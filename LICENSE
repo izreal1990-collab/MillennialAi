@@ -1,0 +1,59 @@
+MIT License
+
+Copyright (c) 2025 Jovan Blango (izreal1990-collab)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+
+ACADEMIC RESEARCH FOUNDATION:
+
+This software implements Tiny Recursion Models (TRM) based on published 
+academic research:
+
+Paper: "Less is More: Recursive Reasoning with Tiny Networks"
+Author: Alexia Jolicoeur-Martineau
+Affiliation: Samsung SAIL Montréal
+Publication: arXiv:2510.04871 (2024)
+
+The TRM implementation in this project is an original implementation inspired
+by the methodology described in the above paper, not derived from any 
+proprietary Samsung source code.
+
+DERIVED FROM TRILL-AI PROJECT:
+
+MillenialAi is derived from and builds upon the Trill-AI project by Jovan Blango
+(https://github.com/izreal1990-collab/Trill-Ai), which provided the foundational
+TRM architecture concepts. This project extends those concepts with revolutionary
+Layer Injection Architecture for seamless TRM-LLM integration.
+
+NOVEL CONTRIBUTIONS:
+
+This project represents the first known implementation of direct layer injection
+between Tiny Recursion Models and Large Language Models using PyTorch forward
+hooks, creating a revolutionary hybrid architecture for enhanced reasoning
+capabilities.
+
+PATENT DISCLAIMER:
+
+This implementation may be subject to existing or future patents on recursive 
+reasoning methods, TRM architectures, layer injection techniques, or hybrid AI 
+systems. Users should conduct their own patent analysis and freedom-to-operate 
+assessment for commercial applications. The authors make no warranty regarding 
+patent infringement.
