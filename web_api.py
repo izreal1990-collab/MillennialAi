@@ -160,7 +160,16 @@ async def chat(request: ConversationRequest):
     """Single conversation exchange"""
     try:
         # Process with the brain
+        print(f"🔍 Processing: {request.message}")
         brain_data = brain.think(request.message)
+        print(f"🔍 Brain returned: {type(brain_data)} - {brain_data}")
+        
+        # Validate brain_data format
+        if not isinstance(brain_data, dict):
+            raise ValueError(f"Brain returned {type(brain_data)} instead of dict: {brain_data}")
+        
+        if 'response' not in brain_data:
+            raise ValueError(f"Brain data missing 'response' key. Keys: {brain_data.keys()}")
         
         # Generate intelligent response
         ai_response = brain_data['response']  # Use the revolutionary response directly
@@ -186,6 +195,9 @@ async def chat(request: ConversationRequest):
         )
         
     except Exception as e:
+        import traceback
+        error_details = traceback.format_exc()
+        print(f"🚨 ERROR: {error_details}")
         raise HTTPException(status_code=500, detail=f"Error processing conversation: {str(e)}")
 
 @app.post("/debug-brain")
