@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/refs/heads/main/schemas/v1.0/azure.yaml.json
+
+name: millennialai
+metadata:
+  template: millennialai@1.0.0
+  
+services:
+  millennialai:
+    project: .
+    language: python
+    host: containerapp
+    docker:
+      path: Dockerfile
+      context: .
+
+infra:
+  provider: bicep
+  path: infra

@@ -2,6 +2,11 @@
 torch>=1.12.0
 numpy>=1.21.0
 
+# Web API Dependencies
+fastapi>=0.104.0
+uvicorn>=0.24.0
+pydantic>=2.0.0
+
 # Optional but recommended for full functionality
 transformers>=4.20.0  # For HuggingFace model integration
 tokenizers>=0.12.1    # For tokenization support
