@@ -1,5 +1,5 @@
 """
-Configuration system for MillenialAi hybrid architecture
+Configuration system for MillennialAi hybrid architecture
 
 This module provides configuration classes for the hybrid TRM-LLM architecture,
 allowing fine-grained control over layer injection, model parameters, and

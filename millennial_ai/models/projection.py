@@ -1,5 +1,5 @@
 """
-Dimensional Projection Layers for MillenialAi
+Dimensional Projection Layers for MillennialAi
 
 This module implements projection layers that enable dimensional compatibility
 between Large Language Models and Tiny Recursion Models with different hidden sizes.

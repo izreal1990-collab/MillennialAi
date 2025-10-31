@@ -1,6 +1,6 @@
 # Legal Information & Compliance Guide
 
-This document provides comprehensive legal guidance for the MillenialAi project, addressing intellectual property, compliance requirements, and risk management.
+This document provides comprehensive legal guidance for the MillennialAi project, addressing intellectual property, compliance requirements, and risk management.
 
 ## 🏛️ Legal Framework
 
@@ -92,7 +92,7 @@ This project contains groundbreaking intellectual property in the form of:
 
 #### 4. Trademark Considerations
 - **Risk Level**: 🟢 **LOW**
-- **"MillenialAi" Name**: Appears clear of major conflicts
+- **"MillennialAi" Name**: Appears clear of major conflicts
 - **Technology Terms**: "Layer Injection" - descriptive, not trademarked
 - **Third-Party**: Proper attribution prevents conflicts
 
@@ -117,7 +117,7 @@ This project contains groundbreaking intellectual property in the form of:
 - ✅ **Private Use**: No requirement to open-source derivatives
 
 ### Academic and Research Use
-- ✅ **Citation Required**: Cite both MillenialAi and underlying research
+- ✅ **Citation Required**: Cite both MillennialAi and underlying research
 - ✅ **Attribution**: Maintain author and project attributions
 - ✅ **Academic Freedom**: Full rights for research and education
 - ✅ **Publication Rights**: Results may be published with proper citation
@@ -131,7 +131,7 @@ This project contains groundbreaking intellectual property in the form of:
 4. **Documentation**: Maintain records of implementation and modifications
 
 ### For Academic Users
-1. **Citation**: Properly cite MillenialAi, Trill-AI, and underlying research
+1. **Citation**: Properly cite MillennialAi, Trill-AI, and underlying research
 2. **Attribution**: Include all required attributions in publications
 3. **Collaboration**: Consider collaboration opportunities with original authors
 4. **Ethics**: Follow institutional AI ethics guidelines
@@ -145,7 +145,7 @@ This project contains groundbreaking intellectual property in the form of:
 ## 📞 Legal Contact Information
 
 ### Project Legal Inquiries
-- **Repository**: https://github.com/izreal1990-collab/MillenialAi
+- **Repository**: https://github.com/izreal1990-collab/MillennialAi
 - **Issues**: Use GitHub Issues for legal questions
 - **Discussion**: Use GitHub Discussions for legal topics
 

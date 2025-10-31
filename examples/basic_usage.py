@@ -1,5 +1,5 @@
 """
-Basic Usage Example for MillenialAi
+Basic Usage Example for MillennialAi
 
 This example demonstrates how to use the Layer Injection Architecture
 with a simple mock model to understand the core concepts.
@@ -8,7 +8,7 @@ with a simple mock model to understand the core concepts.
 import torch
 import torch.nn as nn
 
-# Import MillenialAi components
+# Import MillennialAi components
 from millennial_ai.core.hybrid_model import CombinedTRMLLM, create_hybrid_model
 from millennial_ai.config.config import HybridConfig
 
@@ -52,7 +52,7 @@ class SimpleLLM(nn.Module):
 
 
 def main():
-    print("MillenialAi Basic Usage Example")
+    print("MillennialAi Basic Usage Example")
     print("=" * 40)
     
     # Step 1: Create a base LLM model

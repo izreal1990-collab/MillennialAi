@@ -1,5 +1,5 @@
 """
-ENTERPRISE-SCALE Example for MillenialAi
+ENTERPRISE-SCALE Example for MillennialAi
 
 This example demonstrates the Layer Injection Architecture with massive 70B+ parameter
 models for enterprise deployment. This is designed for production-grade AI systems.
@@ -18,7 +18,7 @@ from typing import Dict, Any
 import gc
 import warnings
 
-# Import MillenialAi components
+# Import MillennialAi components
 from millennial_ai.core.hybrid_model import CombinedTRMLLM, create_hybrid_model
 from millennial_ai.config.config import HybridConfig, PresetConfigs
 
@@ -403,7 +403,7 @@ def main():
     print(f"   5. Implement production monitoring and scaling")
     
     print(f"\n📞 Enterprise Support:")
-    print(f"   GitHub: https://github.com/izreal1990-collab/MillenialAi")
+    print(f"   GitHub: https://github.com/izreal1990-collab/MillennialAi")
     print(f"   Email: izreal1990@gmail.com")
     print(f"   Enterprise consulting available for large-scale deployments")
 

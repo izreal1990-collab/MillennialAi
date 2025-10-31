@@ -1,4 +1,4 @@
-# MillenialAi 🚀
+# MillennialAi 🚀
 
 Revolutionary Layer Injection Architecture for Hybrid Neural Networks
 
@@ -8,11 +8,11 @@ Revolutionary Layer Injection Architecture for Hybrid Neural Networks
 
 ## 🌟 Overview
 
-MillenialAi introduces a groundbreaking **Layer Injection Architecture** that seamlessly integrates Tiny Recursion Models (TRM) into existing Large Language Models (LLM) using PyTorch forward hooks. This revolutionary approach enables hybrid neural architectures without modifying the original models.
+MillennialAi introduces a groundbreaking **Layer Injection Architecture** that seamlessly integrates Tiny Recursion Models (TRM) into existing Large Language Models (LLM) using PyTorch forward hooks. This revolutionary approach enables hybrid neural architectures without modifying the original models.
 
 ### Key Innovation
 
-Unlike traditional approaches that require model retraining or architecture changes, MillenialAi uses **forward hooks** to inject TRM processing directly into LLM hidden layers, creating a hybrid system that:
+Unlike traditional approaches that require model retraining or architecture changes, MillennialAi uses **forward hooks** to inject TRM processing directly into LLM hidden layers, creating a hybrid system that:
 
 - ✅ **Zero Model Modification**: Original LLM remains unchanged
 - ✅ **Dynamic Activation**: Injection can be toggled on/off at runtime
@@ -58,8 +58,8 @@ Unlike traditional approaches that require model retraining or architecture chan
 
 ```bash
 # Clone the repository
-git clone https://github.com/izreal1990-collab/MillenialAi.git
-cd MillenialAi
+git clone https://github.com/izreal1990-collab/MillennialAi.git
+cd MillennialAi
 
 # Install dependencies
 pip install -r requirements.txt
@@ -284,8 +284,8 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 ### Development Setup
 
 ```bash
-git clone https://github.com/izreal1990-collab/MillenialAi.git
-cd MillenialAi
+git clone https://github.com/izreal1990-collab/MillennialAi.git
+cd MillennialAi
 
 # Install development dependencies
 pip install -e ".[dev]"
@@ -311,14 +311,14 @@ This work builds upon:
 
 ## 📖 Citation
 
-If you use MillenialAi in your research, please cite:
+If you use MillennialAi in your research, please cite:
 
 ```bibtex
 @software{millennial_ai_2024,
-  title={MillenialAi: Revolutionary Layer Injection Architecture for Hybrid Neural Networks},
+  title={MillennialAi: Revolutionary Layer Injection Architecture for Hybrid Neural Networks},
   author={Jovan Blango},
   year={2024},
-  url={https://github.com/izreal1990-collab/MillenialAi},
+  url={https://github.com/izreal1990-collab/MillennialAi},
   note={Based on Trill-AI TRM architecture}
 }
 ```
@@ -334,8 +334,8 @@ If you use MillenialAi in your research, please cite:
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/izreal1990-collab/MillenialAi/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/izreal1990-collab/MillenialAi/discussions)
+- **Issues**: [GitHub Issues](https://github.com/izreal1990-collab/MillennialAi/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/izreal1990-collab/MillennialAi/discussions)
 - **Email**: izreal1990@gmail.com
 
 ---

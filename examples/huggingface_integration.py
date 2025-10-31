@@ -1,5 +1,5 @@
 """
-HuggingFace Integration Example for MillenialAi
+HuggingFace Integration Example for MillennialAi
 
 This example shows how to use the Layer Injection Architecture with
 real HuggingFace transformer models for practical applications.
@@ -16,7 +16,7 @@ from transformers import (
 import warnings
 warnings.filterwarnings('ignore')
 
-# Import MillenialAi components
+# Import MillennialAi components
 from millennial_ai.core.hybrid_model import CombinedTRMLLM
 from millennial_ai.config.config import HybridConfig
 
@@ -366,7 +366,7 @@ def benchmark_performance():
 
 def main():
     """Run all integration examples"""
-    print("MillenialAi HuggingFace Integration Examples")
+    print("MillennialAi HuggingFace Integration Examples")
     print("=" * 60)
     
     # Track success

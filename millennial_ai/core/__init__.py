@@ -1,5 +1,5 @@
 """
-Core module for MillenialAi Layer Injection Architecture
+Core module for MillennialAi Layer Injection Architecture
 
 This module contains the main components for implementing hybrid TRM-LLM models:
 - CombinedTRMLLM: Main hybrid model class

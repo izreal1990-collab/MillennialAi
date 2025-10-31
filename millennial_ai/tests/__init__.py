@@ -1,5 +1,5 @@
 """
-Testing Framework for MillenialAi
+Testing Framework for MillennialAi
 
 This module provides comprehensive testing for the Layer Injection Architecture,
 including unit tests, integration tests, and performance benchmarks.
@@ -588,7 +588,7 @@ def run_benchmarks():
 
 
 if __name__ == '__main__':
-    print("MillenialAi Testing Framework")
+    print("MillennialAi Testing Framework")
     print("=" * 50)
     
     # Run tests

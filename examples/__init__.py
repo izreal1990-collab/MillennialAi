@@ -1,5 +1,5 @@
 """
-Examples for MillenialAi Layer Injection Architecture
+Examples for MillennialAi Layer Injection Architecture
 
 This directory contains comprehensive examples demonstrating:
 - Basic usage patterns

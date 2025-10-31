@@ -1,6 +1,6 @@
 # Dependencies License Report
 
-This document provides a comprehensive overview of all third-party dependencies used in the MillenialAi project and their respective licenses.
+This document provides a comprehensive overview of all third-party dependencies used in the MillennialAi project and their respective licenses.
 
 ## 📊 License Summary
 

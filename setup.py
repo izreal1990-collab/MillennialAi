@@ -1,7 +1,7 @@
 """
-Setup configuration for MillenialAi
+Setup configuration for MillennialAi
 
-MillenialAi implements revolutionary Layer Injection Architecture for seamlessly
+MillennialAi implements revolutionary Layer Injection Architecture for seamlessly
 integrating Tiny Recursion Models into Large Language Models using PyTorch
 forward hooks, enabling hybrid neural architectures without model modification.
 """
@@ -45,11 +45,11 @@ setup(
     long_description_content_type="text/markdown",
     
     # Project URLs
-    url="https://github.com/izreal1990-collab/MillenialAi",
+    url="https://github.com/izreal1990-collab/MillennialAi",
     project_urls={
-        "Bug Reports": "https://github.com/izreal1990-collab/MillenialAi/issues",
-        "Source": "https://github.com/izreal1990-collab/MillenialAi",
-        "Documentation": "https://github.com/izreal1990-collab/MillenialAi/blob/main/README.md",
+        "Bug Reports": "https://github.com/izreal1990-collab/MillennialAi/issues",
+        "Source": "https://github.com/izreal1990-collab/MillennialAi",
+        "Documentation": "https://github.com/izreal1990-collab/MillennialAi/blob/main/README.md",
     },
     
     # Package configuration
@@ -207,7 +207,7 @@ setup(
 
 # Post-installation message
 print("""
-🎉 MillenialAi has been installed successfully!
+🎉 MillennialAi has been installed successfully!
 
 This package implements the revolutionary Layer Injection Architecture
 for hybrid neural networks, enabling seamless integration of Tiny
@@ -230,13 +230,13 @@ outputs = hybrid(input_ids)
 
 Documentation:
 -------------
-• GitHub: https://github.com/izreal1990-collab/MillenialAi
+• GitHub: https://github.com/izreal1990-collab/MillennialAi
 • Examples: See examples/ directory
 • Tests: Run 'millennial-ai-test'
 • Benchmarks: Run 'millennial-ai-benchmark'
 
 For help or issues, visit:
-https://github.com/izreal1990-collab/MillenialAi/issues
+https://github.com/izreal1990-collab/MillennialAi/issues
 
 Happy researching! 🚀
 """)

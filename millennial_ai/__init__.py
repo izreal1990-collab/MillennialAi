@@ -1,5 +1,5 @@
 """
-MillenialAi: Enterprise-Grade Layer Injection Architecture
+MillennialAi: Enterprise-Grade Layer Injection Architecture
 
 Revolutionary hybrid neural networks for 70B+ parameter models with seamless
 TRM injection using PyTorch forward hooks. Designed for enterprise AI deployment.
@@ -41,7 +41,7 @@ __version__ = "1.0.0"
 __author__ = "Jovan Blango"
 __email__ = "izreal1990@gmail.com"
 __license__ = "MIT"
-__url__ = "https://github.com/izreal1990-collab/MillenialAi"
+__url__ = "https://github.com/izreal1990-collab/MillennialAi"
 
 # Core enterprise components
 from millennial_ai.core.hybrid_model import CombinedTRMLLM, create_hybrid_model
@@ -91,7 +91,7 @@ def get_enterprise_info():
 
 def quick_start_enterprise():
     """Show quick start for enterprise deployment"""
-    print("🏢 MillenialAi Enterprise Quick Start")
+    print("🏢 MillennialAi Enterprise Quick Start")
     print("=" * 40)
     print("1. Load your 70B+ parameter model:")
     print("   model = AutoModelForCausalLM.from_pretrained('meta-llama/Llama-2-70b-hf')")
