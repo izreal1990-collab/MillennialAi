@@ -163,7 +163,7 @@ async def chat(request: ConversationRequest):
         brain_data = brain.think(request.message)
         
         # Generate intelligent response
-        ai_response = generate_intelligent_response(request.message, brain_data)
+        ai_response = brain_data['response']  # Use the revolutionary response directly
         
         # Update memory
         exchange = {

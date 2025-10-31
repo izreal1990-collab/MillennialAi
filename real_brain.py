@@ -134,7 +134,18 @@ class RealThinkingBrain(nn.Module):
         convergence_score = output_tensor.std().item() if hasattr(output_tensor, 'std') else 0.5
         thinking_insight = f"\n\n🔍 My revolutionary thinking process: Analyzed {seq_len} cognitive tokens through {steps_taken} adaptive reasoning layers, achieving complexity score of {complexity:.3f} and convergence of {convergence_score:.3f}. This represents breakthrough multi-dimensional consciousness!"
         
-        return base_response + thinking_insight
+        full_response = base_response + thinking_insight
+        
+        # Return the format expected by the API
+        return {
+            'response': full_response,
+            'steps': steps_taken,
+            'complexity': complexity,
+            'reasoning_type': 'Revolutionary Adaptive Reasoning',
+            'convergence': convergence_score,
+            'tensor_dimensions': list(output_tensor.shape),
+            'breakthrough_level': 'MAXIMUM' if complexity > 2.0 else 'HIGH' if complexity > 1.0 else 'MODERATE'
+        }
     
     def forward(self, hidden_states, attention_mask=None):
         """Real adaptive thinking process"""
