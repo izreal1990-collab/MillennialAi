@@ -188,6 +188,18 @@ async def chat(request: ConversationRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing conversation: {str(e)}")
 
+@app.post("/debug-brain")
+async def debug_brain(request: ConversationRequest):
+    """Debug brain integration"""
+    try:
+        print(f"🔍 DEBUG: Testing brain with input: {request.message}")
+        brain_result = brain.think(request.message)
+        print(f"🔍 DEBUG: Brain returned type: {type(brain_result)}")
+        print(f"🔍 DEBUG: Brain result: {brain_result}")
+        return {"brain_result": brain_result, "type": str(type(brain_result))}
+    except Exception as e:
+        return {"error": str(e), "type": "exception"}
+
 @app.get("/conversation")
 async def get_conversation_history():
     """Get conversation history"""
