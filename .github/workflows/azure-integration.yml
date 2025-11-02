@@ -109,22 +109,32 @@ jobs:
       run: |
         az extension add --name ml --upgrade
     
+    - name: Install Azure ML Python SDK
+      run: |
+        pip install azure-ai-ml azure-identity
+    
     - name: Validate Azure resources
       run: |
+        echo "🔍 Setting subscription context..."
+        az account set --subscription '${{ secrets.AZURE_SUBSCRIPTION_ID }}'
+        
         echo "🔍 Validating Azure ML workspace..."
         az ml workspace show \
           --name '${{ secrets.AZURE_ML_WORKSPACE }}' \
-          --resource-group '${{ secrets.AZURE_RESOURCE_GROUP }}'
+          --resource-group '${{ secrets.AZURE_RESOURCE_GROUP }}' \
+          --subscription '${{ secrets.AZURE_SUBSCRIPTION_ID }}'
         
         echo "🔍 Checking compute clusters..."
         az ml compute list \
           --workspace-name '${{ secrets.AZURE_ML_WORKSPACE }}' \
-          --resource-group '${{ secrets.AZURE_RESOURCE_GROUP }}'
+          --resource-group '${{ secrets.AZURE_RESOURCE_GROUP }}' \
+          --subscription '${{ secrets.AZURE_SUBSCRIPTION_ID }}'
         
         echo "🔍 Validating AI Foundry Hub..."
         az ml workspace show \
           --name '${{ secrets.AZURE_FOUNDRY_HUB }}' \
-          --resource-group '${{ secrets.AZURE_RESOURCE_GROUP }}'
+          --resource-group '${{ secrets.AZURE_RESOURCE_GROUP }}' \
+          --subscription '${{ secrets.AZURE_SUBSCRIPTION_ID }}'
     
     - name: Test Azure ML job submission (dry run)
       run: |
