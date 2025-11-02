@@ -66,7 +66,7 @@ jobs:
         
         # Test basic configuration
         config = HybridConfig()
-        print(f'✅ HybridConfig created: hidden_size={config.hidden_size}')
+        print(f'✅ HybridConfig created: trm_hidden_size={config.trm_hidden_size}')
         
         # Test framework initialization (skip for CI - requires model download)
         print('✅ LayerInjectionFramework import successful')
