@@ -20,6 +20,9 @@ import torch.nn as nn
 from typing import Dict, Any, Optional
 import warnings
 
+# Add HuggingFace imports
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
 # Import our original components
 from millennial_ai.models.millennial_reasoning_block import (
     MillennialAiReasoningBlock,
@@ -270,6 +273,49 @@ def compare_models(samsung_model: CombinedTRMLLM,
     print("✅ Comparison completed")
     
     return results
+
+
+def create_ip_safe_model(config) -> MillennialAiIPSafeModel:
+    """
+    Create IP-safe MillennialAi model with real HuggingFace model loading
+    
+    Args:
+        config: MillennialAiConfig with model specifications
+        
+    Returns:
+        MillennialAi model with loaded base model and proprietary reasoning engine
+    """
+    print(f"🔄 Loading base model: {config.base_model_name}")
+    
+    try:
+        # Load base model from HuggingFace
+        model = AutoModelForCausalLM.from_pretrained(
+            config.base_model_name,
+            torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
+            device_map="auto" if torch.cuda.is_available() else None,
+            trust_remote_code=True  # For models that need custom code
+        )
+        
+        # Load tokenizer
+        tokenizer = AutoTokenizer.from_pretrained(config.base_model_name)
+        if tokenizer.pad_token is None:
+            tokenizer.pad_token = tokenizer.eos_token
+        
+        print(f"   ✅ Loaded {config.base_model_name} ({sum(p.numel() for p in model.parameters()):,}) parameters")
+        
+        # Create IP-safe model
+        ip_safe_model = MillennialAiIPSafeModel(model, config)
+        ip_safe_model.tokenizer = tokenizer  # Attach tokenizer
+        
+        return ip_safe_model
+        
+    except Exception as e:
+        print(f"   ❌ Failed to load model: {e}")
+        print("   💡 Make sure you have:")
+        print("      - Internet connection for downloading models")
+        print("      - HuggingFace token set: export HF_TOKEN=your_token")
+        print("      - Sufficient disk space (70B models need ~140GB)")
+        raise
 
 
 if __name__ == "__main__":

@@ -1,0 +1,90 @@
+
+
+4int
+512int
+"num_heads"str
+"max_recursion_depth"str
+"num_scales"str
+"memory_size"str
+
+8int
+64int
+0.1float
+	"dropout"str
+
+	3int
+"ff_hidden_size"str
+ßù"
+    Create a MillennialAi Reasoning Engine with sensible defaults
+    
+    Args:
+        hidden_size: Hidden dimension size (should match LLM hidden size)
+        **kwargs: Additional configuration parameters
+        
+    Returns:
+        Configured MillennialAiReasoningEngine
+    "str
+
+1inthidden_size
+º' º(7kwargs
+º9 º(A"dict"µ0
+.
+
+« Œ(defaults"#new-object#Bdict"
+ 
+
+» »( "	#map-set#:"
+ 
+
+… …(
+"	#map-set#:	)
+'
+
+   (-"
+#binop //#*2//:(
+&
+
+   (."
+builtinsmax*:"
+ 
+
+   (."	#map-set#:(
+&
+
+À À(,"
+builtinsmin*:"
+ 
+
+À À(,"	#map-set#:'
+%
+
+Ã Ã()"	#binop *#*2*:"
+ 
+
+Ã Ã()"	#map-set#:"
+ 
+
+Õ Õ("	#map-set#:.
+,
+
+— —(#config"#new-object#Bdict'
+%
+
+— —("#unaryop **#2**:%
+#
+
+— —("#map-set-all#:'
+%
+
+— —(""#unaryop **#2**:%
+#
+
+— —(" "#map-set-all#:'
+%
+
+”4 ”(<!"#unaryop **#2**:v
+t
+
+” ”(=""MillennialAiReasoningEngine:!BAmillennial_ai.models.reasoning_engine.MillennialAiReasoningEngine
+
+” ”(="*P/home/jovan-blango/Desktop/MillennialAi/millennial_ai/models/reasoning_engine.py

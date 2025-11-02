@@ -1,0 +1,125 @@
+
+?millennial_ai.core.hybrid_model.CombinedTRMLLM.named_parametersV
+J/home/jovan-blango/Desktop/MillennialAi/millennial_ai/core/hybrid_model.py³ ³("2*Ý
+2
+´ ´(:y
+w
+
+µ µ()
+%7"__id*]
+
+__unknown_file (A*?0
+.millennial_ai.core.hybrid_model.CombinedTRMLLM"
+	llm_modelV
+T
+
+µB µ(W
+%8"__concat*
+
+µB µ(N
+
+llm_model.*
+
+µQ µ(W
+
+
+prefixtr
+
+µ µ(i
+%9*"
+
+__unknown_file (
+
+%72named_parameters:
+prefix
+
+%8:
+recurse
+	
+recurse*
+9*7
+3
+hybrid_model.py"
+¼ ¼(
+implicit return*ß
+6
+¹ ¹(kz
+x
+
+¹ ¹(*
+%1"__id*^
+
+__unknown_file (B*@0
+.millennial_ai.core.hybrid_model.CombinedTRMLLM"
+
+projectionW
+U
+
+¹C ¹(Y
+%2"__concat*
+
+¹C ¹(P
+projection.*
+
+¹S ¹(Y
+
+
+prefixtr
+
+¹ ¹(k
+%3*"
+
+__unknown_file (
+
+%12named_parameters:
+prefix
+
+%2:
+recurse
+	
+recurse*
+3*Ý
+9
+· ·(iy
+w
+
+· ·()
+%4"__id*]
+
+__unknown_file (A*?0
+.millennial_ai.core.hybrid_model.CombinedTRMLLM"
+	trm_blockV
+T
+
+·B ·(W
+%5"__concat*
+
+·B ·(N
+
+trm_block.*
+
+·Q ·(W
+
+
+prefixtr
+
+· ·(i
+%6*"
+
+__unknown_file (
+
+%42named_parameters:
+prefix
+
+%5:
+recurse
+	
+recurse*
+6:
+
+³ ³(/
+prefix:
+
+³1 ³(E	
+recurseB20
+.millennial_ai.core.hybrid_model.CombinedTRMLLMH

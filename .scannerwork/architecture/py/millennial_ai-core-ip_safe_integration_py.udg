@@ -1,0 +1,232 @@
+
+1.0PythonFrontend"1762044806123*py2.B’
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+.
+)millennial_ai/core/ip_safe_integration.py9
+,
+&millennial_ai.core.ip_safe_integration11
+
+torch12
+
+typing14
+
+warnings16
+
+transformers18
+5
+/millennial_ai.models.millennial_reasoning_block20
+%
+millennial_ai.core.hybrid_model22
+!
+millennial_ai.config.config24
+E
+?millennial_ai.core.ip_safe_integration.migrate_from_samsung_trm26
+D
+>millennial_ai.core.ip_safe_integration.MillennialAiIPSafeModel28
+4
+.millennial_ai.core.hybrid_model.CombinedTRMLLM30
+^
+Xmillennial_ai.core.ip_safe_integration.MillennialAiIPSafeModel.get_reasoning_performance32
+
+
+dict34
+\
+Vmillennial_ai.core.ip_safe_integration.MillennialAiIPSafeModel._update_injection_hooks36
+M
+Gmillennial_ai.core.ip_safe_integration.MillennialAiIPSafeModel.__init__38
+$
+torch.nn.modules.module.Module40
+.
+(millennial_ai.config.config.HybridConfig42
+U
+Omillennial_ai.core.ip_safe_integration.MillennialAiIPSafeModel.count_parameters44
+f
+`millennial_ai.core.ip_safe_integration.MillennialAiIPSafeModel._create_millennial_injection_hook46
+L
+Fmillennial_ai.core.ip_safe_integration.create_ip_safe_millennial_model48
+
+
+list50
+;
+5millennial_ai.core.ip_safe_integration.compare_models52
+
+torch.Tensor54
+4
+.millennial_ai.core.ip_safe_integration.MockLLM56
+<
+6millennial_ai.core.ip_safe_integration.MockLLM.forward58
+=
+7millennial_ai.core.ip_safe_integration.MockLLM.__init__60
+A
+;millennial_ai.core.ip_safe_integration.create_ip_safe_model62J
+
+8
+89jÞ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27267 210
+
+29
+29286 210
+
+31
+31306
+
+33
+33327 229
+
+35
+35346
+
+37
+37367 229
+
+39
+39387 229
+
+41
+41406
+
+43
+43426
+
+45
+45447 229
+
+47
+47467 229
+
+49
+49487 210
+
+51
+51506
+
+53
+53527 210
+
+55
+55546
+
+57
+57566 210
+
+59
+59587 257
+
+61
+61607 257
+
+63
+63627 210rŒ
+
+10131*
+8 (
+
+10151*
+8 ('
+
+10171*
+8 (
+
+10191*
+8 (=
+
+10211*
+8 (
+
+10231*
+8" "(;
+
+10251*
+8# #(5
+
+27293*
+8¾ ¾(
+
+27314*
+8¾ ¾(
+
+29312*
+8& &(
+
+33353*
+8ƒ	 ƒ("
+
+39414*
+81	 1(
+
+39434*
+81	 1(
+
+45353*
+8	 (
+
+49293*
+8› ›($
+
+49414*
+8› ›($
+
+49514*
+8› ›($
+
+49354*
+8› ›($
+
+53353*
+8Þ Þ(
+
+53314*
+8Þ Þ(
+
+53294*
+8Þ Þ(
+
+53554*
+8Þ Þ(
+
+57412*
+8Ë Ë(
+
+63293*
+8– –(

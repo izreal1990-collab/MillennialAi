@@ -1,0 +1,166 @@
+
+;millennial_ai.tests.TestCombinedTRMLLM.test_parameter_countS
+G/home/jovan-blango/Desktop/MillennialAi/millennial_ai/tests/__init__.py¬ ¬("2*∂
+2
+√ √(%n
+l
+
+ƒ ƒ("
+%1"__id*R
+
+__unknown_file (6*4(
+&millennial_ai.tests.TestCombinedTRMLLM"
+hybridMK
+
+ƒ ƒ(8
+%2*"
+
+__unknown_file (
+
+%12get_parameter_countH
+F
+
+ƒ ƒ(8
+param_counts"__id*"
+
+__unknown_file (
+
+%2ºπ
+
+∆ ∆(,
+%3*F
+
+__unknown_file (*(
+&millennial_ai.tests.TestCombinedTRMLLM*%
+
+__unknown_file (	
+total*,
+
+__unknown_file (
+
+param_counts2assertIn¿Ω
+
+« «(0
+%4*F
+
+__unknown_file (*(
+&millennial_ai.tests.TestCombinedTRMLLM*)
+
+__unknown_file (
+	llm_model*,
+
+__unknown_file (
+
+param_counts2assertIn¿Ω
+
+» »(0
+%5*F
+
+__unknown_file (*(
+&millennial_ai.tests.TestCombinedTRMLLM*)
+
+__unknown_file (
+	trm_block*,
+
+__unknown_file (
+
+param_counts2assertIn¡æ
+
+… …(1
+%6*F
+
+__unknown_file (*(
+&millennial_ai.tests.TestCombinedTRMLLM**
+
+__unknown_file (
+
+projection*,
+
+__unknown_file (
+
+param_counts2assertInÜÉ
+
+ÃQ Ã(k
+%7"__mapGet*,
+
+__unknown_file (
+
+param_counts**
+
+__unknown_file (
+
+projection2__getitem__ÖÇ
+
+Ã5 Ã(N
+%8"__mapGet*,
+
+__unknown_file (
+
+param_counts*)
+
+__unknown_file (
+	trm_block2__getitem__ÖÇ
+
+Ã Ã(2
+%9"__mapGet*,
+
+__unknown_file (
+
+param_counts*)
+
+__unknown_file (
+	llm_model2__getitem__a
+_
+
+Ã Ã(k
+%10"__concat*
+
+Ã Ã(2
+
+%9*
+
+Ã5 Ã(N
+
+%8*
+
+ÃQ Ã(k
+
+%7K
+I
+
+Ã Ã(k
+expected_total"__id*#
+
+__unknown_file (
+
+%10Å
+
+Õ Õ(.
+%11"__mapGet*,
+
+__unknown_file (
+
+param_counts*%
+
+__unknown_file (	
+total2__getitem__¿Ω
+
+Õ Õ(?
+%12*F
+
+__unknown_file (*(
+&millennial_ai.tests.TestCombinedTRMLLM*#
+
+__unknown_file (
+
+%11*.
+
+__unknown_file (
+
+expected_total2assertEqual*
+3*3
+3
+__init__.py"
+œ œ(
+implicit returnB*(
+&millennial_ai.tests.TestCombinedTRMLLMH

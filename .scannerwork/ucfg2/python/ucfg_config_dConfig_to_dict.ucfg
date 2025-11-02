@@ -1,0 +1,427 @@
+
+0millennial_ai.config.config.HybridConfig.to_dictR
+F/home/jovan-blango/Desktop/MillennialAi/millennial_ai/config/config.py– –("2*´(
+2
+— —(1
+
+“ Â(	
+%1"dictz
+x
+
+”  ”(5
+%2"__id*^
+
+__unknown_file (B*@*
+(millennial_ai.config.config.HybridConfig"
+injection_layersô
+ñ
+
+” ”(5
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*0
+
+__unknown_file (
+injection_layers*"
+
+__unknown_file (
+
+%2|
+z
+
+‘" ‘(9
+%4"__id*`
+
+__unknown_file (D*B*
+(millennial_ai.config.config.HybridConfig"
+injection_strengthõ
+ò
+
+‘ ‘(9
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*2
+
+__unknown_file (
+injection_strength*"
+
+__unknown_file (
+
+%4|
+z
+
+’" ’(9
+%6"__id*`
+
+__unknown_file (D*B*
+(millennial_ai.config.config.HybridConfig"
+adaptive_injectionõ
+ò
+
+’ ’(9
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*2
+
+__unknown_file (
+adaptive_injection*"
+
+__unknown_file (
+
+%6{
+y
+
+÷! ÷(7
+%8"__id*_
+
+__unknown_file (C*A*
+(millennial_ai.config.config.HybridConfig"
+blending_strategyö
+ó
+
+÷ ÷(7
+%9"__mapSet*"
+
+__unknown_file (
+
+%1*1
+
+__unknown_file (
+blending_strategy*"
+
+__unknown_file (
+
+%8z
+x
+
+◊ ◊(3
+%10"__id*]
+
+__unknown_file (A*?*
+(millennial_ai.config.config.HybridConfig"
+trm_hidden_sizeö
+ó
+
+◊ ◊(3
+%11"__mapSet*"
+
+__unknown_file (
+
+%1*/
+
+__unknown_file (
+trm_hidden_size*#
+
+__unknown_file (
+
+%10x
+v
+
+ÿ ÿ(/
+%12"__id*[
+
+__unknown_file (?*=*
+(millennial_ai.config.config.HybridConfig"
+trm_num_headsò
+ï
+
+ÿ ÿ(/
+%13"__mapSet*"
+
+__unknown_file (
+
+%1*-
+
+__unknown_file (
+trm_num_heads*#
+
+__unknown_file (
+
+%12}
+{
+
+Ÿ" Ÿ(9
+%14"__id*`
+
+__unknown_file (D*B*
+(millennial_ai.config.config.HybridConfig"
+trm_ff_hidden_sizeù
+ö
+
+Ÿ Ÿ(9
+%15"__mapSet*"
+
+__unknown_file (
+
+%1*2
+
+__unknown_file (
+trm_ff_hidden_size*#
+
+__unknown_file (
+
+%14y
+w
+
+⁄ ⁄(1
+%16"__id*\
+
+__unknown_file (@*>*
+(millennial_ai.config.config.HybridConfig"
+trm_num_layersô
+ñ
+
+⁄ ⁄(1
+%17"__mapSet*"
+
+__unknown_file (
+
+%1*.
+
+__unknown_file (
+trm_num_layers*#
+
+__unknown_file (
+
+%16~
+|
+
+€# €(;
+%18"__id*a
+
+__unknown_file (E*C*
+(millennial_ai.config.config.HybridConfig"
+num_recursion_stepsû
+õ
+
+€ €(;
+%19"__mapSet*"
+
+__unknown_file (
+
+%1*3
+
+__unknown_file (
+num_recursion_steps*#
+
+__unknown_file (
+
+%18r
+p
+
+‹ ‹(#
+%20"__id*U
+
+__unknown_file (9*7*
+(millennial_ai.config.config.HybridConfig"	
+dropoutí
+è
+
+‹ ‹(#
+%21"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+dropout*#
+
+__unknown_file (
+
+%20y
+w
+
+› ›(1
+%22"__id*\
+
+__unknown_file (@*>*
+(millennial_ai.config.config.HybridConfig"
+layer_norm_epsô
+ñ
+
+› ›(1
+%23"__mapSet*"
+
+__unknown_file (
+
+%1*.
+
+__unknown_file (
+layer_norm_eps*#
+
+__unknown_file (
+
+%22|
+z
+
+ﬁ! ﬁ(7
+%24"__id*_
+
+__unknown_file (C*A*
+(millennial_ai.config.config.HybridConfig"
+recursion_dropoutú
+ô
+
+ﬁ ﬁ(7
+%25"__mapSet*"
+
+__unknown_file (
+
+%1*1
+
+__unknown_file (
+recursion_dropout*#
+
+__unknown_file (
+
+%24z
+x
+
+ﬂ ﬂ(3
+%26"__id*]
+
+__unknown_file (A*?*
+(millennial_ai.config.config.HybridConfig"
+projection_biasö
+ó
+
+ﬂ ﬂ(3
+%27"__mapSet*"
+
+__unknown_file (
+
+%1*/
+
+__unknown_file (
+projection_bias*#
+
+__unknown_file (
+
+%26Ä
+~
+
+‡% ‡(?
+%28"__id*c
+
+__unknown_file (G*E*
+(millennial_ai.config.config.HybridConfig"
+projection_activation†
+ù
+
+‡ ‡(?
+%29"__mapSet*"
+
+__unknown_file (
+
+%1*5
+
+__unknown_file (
+projection_activation*#
+
+__unknown_file (
+
+%28Å
+
+
+·& ·(A
+%30"__id*d
+
+__unknown_file (H*F*
+(millennial_ai.config.config.HybridConfig"
+gradient_checkpointing°
+û
+
+· ·(A
+%31"__mapSet*"
+
+__unknown_file (
+
+%1*6
+
+__unknown_file (
+gradient_checkpointing*#
+
+__unknown_file (
+
+%30z
+x
+
+‚ ‚(3
+%32"__id*]
+
+__unknown_file (A*?*
+(millennial_ai.config.config.HybridConfig"
+mixed_precisionö
+ó
+
+‚ ‚(3
+%33"__mapSet*"
+
+__unknown_file (
+
+%1*/
+
+__unknown_file (
+mixed_precision*#
+
+__unknown_file (
+
+%32}
+{
+
+„" „(9
+%34"__id*`
+
+__unknown_file (D*B*
+(millennial_ai.config.config.HybridConfig"
+custom_trm_configsù
+ö
+
+„ „(9
+%35"__mapSet*"
+
+__unknown_file (
+
+%1*2
+
+__unknown_file (
+custom_trm_configs*#
+
+__unknown_file (
+
+%34}
+{
+
+‰" ‰(9
+%36"__id*`
+
+__unknown_file (D*B*
+(millennial_ai.config.config.HybridConfig"
+injection_scheduleù
+ö
+
+‰ ‰(9
+%37"__mapSet*"
+
+__unknown_file (
+
+%1*2
+
+__unknown_file (
+injection_schedule*#
+
+__unknown_file (
+
+%36"
+
+“ Â(	
+
+%1B,*
+(millennial_ai.config.config.HybridConfigH

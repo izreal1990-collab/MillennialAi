@@ -1,0 +1,60 @@
+
+"total"str
+"layer_norms"str
+"recursive_processor"str
+"tiny_transformer"str
+1("Get detailed parameter count breakdown"strself
+   ( "ç&
+$
+
+¥ ª(	"#new-object#Bdictk
+i
+
+¦ ¦(+"V
+Bmillennial_ai.models.hybrid_trm.HybridTRMBlock.get_parameter_countcount_parameters:"
+ 
+
+¦ ¦(+"	#map-set#:3
+1
+
+§1 §(F"#get-field# tiny_transformer:k
+i
+
+§  §(G	"V
+Bmillennial_ai.models.hybrid_trm.HybridTRMBlock.get_parameter_countcount_parameters:"
+ 
+
+§ §(G
+"	#map-set#:	6
+4
+
+¨4 ¨(L"!#get-field# recursive_processor:k
+i
+
+¨# ¨(M"V
+Bmillennial_ai.models.hybrid_trm.HybridTRMBlock.get_parameter_countcount_parameters:"
+ 
+
+¨ ¨(M"	#map-set#:2
+0
+
+©, ©(@"#get-field# input_layernorm:k
+i
+
+© ©(A"V
+Bmillennial_ai.models.hybrid_trm.HybridTRMBlock.get_parameter_countcount_parameters:3
+1
+
+©U ©(j"#get-field# output_layernorm:k
+i
+
+©D ©(k"V
+Bmillennial_ai.models.hybrid_trm.HybridTRMBlock.get_parameter_countcount_parameters:$
+"
+
+© ©(k"	#binop +#2+:"
+ 
+
+© ©(k"	#map-set#:
+
+¥ ª(	*J/home/jovan-blango/Desktop/MillennialAi/millennial_ai/models/hybrid_trm.py

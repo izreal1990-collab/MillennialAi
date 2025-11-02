@@ -1,0 +1,152 @@
+
+Rmillennial_ai.models.millennial_reasoning_block.MillennialAiReasoningBlock.forwardd
+Z/home/jovan-blango/Desktop/MillennialAi/millennial_ai/models/millennial_reasoning_block.py` `("1*∆	
+2d n(M
+K
+p p( 
+
+residual"__id*-
+
+__unknown_file (
+
+hidden_states∫∑
+s s(9
+%5*j
+
+__unknown_file (NL
+Jmillennial_ai.models.millennial_reasoning_block.MillennialAiReasoningBlock*-
+
+__unknown_file (
+
+hidden_states2
+layer_normJ
+H
+s s(9
+normalized_input"__id*"
+
+__unknown_file (
+
+%5ü
+ú
+y y(.
+%6"__id*É
+
+__unknown_file (g*eL
+Jmillennial_ai.models.millennial_reasoning_block.MillennialAiReasoningBlock"
+num_recursion_steps˛˚
+v z(	
+%7*j
+
+__unknown_file (NL
+Jmillennial_ai.models.millennial_reasoning_block.MillennialAiReasoningBlock*0
+
+__unknown_file (
+
+normalized_input2reasoning_engine:$
+attention_mask
+
+attention_mask:
+	max_steps
+
+%6J
+H
+v z(	
+reasoning_result"__id*"
+
+__unknown_file (
+
+%7ÑÅ
+} }(4
+%8"__mapGet*0
+
+__unknown_file (
+
+reasoning_result*&
+
+__unknown_file (
+
+output2__getitem__I
+G
+} }(4
+reasoned_output"__id*"
+
+__unknown_file (
+
+%8ï
+í
+
+Ä Ä(
+%9"__id*x
+
+__unknown_file (\*ZL
+Jmillennial_ai.models.millennial_reasoning_block.MillennialAiReasoningBlock"
+
+training*
+4
+5*Ã
+4
+Ñ Ñ(+]
+[
+
+Ñ Ñ(+
+%3"__concat*
+
+Ñ Ñ(
+
+
+residual*!
+
+Ñ Ñ(+
+
+reasoned_outputB
+@
+
+Ñ Ñ(+
+output"__id*"
+
+__unknown_file (
+
+%3"
+
+Ü Ü(
+
+
+output*Â
+5
+Å Å(<ŒÀ
+
+Å Å(<
+%4*j
+
+__unknown_file (NL
+Jmillennial_ai.models.millennial_reasoning_block.MillennialAiReasoningBlock*0
+
+__unknown_file (
+
+reasoning_result2_update_performance_stats*
+4*¨
+1c c(K
+I
+b) b(5
+%1"__id*1
+
+__unknown_file (*
+
+torch"
+TensorK
+I
+a a(+
+%2"__id*1
+
+__unknown_file (*
+
+torch"
+Tensor*
+2:
+a a(+
+hidden_states:
+b b(=
+attention_mask:
+c c(
+kwargsBNL
+Jmillennial_ai.models.millennial_reasoning_block.MillennialAiReasoningBlockH

@@ -1,0 +1,86 @@
+# Azure Pipelines YAML for MillennialAi with SonarQube
+# This pipeline runs on Azure DevOps with SonarQube integration
+
+trigger:
+  branches:
+    include:
+    - main
+    - develop
+  paths:
+    include:
+    - millennial_ai/
+    - examples/
+    - tests/
+    - main_window.py
+    - fast_app.py
+    - web_api.py
+
+pr:
+  branches:
+    include:
+    - main
+    - develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  pythonVersion: '3.11'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '$(pythonVersion)'
+
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+    pip install pytest-cov
+  displayName: 'Install dependencies'
+
+- script: |
+    pytest --cov=millennial_ai --cov-report=xml:coverage.xml --cov-report=term-missing -v
+  displayName: 'Run tests with coverage'
+
+- task: SonarQubePrepare@5
+  inputs:
+    SonarQube: 'SonarQubeServiceConnection'
+    scannerMode: 'CLI'
+    configMode: 'file'
+
+- task: SonarQubeAnalyze@5
+  displayName: 'Run SonarQube analysis'
+
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'
+  displayName: 'Publish SonarQube results'
+
+- task: Docker@2
+  inputs:
+    command: 'build'
+    dockerfile: '**/Dockerfile'
+    tags: '$(Build.BuildId)'
+  displayName: 'Build Docker image'
+
+- script: |
+    docker run --rm millennialai:$(Build.BuildId) python -c "
+    from millennial_ai.original_architecture import MillennialAiConfig
+    config = MillennialAiConfig.for_rtx_5060ti_optimized()
+    print('✅ Docker build successful - config loaded')
+    "
+  displayName: 'Test Docker image'
+
+# Deployment steps (uncomment when ready)
+# - task: AzureCLI@2
+#   inputs:
+#     azureSubscription: 'your-subscription'
+#     scriptType: 'bash'
+#     scriptLocation: 'inlineScript'
+#     inlineScript: |
+#       az containerapp update \
+#         --name millennialai \
+#         --resource-group your-resource-group \
+#         --image your-acr.azurecr.io/millennialai:$(Build.BuildId) \
+#         --set-env-vars MODEL_SIZE=70b
+#   displayName: 'Deploy to Azure Container Apps'

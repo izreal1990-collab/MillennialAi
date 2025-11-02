@@ -1,0 +1,80 @@
+name: CI/CD Pipeline with SonarQube
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test-and-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Shallow clones should be disabled for better analysis
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest-cov
+
+    - name: Run tests with coverage
+      run: |
+        pytest --cov=millennial_ai --cov-report=xml:coverage.xml --cov-report=term-missing
+
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@v2
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+    - name: Build Docker image
+      run: docker build -t millennialai:latest .
+
+    - name: Run Docker container test
+      run: |
+        docker run --rm millennialai:latest python -c "
+        from millennial_ai.original_architecture import MillennialAiConfig
+        config = MillennialAiConfig.for_rtx_5060ti_optimized()
+        print('✅ Docker build successful - config loaded')
+        "
+
+  deploy:
+    needs: test-and-scan
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Login to Azure Container Registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.ACR_LOGIN_SERVER }}
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+
+    - name: Build and push Docker image
+      run: |
+        docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/millennialai:${{ github.sha }} .
+        docker push ${{ secrets.ACR_LOGIN_SERVER }}/millennialai:${{ github.sha }}
+
+    - name: Deploy to Azure Container Apps
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az containerapp update \
+            --name millennialai \
+            --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+            --image ${{ secrets.ACR_LOGIN_SERVER }}/millennialai:${{ github.sha }} \
+            --set-env-vars MODEL_SIZE=70b

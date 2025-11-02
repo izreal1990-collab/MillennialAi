@@ -46,7 +46,7 @@ class RotaryPositionalEmbedding(nn.Module):
         """Update cached cos/sin values if sequence length changed"""
         if seq_len > self._cached_seq_len:
             seq = torch.arange(seq_len, device=device, dtype=dtype)
-            freqs = torch.outer(seq, self.inv_freq)
+            freqs = torch.outer(seq, self.inv_freq.to(device))
             emb = torch.cat((freqs, freqs), dim=-1)
             
             self._cached_cos = emb.cos()
@@ -57,10 +57,16 @@ class RotaryPositionalEmbedding(nn.Module):
         """Apply rotary positional embedding to query and key tensors"""
         self._update_cache(seq_len, q.device, q.dtype)
         
+        if self._cached_cos is None or self._cached_sin is None:
+            raise RuntimeError("Cache not initialized")
+        
+        cached_cos = self._cached_cos
+        cached_sin = self._cached_sin
+        
         def apply_rotary_pos_emb(x: torch.Tensor) -> torch.Tensor:
             # x shape: [batch, seq_len, heads, dim]
             x1, x2 = x[..., ::2], x[..., 1::2]
-            cos, sin = self._cached_cos[:seq_len], self._cached_sin[:seq_len]
+            cos, sin = cached_cos[:seq_len], cached_sin[:seq_len]
             
             # Expand for broadcasting
             cos = cos.unsqueeze(0).unsqueeze(2)  # [1, seq_len, 1, dim//2]
@@ -424,3 +430,54 @@ class HybridTRMBlock(nn.Module):
         if steps < 1:
             raise ValueError("Recursion steps must be at least 1")
         self.num_recursion_steps = steps
+
+
+class TRMBlock(nn.Module):
+    """TRM Block for layer injection - simplified version of HybridTRMBlock"""
+    
+    def __init__(self, config):
+        super().__init__()
+        # Use enhancement_dim and attention_heads from MillennialAiConfig
+        hidden_size = getattr(config, 'enhancement_dim', 512)
+        num_heads = getattr(config, 'attention_heads', 8)
+        
+        self.attention = nn.MultiheadAttention(
+            embed_dim=hidden_size, 
+            num_heads=num_heads,
+            batch_first=True
+        )
+        self.feed_forward = nn.Sequential(
+            nn.Linear(hidden_size, hidden_size * 4),
+            nn.ReLU(),
+            nn.Linear(hidden_size * 4, hidden_size)
+        )
+        self.norm1 = nn.LayerNorm(hidden_size)
+        self.norm2 = nn.LayerNorm(hidden_size)
+    
+    def forward(self, x, mask=None):
+        # Self-attention with residual
+        attn_out, _ = self.attention(x, x, x, attn_mask=mask)
+        x = self.norm1(x + attn_out)
+        
+        # Feed-forward with residual
+        ff_out = self.feed_forward(x)
+        x = self.norm2(x + ff_out)
+        
+        return x
+
+
+class HybridTRM(nn.Module):
+    """Stack of TRM blocks for enhanced reasoning"""
+    
+    def __init__(self, config):
+        super().__init__()
+        # Use cognitive_layers from MillennialAiConfig, default to 4
+        num_layers = getattr(config, 'cognitive_layers', 4)
+        self.layers = nn.ModuleList([
+            TRMBlock(config) for _ in range(num_layers)
+        ])
+    
+    def forward(self, x, mask=None):
+        for layer in self.layers:
+            x = layer(x, mask)
+        return x

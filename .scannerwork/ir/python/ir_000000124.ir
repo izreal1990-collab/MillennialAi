@@ -1,0 +1,57 @@
+
+8/"Move all components to specified device/dtype"strself
+È È(args
+È È(kwargs
+È È( "dict2.millennial_ai.core.hybrid_model.CombinedTRMLLM"«%
+#
+
+Ê Ê("#unaryop *#2*:'
+%
+
+Ê Ê(""#unaryop **#2**: 
+
+
+Ê Ê("super*:)
+'
+
+Ê Ê(#	"?python-unknown?:%
+#
+
+Ë Ë(
+"#unaryop *#2*:'
+%
+
+Ë! Ë()"#unaryop **#2**:,
+*
+
+Ë Ë("#get-field# llm_model:)
+'
+
+Ë Ë(*"?python-unknown?:
+%
+#
+
+Ì Ì("#unaryop *#2*:'
+%
+
+Ì! Ì()"#unaryop **#2**:,
+*
+
+Ì Ì("#get-field# trm_block:)
+'
+
+Ì Ì(*"?python-unknown?:%
+#
+
+Í Í( "#unaryop *#2*:'
+%
+
+Í" Í(*"#unaryop **#2**:-
++
+
+Í Í("#get-field# projection:)
+'
+
+Í Í(+"?python-unknown?:
+
+Î Î(*J/home/jovan-blango/Desktop/MillennialAi/millennial_ai/core/hybrid_model.py

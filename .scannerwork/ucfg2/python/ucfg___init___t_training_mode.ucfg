@@ -1,0 +1,248 @@
+
+9millennial_ai.tests.TestCombinedTRMLLM.test_training_modeS
+G/home/jovan-blango/Desktop/MillennialAi/millennial_ai/tests/__init__.pyÞ Þ("2*¥
+2
+ß ß(*n
+l
+
+á á(
+%1"__id*R
+
+__unknown_file (6*4(
+&millennial_ai.tests.TestCombinedTRMLLM"
+hybrid><
+
+á á(
+%2*"
+
+__unknown_file (
+
+%12evaln
+l
+
+â â($
+%3"__id*R
+
+__unknown_file (6*4(
+&millennial_ai.tests.TestCombinedTRMLLM"
+hybridL
+J
+
+â â(-
+%4"__id*0
+
+__unknown_file (*
+
+%3"
+
+trainingŽ‹
+
+â â(.
+%5*F
+
+__unknown_file (*(
+&millennial_ai.tests.TestCombinedTRMLLM*"
+
+__unknown_file (
+
+%42assertFalsen
+l
+
+ã ã($
+%6"__id*R
+
+__unknown_file (6*4(
+&millennial_ai.tests.TestCombinedTRMLLM"
+hybridM
+K
+
+ã ã(.
+%7"__id*1
+
+__unknown_file (*
+
+%6"
+	llm_modelL
+J
+
+ã ã(7
+%8"__id*0
+
+__unknown_file (*
+
+%7"
+
+trainingŽ‹
+
+ã ã(8
+%9*F
+
+__unknown_file (*(
+&millennial_ai.tests.TestCombinedTRMLLM*"
+
+__unknown_file (
+
+%82assertFalseo
+m
+
+ä ä($
+%10"__id*R
+
+__unknown_file (6*4(
+&millennial_ai.tests.TestCombinedTRMLLM"
+hybridO
+M
+
+ä ä(.
+%11"__id*2
+
+__unknown_file (*
+
+%10"
+	trm_blockN
+L
+
+ä ä(7
+%12"__id*1
+
+__unknown_file (*
+
+%11"
+
+training
+
+ä ä(8
+%13*F
+
+__unknown_file (*(
+&millennial_ai.tests.TestCombinedTRMLLM*#
+
+__unknown_file (
+
+%122assertFalseo
+m
+
+ç ç(
+%14"__id*R
+
+__unknown_file (6*4(
+&millennial_ai.tests.TestCombinedTRMLLM"
+hybridA?
+
+ç ç(
+%15*#
+
+__unknown_file (
+
+%142traino
+m
+
+è è(#
+%16"__id*R
+
+__unknown_file (6*4(
+&millennial_ai.tests.TestCombinedTRMLLM"
+hybridN
+L
+
+è è(,
+%17"__id*1
+
+__unknown_file (*
+
+%16"
+
+trainingŒ
+
+è è(-
+%18*F
+
+__unknown_file (*(
+&millennial_ai.tests.TestCombinedTRMLLM*#
+
+__unknown_file (
+
+%172
+assertTrueo
+m
+
+é é(#
+%19"__id*R
+
+__unknown_file (6*4(
+&millennial_ai.tests.TestCombinedTRMLLM"
+hybridO
+M
+
+é é(-
+%20"__id*2
+
+__unknown_file (*
+
+%19"
+	llm_modelN
+L
+
+é é(6
+%21"__id*1
+
+__unknown_file (*
+
+%20"
+
+trainingŒ
+
+é é(7
+%22*F
+
+__unknown_file (*(
+&millennial_ai.tests.TestCombinedTRMLLM*#
+
+__unknown_file (
+
+%212
+assertTrueo
+m
+
+ê ê(#
+%23"__id*R
+
+__unknown_file (6*4(
+&millennial_ai.tests.TestCombinedTRMLLM"
+hybridO
+M
+
+ê ê(-
+%24"__id*2
+
+__unknown_file (*
+
+%23"
+	trm_blockN
+L
+
+ê ê(6
+%25"__id*1
+
+__unknown_file (*
+
+%24"
+
+trainingŒ
+
+ê ê(7
+%26*F
+
+__unknown_file (*(
+&millennial_ai.tests.TestCombinedTRMLLM*#
+
+__unknown_file (
+
+%252
+assertTrue*
+3*3
+3
+__init__.py"
+ì ì(
+implicit returnB*(
+&millennial_ai.tests.TestCombinedTRMLLMH

@@ -290,12 +290,57 @@ cd MillennialAi
 # Install development dependencies
 pip install -e ".[dev]"
 
-# Install pre-commit hooks
+# Install pre-commit hooks (includes SonarQube scanning)
 pre-commit install
 
 # Run tests
 pytest
 ```
+
+### Code Quality & SonarQube
+
+MillennialAi uses SonarQube for continuous code quality analysis. Scans run automatically on commits, PRs, and CI/CD pipelines.
+
+#### Local SonarQube Setup
+
+1. **Install SonarQube Scanner**:
+   ```bash
+   # Download from: https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner/
+   # Or use the included scanner
+   export PATH="$PATH:$(pwd)/sonar-scanner-4.8.0.2856-linux/bin"
+   ```
+
+2. **Set up SonarCloud Token**:
+   ```bash
+   # Get token from: https://sonarcloud.io/account/security/
+   export SONAR_TOKEN=your_token_here
+   export SONAR_HOST_URL=https://sonarcloud.io
+   ```
+
+3. **Run Local Scan**:
+   ```bash
+   # Quick scan script
+   ./scripts/run_sonar_scan.sh
+   
+   # Or manual scan
+   sonar-scanner
+   ```
+
+#### CI/CD Integration
+
+- **GitHub Actions**: Automatic scans on push/PR via `.github/workflows/ci-cd.yml`
+- **Azure Pipelines**: Use `azure-pipelines.yml` for Azure DevOps integration
+- **Pre-commit**: Local scans on commit via `.pre-commit-config.yaml`
+
+#### Quality Gates
+
+The project enforces these quality standards:
+- **Test Coverage**: >80% target
+- **Code Smells**: <10 per file
+- **Duplications**: <3% of codebase
+- **Security Issues**: 0 critical/blocking issues
+
+View results at: [SonarCloud Dashboard](https://sonarcloud.io/dashboard?id=millennial-ai)
 
 ## 📄 License
 

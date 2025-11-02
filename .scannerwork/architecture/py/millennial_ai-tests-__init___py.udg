@@ -1,0 +1,392 @@
+
+1.0PythonFrontend"1762044806602*py2.Bð
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+$
+millennial_ai/tests/__init__.py9
+
+millennial_ai.tests11
+
+unittest12
+
+torch14
+
+typing16
+
+
+time18
+
+
+json20
+
+os22
+
+tempfile24
+%
+millennial_ai.core.hybrid_model26
+%
+millennial_ai.models.hybrid_trm28
+%
+millennial_ai.models.projection30
+!
+millennial_ai.config.config32
+
+transformers34
+'
+!millennial_ai.tests.run_all_tests36
+&
+ millennial_ai.tests.TestEndToEnd38
+
+unittest.case.TestCase40
+=
+7millennial_ai.tests.TestEndToEnd.test_memory_efficiency42
+P
+Jmillennial_ai.tests.TestEndToEnd.test_full_pipeline_inject_enhance_respond44
+/
+)millennial_ai.tests.TestDimensionalBridge46
+H
+Bmillennial_ai.tests.TestDimensionalBridge.test_adaptive_projection48
+5
+/millennial_ai.tests.TestDimensionalBridge.setUp50
+F
+@millennial_ai.tests.TestDimensionalBridge.test_linear_projection52
+D
+>millennial_ai.tests.TestDimensionalBridge.test_identity_bridge54
+,
+&millennial_ai.tests.TestCombinedTRMLLM56
+F
+@millennial_ai.tests.TestCombinedTRMLLM.test_injection_statistics58
+H
+Bmillennial_ai.tests.TestCombinedTRMLLM.test_forward_with_injection60
+@
+:millennial_ai.tests.TestCombinedTRMLLM.test_initialization62
+F
+@millennial_ai.tests.TestCombinedTRMLLM.test_injection_activation64
+A
+;millennial_ai.tests.TestCombinedTRMLLM.test_device_movement66
+K
+Emillennial_ai.tests.TestCombinedTRMLLM.test_forward_without_injection68
+A
+;millennial_ai.tests.TestCombinedTRMLLM.test_parameter_count70
+2
+,millennial_ai.tests.TestCombinedTRMLLM.setUp72
+?
+9millennial_ai.tests.TestCombinedTRMLLM.test_training_mode74
+?
+9millennial_ai.tests.TestCombinedTRMLLM.test_save_and_load76
+(
+"millennial_ai.tests.run_benchmarks78
+!
+millennial_ai.tests.MockLLM80
+$
+torch.nn.modules.module.Module82
+)
+#millennial_ai.tests.MockLLM.forward84
+
+
+dict86
+*
+$millennial_ai.tests.MockLLM.__init__88
+)
+#millennial_ai.tests.TestIntegration90
+F
+@millennial_ai.tests.TestIntegration.test_huggingface_integration92
+B
+<millennial_ai.tests.TestIntegration.test_end_to_end_training94
+*
+$millennial_ai.tests.TestHybridConfig96
+D
+>millennial_ai.tests.TestHybridConfig.test_config_serialization98
+?
+8millennial_ai.tests.TestHybridConfig.test_default_config100
+?
+8millennial_ai.tests.TestHybridConfig.test_config_presets102
+B
+;millennial_ai.tests.TestHybridConfig.test_config_validation104
+/
+(millennial_ai.tests.PerformanceBenchmark106
+L
+Emillennial_ai.tests.PerformanceBenchmark.benchmark_injection_overhead108
+/
+(millennial_ai.config.config.HybridConfig110
+
+
+int112
+F
+?millennial_ai.tests.PerformanceBenchmark.benchmark_memory_usage114
+-
+&millennial_ai.tests.TestHybridTRMBlock116
+?
+8millennial_ai.tests.TestHybridTRMBlock.test_forward_pass118
+A
+:millennial_ai.tests.TestHybridTRMBlock.test_attention_mask120
+<
+5millennial_ai.tests.TestHybridTRMBlock.test_recursion122
+@
+9millennial_ai.tests.TestHybridTRMBlock.test_gradient_flow124
+3
+,millennial_ai.tests.TestHybridTRMBlock.setUp126J
+
+8
+89j—
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31305
+
+33
+33325
+
+35
+35345
+
+37
+37367 210
+
+39
+39386 210
+
+41
+41406
+
+43
+43427 239
+
+45
+45447 239
+
+47
+47466 210
+
+49
+49487 247
+
+51
+51507 247
+
+53
+53527 247
+
+55
+55547 247
+
+57
+57566 210
+
+59
+59587 257
+
+61
+61607 257
+
+63
+63627 257
+
+65
+65647 257
+
+67
+67667 257
+
+69
+69687 257
+
+71
+71707 257
+
+73
+73727 257
+
+75
+75747 257
+
+77
+77767 257
+
+79
+79787 210
+
+81
+81806 210
+
+83
+83826
+
+85
+85847 281
+
+87
+87866
+
+89
+89887 281
+
+91
+91906 210
+
+93
+93927 291
+
+95
+95947 291
+
+97
+97966 210
+
+99
+99987 297
+
+101
+1011007 297
+
+103
+1031027 297
+
+105
+1051047 297
+
+107
+1071066 210
+
+109
+1091087 2107
+
+111
+1111106
+
+113
+1131126
+
+115
+1151147 2107
+
+117
+1171166 210
+
+119
+1191187 2117
+
+121
+1211207 2117
+
+123
+1231227 2117
+
+125
+1251247 2117
+
+127
+1271267 2117rñ
+
+10131*
+8 (
+
+10151*
+8	 	(
+
+10171*
+8 (#
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 (
+
+
+10251*
+8 (
+
+10271*
+8 (P
+
+10291*
+8 (;
+
+10311*
+8 (Y
+
+10331*
+8 (5
+
+10351*
+8… …(D
+
+39412*
+8³ ³(
+
+47412*
+8‰ ‰(
+
+57412*
+8ö ö(
+
+81832*
+8Ã Ã(
+
+85874*
+8ã	 ã(
+
+91412*
+8ÿ ÿ(
+
+97412*
+8 (
+
+1091114*
+8Í	 Í(%
+
+1091134*
+8Í	 Í(%
+
+1151114*
+8õ	 õ(
+
+117412*
+8B B(

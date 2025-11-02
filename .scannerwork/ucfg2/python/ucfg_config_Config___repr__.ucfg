@@ -1,0 +1,89 @@
+
+1millennial_ai.config.config.HybridConfig.__repr__R
+F/home/jovan-blango/Desktop/MillennialAi/millennial_ai/config/config.py ("2*ó
+2
+Ò Ò(8z
+x
+
+Û$ Û(9
+%1"__id*^
+
+__unknown_file (B*@*
+(millennial_ai.config.config.HybridConfig"
+injection_layersy
+w
+
+Ù# Ù(7
+%2"__id*]
+
+__unknown_file (A*?*
+(millennial_ai.config.config.HybridConfig"
+trm_hidden_sizew
+u
+
+ı! ı(3
+%3"__id*[
+
+__unknown_file (?*=*
+(millennial_ai.config.config.HybridConfig"
+trm_num_heads|
+z
+
+ˆ& ˆ(=
+%4"__id*`
+
+__unknown_file (D*B*
+(millennial_ai.config.config.HybridConfig"
+adaptive_injectionÅ
+˛
+
+Ú ˆ(@
+%5"__concat*
+
+Ú Ú(
+HybridConfig(*#
+
+Û Û(#
+injection_layers=*
+
+Û$ Û(9
+
+%1*
+
+Û: Û(<
+, *"
+
+Ù Ù("
+trm_hidden_size=*
+
+Ù# Ù(7
+
+%2*
+
+Ù8 Ù(:
+, * 
+
+ı ı( 
+trm_num_heads=*
+
+ı! ı(3
+
+%3*
+
+ı4 ı(6
+, *%
+
+ˆ ˆ(%
+adaptive_injection=*
+
+ˆ& ˆ(=
+
+%4*
+
+ˆ> ˆ(?
+)"
+
+Ú ˆ(A
+
+%5B,*
+(millennial_ai.config.config.HybridConfigH

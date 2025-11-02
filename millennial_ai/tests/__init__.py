@@ -560,6 +560,65 @@ def run_all_tests():
     return result
 
 
+class TestEndToEnd(unittest.TestCase):
+    """End-to-end tests for the full pipeline"""
+    
+    def test_full_pipeline_inject_enhance_respond(self):
+        """Test complete pipeline: inject → enhance → respond"""
+        # Create mock LLM
+        llm = MockLLM(hidden_size=512, num_layers=8)
+        
+        # Create config with injection points
+        config = HybridConfig(injection_layers=[2, 5])
+        
+        # Create hybrid model
+        model = create_hybrid_model(llm, config)
+        
+        # Test input
+        batch_size, seq_len = 2, 16
+        input_ids = torch.randint(0, 1000, (batch_size, seq_len))
+        
+        # Enable injection
+        model.activate_injection()
+        
+        # Run forward pass (inject → enhance → respond)
+        with torch.no_grad():
+            output = model(input_ids)
+        
+        # Verify output shape
+        self.assertEqual(output.shape, (batch_size, seq_len, llm.hidden_size))
+        
+        # Check that injection actually happened
+        performance = model.get_reasoning_performance()
+        self.assertGreater(performance['injection_statistics']['total_injections'], 0)
+        
+        # Verify enhancement layers were used
+        self.assertTrue(any(layer.injection_active for layer in model.injection_layers.values()))
+    
+    def test_memory_efficiency(self):
+        """Test memory usage with different configurations"""
+        llm = MockLLM(hidden_size=768, num_layers=12)
+        
+        # Test with different injection strategies
+        configs = [
+            HybridConfig(injection_layers=[3, 6, 9]),  # 3 injections
+            HybridConfig(injection_layers=[2, 5]),     # 2 injections
+            HybridConfig(injection_layers=[4]),        # 1 injection
+        ]
+        
+        for config in configs:
+            model = create_hybrid_model(llm, config)
+            model.activate_injection()
+            
+            # Test inference
+            input_ids = torch.randint(0, 1000, (1, 32))
+            with torch.no_grad():
+                output = model(input_ids)
+            
+            # Should complete without memory errors
+            self.assertIsNotNone(output)
+
+
 def run_benchmarks():
     """Run performance benchmarks"""
     print("Running performance benchmarks...")
