@@ -1,432 +1,0 @@
-
-1.0PythonFrontend"1762044806392*py2.B™
-
-imports1
-
-extends2
-
-returns3
-
-	has param4
-
-module5
-
-
-class6
-
-function7
-'
-"millennial_ai/models/hybrid_trm.py9
-%
-millennial_ai.models.hybrid_trm11
-
-torch12
-
-typing14
-
-
-math16
-8
-2millennial_ai.models.hybrid_trm.RecursiveProcessor18
-$
-torch.nn.modules.module.Module20
-A
-;millennial_ai.models.hybrid_trm.RecursiveProcessor.__init__22
-	
-int24
-
-float26
-@
-:millennial_ai.models.hybrid_trm.RecursiveProcessor.forward28
-
-torch.Tensor30
-?
-9millennial_ai.models.hybrid_trm.RotaryPositionalEmbedding32
-M
-Gmillennial_ai.models.hybrid_trm.RotaryPositionalEmbedding._update_cache34
-
-torch.device36
-
-torch.dtype38
-H
-Bmillennial_ai.models.hybrid_trm.RotaryPositionalEmbedding.__init__40
-G
-Amillennial_ai.models.hybrid_trm.RotaryPositionalEmbedding.forward42
-
-tuple44
-4
-.millennial_ai.models.hybrid_trm.HybridTRMBlock46
-H
-Bmillennial_ai.models.hybrid_trm.HybridTRMBlock.get_parameter_count48
-
-
-dict50
-H
-Bmillennial_ai.models.hybrid_trm.HybridTRMBlock.set_recursion_steps52
-<
-6millennial_ai.models.hybrid_trm.HybridTRMBlock.forward54
-B
-<millennial_ai.models.hybrid_trm.HybridTRMBlock._init_weights56
-=
-7millennial_ai.models.hybrid_trm.HybridTRMBlock.__init__58
-.
-(millennial_ai.models.hybrid_trm.TRMBlock60
-6
-0millennial_ai.models.hybrid_trm.TRMBlock.forward62
-7
-1millennial_ai.models.hybrid_trm.TRMBlock.__init__64
-<
-6millennial_ai.models.hybrid_trm.TinyMultiHeadAttention66
-D
->millennial_ai.models.hybrid_trm.TinyMultiHeadAttention.forward68
-E
-?millennial_ai.models.hybrid_trm.TinyMultiHeadAttention.__init__70
-5
-/millennial_ai.models.hybrid_trm.TinyFeedForward72
->
-8millennial_ai.models.hybrid_trm.TinyFeedForward.__init__74
-=
-7millennial_ai.models.hybrid_trm.TinyFeedForward.forward76
-5
-/millennial_ai.models.hybrid_trm.TinyTransformer78
-=
-7millennial_ai.models.hybrid_trm.TinyTransformer.forward80
->
-8millennial_ai.models.hybrid_trm.TinyTransformer.__init__82
-:
-4millennial_ai.models.hybrid_trm.TinyTransformerLayer84
-B
-<millennial_ai.models.hybrid_trm.TinyTransformerLayer.forward86
-C
-=millennial_ai.models.hybrid_trm.TinyTransformerLayer.__init__88
-/
-)millennial_ai.models.hybrid_trm.HybridTRM90
-7
-1millennial_ai.models.hybrid_trm.HybridTRM.forward92
-8
-2millennial_ai.models.hybrid_trm.HybridTRM.__init__94J
-
-8
-89jú
- 
-10
-10115 *
-8 (
-
-13
-13125
-
-15
-15145
-
-17
-17165
-
-19
-19186 210
-
-21
-21206
-
-23
-23227 219
-
-25
-25246
-
-27
-27266
-
-29
-29287 219
-
-31
-31306
-
-33
-33326 210
-
-35
-35347 233
-
-37
-37366
-
-39
-39386
-
-41
-41407 233
-
-43
-43427 233
-
-45
-45446
-
-47
-47466 210
-
-49
-49487 247
-
-51
-51506
-
-53
-53527 247
-
-55
-55547 247
-
-57
-57567 247
-
-59
-59587 247
-
-61
-61606 210
-
-63
-63627 261
-
-65
-65647 261
-
-67
-67666 210
-
-69
-69687 267
-
-71
-71707 267
-
-73
-73726 210
-
-75
-75747 273
-
-77
-77767 273
-
-79
-79786 210
-
-81
-81807 279
-
-83
-83827 279
-
-85
-85846 210
-
-87
-87867 285
-
-89
-89887 285
-
-91
-91906 210
-
-93
-93927 291
-
-95
-95947 291rØ
-
-10131*
-8 (
-
-10151*
-8 (#
-
-10171*
-8 (
-
-19212*
-8Ù Ù(
-
-23254*
-8á	 á(
-
-23254*
-8á	 á(
-
-23274*
-8á	 á(
-
-29313*
-8ì	 ì(
-
-29314*
-8ì	 ì(
-
-29254*
-8ì	 ì(
-
-33212*
-8 ( 
-
-35254*
-8-	 -(
-
-35374*
-8-	 -(
-
-35394*
-8-	 -(
-
-41254*
-8	 (
-
-41254*
-8	 (
-
-41274*
-8	 (
-
-43453*
-88	 8(
-
-43314*
-88	 8(
-
-43314*
-88	 8(
-
-43254*
-88	 8(
-
-47212*
-8® ®(
-
-49513*
-8 	  (
-
-53254*
-8¬	 ¬(
-
-55313*
-8	 (
-
-55314*
-8	 (
-
-59254*
-8Ò	 Ò(
-
-59254*
-8Ò	 Ò(
-
-59254*
-8Ò	 Ò(
-
-59254*
-8Ò	 Ò(
-
-59254*
-8Ò	 Ò(
-
-59274*
-8Ò	 Ò(
-
-59274*
-8Ò	 Ò(
-
-61212*
-8³ ³(
-
-67212*
-8P P(
-
-69313*
-8k	 k(
-
-69314*
-8k	 k(
-
-71254*
-8W	 W(
-
-71254*
-8W	 W(
-
-71274*
-8W	 W(
-
-73212*
-8 (
-
-75254*
-8¤	 ¤(
-
-75254*
-8¤	 ¤(
-
-75274*
-8¤	 ¤(
-
-77313*
-8°	 °(
-
-77314*
-8°	 °(
-
-79212*
-8ˆ ˆ(
-
-81313*
-8¤	 ¤(
-
-81314*
-8¤	 ¤(
-
-83254*
-8	 (
-
-83254*
-8	 (
-
-83254*
-8	 (
-
-83254*
-8	 (
-
-83274*
-8	 (
-
-83274*
-8	 (
-
-85212*
-8µ µ(
-
-87313*
-8È	 È(
-
-87314*
-8È	 È(
-
-89254*
-8½	 ½(
-
-89254*
-8½	 ½(
-
-89254*
-8½	 ½(
-
-89274*
-8½	 ½(
-
-89274*
-8½	 ½(
-
-91212*
-8Õ Õ(

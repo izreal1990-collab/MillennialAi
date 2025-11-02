@@ -1,6 +1,0 @@
-
-¼²"HybridConfig(injection_layers={self.injection_layers}, trm_hidden_size={self.trm_hidden_size}, trm_num_heads={self.trm_num_heads}, adaptive_injection={self.adaptive_injection})"str
-5,"String representation of the configuration"strself
-ð ð("
-
-ò ö(A*F/home/jovan-blango/Desktop/MillennialAi/millennial_ai/config/config.py

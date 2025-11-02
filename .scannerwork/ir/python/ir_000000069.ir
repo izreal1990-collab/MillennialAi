@@ -1,40 +1,0 @@
-
-"total"str
-
-2int
-("Get parameter count breakdown"str
-"layer_norm"str
-
-1int
-"scaling_factor"strself
-Ó Ó( "þ&
-$
-
-Õ Ù(	"#new-object#Bdict.
-,
-
-Ö Ö(%"#get-field# hidden_size:'
-%
-
-Ö Ö()"	#binop *#*2*:$
-"
-
-Ö Ö(-	"	#binop +#2+:"
- 
-
-Ö Ö(-
-"	#map-set#:	.
-,
-
-× ×(*"#get-field# hidden_size:'
-%
-
-× ×(."	#binop *#*2*:"
- 
-
-× ×(."	#map-set#:"
- 
-
-Ø Ø("	#map-set#:
-
-Õ Ù(	*J/home/jovan-blango/Desktop/MillennialAi/millennial_ai/models/projection.py

@@ -1,82 +1,0 @@
-
-
-3int
-
-0int
-
-8int
-
-2int
-16int
-1536int
-=4"Configuration optimized for RTX 5060Ti (16GB VRAM)"strcls
-ª! ª($list"ø)
-'
-
-¬ ¬()"#unknown-value#Btypei
-g
-
-¬ ¬()config"L
-6millennial_ai.original_architecture.MillennialAiConfigfor_enterprise_70b:4
-2
-
-¯ ¯($"#get-field# base_model_layers:)
-'
-
-¯ ¯()"
-#binop //#*2//:4
-2
-
-° °((	"#get-field# base_model_layers:'
-%
-
-° °((
-"	#binop *#*2*:	)
-'
-
-° °(-"
-#binop //#*2//:
-4
-2
-
-± ±($"#get-field# base_model_layers:'
-%
-
-± ±(("	#binop -#*2-:)
-'
-
-®" ²(	"#unknown-value#Blist(
-&
-
-®" ²(	"
-#is-exact#:Bbool
-
-
-®" ²(	"
-#assume#::
-8
-
-®" ²(	"#set-field# __collection_size:Bint(
-&
-
-®" ²(	"#array-add-last#:(
-&
-
-®" ²(	"#array-add-last#:(
-&
-
-®" ²(	"#array-add-last#:4
-2
-
-® ®("#set-field# injection_points:3
-1
-
-´ ´("#set-field# enhancement_dim:4
-2
-
-µ µ("#set-field# reasoning_stages:3
-1
-
-¶ ¶("#set-field# attention_heads:
-
-· ·(*N/home/jovan-blango/Desktop/MillennialAi/millennial_ai/original_architecture.py

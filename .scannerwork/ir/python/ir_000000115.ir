@@ -1,26 +1,0 @@
-
-ìâ"
-        Create the injection hook function for a specific layer
-        
-        This is the core of the layer injection mechanism. The hook
-        intercepts the output of an LLM layer and injects TRM processing.
-        "strself
-¸ ¸( 	layer_idx
-¸" ¸(0"ë#
-!
-
-ç ç("#unknown-value#*
-(
-
-¿ ç(%closure"#new-object#(
-&
-
-¿ ç("#set-field# self:-
-+
-
-¿ ç("#set-field# layer_idx:-
-+
-
-¿ ç("?python-partial-apply?:
-
-ç ç(*J/home/jovan-blango/Desktop/MillennialAi/millennial_ai/core/hybrid_model.py

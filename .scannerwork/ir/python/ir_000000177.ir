@@ -1,147 +1,0 @@
-
-21int
-8"{total_size}B"str
-5"{trm_addition_size}B"str
-
-7int
-="required_gpus"str
--0.1float
-?"training_days"str
-4"trm_addition_size"str
-16int
-L"division by zero"bool
-30int
-
-2int
-32int
-(G"cost_per_billion_total_params"str
-E"total_cost"str
-
-8int
-
-4int
-14int
-#3.0float
-
-I0int
-!28int
-C"compute_cost"str
-+0.2float
-;"{training_params}B"str
-&24int
-2"{base_model_size}B"str
-15int
-A"total_gpu_hours"str
-7"total_hybrid_size"str
-:"parameters_to_train"str
-J"S3518"bool
-1"base_model_size"str
-
-
-5int
-
-1int
-A8"Calculate cost for MillennialAi TRM injection approach"str
-K"a"boolbase_model_size+! +(0trm_addition_size+2 +(C"°.
-,
-. .(4
-total_size"	#binop +#2+:*
-(
-1 1('training_params"#id#:*
-(
-4 4("
-#binop <=#2<=:Bbool&"$
-4 4( *4 4(26 6("7-
-+
-5 5(	required_gpus"#id#:Bint	"V*
-(
-6	 6("
-#binop <=#2<=:
-Bbool&"$
-6	 6( *6 6(28 8("7-
-+
-7 7(required_gpus"#id#:Bint	"V*
-(
-8	 8("
-#binop <=#2<=:Bbool&"$
-8	 8( *8 8(2: :("7-
-+
-9 9(required_gpus"#id#:Bint	"V*
-(
-:	 :("
-#binop <=#2<=:Bbool&"$
-:	 :( *: :(2< <("7-
-+
-; ;(required_gpus"#id#:Bint	"7-
-+
-= =(required_gpus"#id#:Bint	"‰	1*/%required_gpus	*
-(
-@ @("
-#binop <=#2<=:
-Bbool&"$
-@ @(
- *@ @(2B B("7
--
-+
-A A(training_days"#id#:Bint"V*
-(
-B	 B("
-#binop <=#2<=:Bbool&"$
-B	 B( *B B(2D D("7-
-+
-C C(training_days"#id#:Bint"V*
-(
-D	 D("
-#binop <=#2<=:Bbool&"$
-D	 D( *D D(2F F("7-
-+
-E E( training_days"#id#:Bint"7-
-+
-G G("training_days"#id#:!Bint"ã+*)(training_days
- "3
-1
-J J($gpu_cost_per_hour"#id#:#Bfloat%
-#
-K K(('"	#binop *#*2*:%&6
-4
-K K(8)total_gpu_hours"	#binop *#*2*:'(?
-=
-L L(6*compute_cost"#dependent-value#*:)$BfloatJ
-H
-O O(0,data_and_infrastructure"#dependent-value#*:*+BfloatI
-G
-P P(/.personnel_and_overhead"#dependent-value#*:*-Bfloat;
-9
-R R(P/
-total_cost"#dependent-value#:*,.Bfloat$
-"
-T _(0"#new-object#Bdict 
-
-U U(03"	#map-set#:012 
-
-V V(46"	#map-set#:045 
-
-W W(-9"	#map-set#:078 
-
-X X(4<"	#map-set#:0:; 
-
-Y Y(&>"	#map-set#:0=% 
-
-Z Z(&@"	#map-set#:0?( 
-
-[ [(*B"	#map-set#:0A) 
-
-\ \($D"	#map-set#:0C* 
-
-] ]( F"	#map-set#:0E/*
-(
-^) ^(@H"
-#binop !=#2!=:IBbool 
-
-^) ^(@M"
-#assert#:HJKL1
-/
-^) ^(@N"#dependent-value#*:/Bfloat 
-
-^ ^(@O"	#map-set#:0GN
-T _(0*C/home/jovan-blango/Desktop/MillennialAi/examples/cost_calculator.py

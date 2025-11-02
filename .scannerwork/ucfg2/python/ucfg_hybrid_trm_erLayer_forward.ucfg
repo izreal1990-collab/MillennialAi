@@ -1,154 +1,0 @@
-
-<millennial_ai.models.hybrid_trm.TinyTransformerLayer.forwardV
-J/home/jovan-blango/Desktop/MillennialAi/millennial_ai/models/hybrid_trm.pyÈ È("1*ø
-
-2
-É Ë(ª§
-
-Í Í(8
-%3*T
-
-__unknown_file (86
-4millennial_ai.models.hybrid_trm.TinyTransformerLayer*-
-
-__unknown_file (
-
-hidden_states2attention_normG
-E
-
-Í Í(8
-norm_hidden"__id*"
-
-__unknown_file (
-
-%3ÓÐ
-
-Î Î(A
-%4*T
-
-__unknown_file (86
-4millennial_ai.models.hybrid_trm.TinyTransformerLayer*+
-
-__unknown_file (
-
-norm_hidden*.
-
-__unknown_file (
-
-attention_mask2	attentionG
-E
-
-Î Î(A
-attn_output"__id*"
-
-__unknown_file (
-
-%4^
-\
-
-Ï Ï(3
-%5"__concat*
-
-Ï Ï(%
-
-hidden_states*
-
-Ï( Ï(3
-
-attn_outputI
-G
-
-Ï Ï(3
-hidden_states"__id*"
-
-__unknown_file (
-
-%5£ 
-
-Ò Ò(1
-%6*T
-
-__unknown_file (86
-4millennial_ai.models.hybrid_trm.TinyTransformerLayer*-
-
-__unknown_file (
-
-hidden_states2ff_normG
-E
-
-Ò Ò(1
-norm_hidden"__id*"
-
-__unknown_file (
-
-%6¦£
-
-Ó Ó(2
-%7*T
-
-__unknown_file (86
-4millennial_ai.models.hybrid_trm.TinyTransformerLayer*+
-
-__unknown_file (
-
-norm_hidden2feed_forwardE
-C
-
-Ó Ó(2
-	ff_output"__id*"
-
-__unknown_file (
-
-%7\
-Z
-
-Ô Ô(1
-%8"__concat*
-
-Ô Ô(%
-
-hidden_states*
-
-Ô( Ô(1
-
-	ff_outputI
-G
-
-Ô Ô(1
-hidden_states"__id*"
-
-__unknown_file (
-
-%8"
-
-Ö Ö(
-
-hidden_states*²
-1
-È3 È(`M
-K
-
-ÈL È(X
-%1"__id*1
-
-__unknown_file (*
-
-torch"
-TensorM
-K
-
-È% È(1
-%2"__id*1
-
-__unknown_file (*
-
-torch"
-Tensor*
-2:
-
-È È(1
-hidden_states:
-
-È3 È(`
-attention_maskB86
-4millennial_ai.models.hybrid_trm.TinyTransformerLayerH

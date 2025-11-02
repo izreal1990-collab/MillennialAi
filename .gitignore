@@ -174,5 +174,8 @@ datasets/
 *.h5
 *.hdf5
 
+# SonarQube scanner work directory
+.scannerwork/
+
 # GPU cache
 .nv/

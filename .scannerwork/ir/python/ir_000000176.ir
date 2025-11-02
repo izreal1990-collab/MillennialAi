@@ -1,85 +1,0 @@
-
-1.5float
-!"training_days"str
-"model_size"str
-64int
-"required_gpus"str
-")"cost_per_billion_params"str
-3.0float
-	30int
-
-7int
-24int
-!"{model_size_billions}B"str
-,"S3518"bool
-0.2float
-#"total_gpu_hours"str
-."division by zero"bool
-7."Calculate cost to train a model from scratch"str
-0.3float
-'"total_cost"str
--"a"bool
-
-+0int
-%"compute_cost"str!model_size_billions( (;"À
-0
-.
- (base_gpus_for_7b"#id#:Bint>
-<
- (0gpu_scaling_factor"#dependent-value#*:%
-#
- (="	#binop *#*2*:=
-;
- (>required_gpus"#dependent-value#*:Bint2
-0
- (
-base_training_days"#id#:	Bint*
-(
- (2"#dependent-value#*:F
-D
- (:time_scaling_factor"#dependent-value#*:Bfloat1
-/
- (@"#dependent-value#*:
-Bfloat=
-;
- (Atraining_days"#dependent-value#*:Bint3
-1
- (gpu_cost_per_hour"#id#:Bfloat%
-#
- (("	#binop *#*2*:6
-4
- (8total_gpu_hours"	#binop *#*2*:?
-=
- (6compute_cost"#dependent-value#*:BfloatJ
-H
- (0data_and_infrastructure"#dependent-value#*:BfloatI
-G
- (/personnel_and_overhead"#dependent-value#*:Bfloat;
-9
- (P
-total_cost"#dependent-value#:Bfloat$
-"
-  (("#new-object#Bdict 
-
-! !(/"	#map-set#: 
-
-" "(& "	#map-set#: 
-
-# #(&""	#map-set#:! 
-
-$ $(*$"	#map-set#:# 
-
-% %($&"	#map-set#:% 
-
-& &( ("	#map-set#:'*
-(
-'# '(C*"
-#binop !=#2!=:+Bbool 
-
-'# '(C/"
-#assert#:*,-.1
-/
-'# '(C0"#dependent-value#*:Bfloat 
-
-' '(C1"	#map-set#:)0
-  ((*C/home/jovan-blango/Desktop/MillennialAi/examples/cost_calculator.py

@@ -1,351 +1,0 @@
-
-1.0PythonFrontend"1762044806378*py2.B
-
-imports1
-
-extends2
-
-returns3
-
-	has param4
-
-module5
-
-
-class6
-
-function7
-'
-"millennial_ai/core/hybrid_model.py9
-%
-millennial_ai.core.hybrid_model11
-
-torch12
-
-typing14
-
-warnings16
-
-logging18
-%
-millennial_ai.models.hybrid_trm20
-%
-millennial_ai.models.projection22
-!
-millennial_ai.config.config24
-
-os26
-
-
-json28
-
-transformers30
-9
-3millennial_ai.core.hybrid_model.create_hybrid_model32
-4
-.millennial_ai.core.hybrid_model.CombinedTRMLLM34
-$
-torch.nn.modules.module.Module36
-
-
-dict38
-R
-Lmillennial_ai.core.hybrid_model.CombinedTRMLLM._get_injection_target_modules40
-9
-3millennial_ai.core.hybrid_model.CombinedTRMLLM.cuda42
-H
-Bmillennial_ai.core.hybrid_model.CombinedTRMLLM._trm_injection_hook44
-	
-int46
-?
-9millennial_ai.core.hybrid_model.CombinedTRMLLM.parameters48
-
-
-bool50
-7
-1millennial_ai.core.hybrid_model.CombinedTRMLLM.to52
-
-tuple54
-L
-Fmillennial_ai.core.hybrid_model.CombinedTRMLLM._detect_llm_hidden_size56
-@
-:millennial_ai.core.hybrid_model.CombinedTRMLLM.__getattr__58
-D
->millennial_ai.core.hybrid_model.CombinedTRMLLM.from_pretrained60
-	
-str62
-=
-7millennial_ai.core.hybrid_model.CombinedTRMLLM.__init__64
-.
-(millennial_ai.config.config.HybridConfig66
-9
-3millennial_ai.core.hybrid_model.CombinedTRMLLM.eval68
-:
-4millennial_ai.core.hybrid_model.CombinedTRMLLM.train70
-D
->millennial_ai.core.hybrid_model.CombinedTRMLLM.save_pretrained72
-O
-Imillennial_ai.core.hybrid_model.CombinedTRMLLM._validate_injection_layers74
-O
-Imillennial_ai.core.hybrid_model.CombinedTRMLLM.reset_injection_statistics76
-<
-6millennial_ai.core.hybrid_model.CombinedTRMLLM.forward78
-=
-7millennial_ai.core.hybrid_model.CombinedTRMLLM.__call__80
-H
-Bmillennial_ai.core.hybrid_model.CombinedTRMLLM.get_parameter_count82
-8
-2millennial_ai.core.hybrid_model.CombinedTRMLLM.cpu84
-G
-Amillennial_ai.core.hybrid_model.CombinedTRMLLM.activate_injection86
-E
-?millennial_ai.core.hybrid_model.CombinedTRMLLM.toggle_injection88
-E
-?millennial_ai.core.hybrid_model.CombinedTRMLLM.named_parameters90
-M
-Gmillennial_ai.core.hybrid_model.CombinedTRMLLM.get_injection_statistics92
-I
-Cmillennial_ai.core.hybrid_model.CombinedTRMLLM.deactivate_injection94
-=
-7millennial_ai.core.hybrid_model.CombinedTRMLLM.__repr__96J
-
-8
-89jï
- 
-10
-10115 *
-8 (
-
-13
-13125
-
-15
-15145
-
-17
-17165
-
-19
-19185
-
-21
-21205
-
-23
-23225
-
-25
-25245
-
-27
-27265
-
-29
-29285
-
-31
-31305
-
-33
-33327 210
-
-35
-35346 210
-
-37
-37366
-
-39
-39386
-
-41
-41407 235
-
-43
-43427 235
-
-45
-45447 235
-
-47
-47466
-
-49
-49487 235
-
-51
-51506
-
-53
-53527 235
-
-55
-55546
-
-57
-57567 235
-
-59
-59587 235
-
-61
-61607 235
-
-63
-63626
-
-65
-65647 235
-
-67
-67666
-
-69
-69687 235
-
-71
-71707 235
-
-73
-73727 235
-
-75
-75747 235
-
-77
-77767 235
-
-79
-79787 235
-
-81
-81807 235
-
-83
-83827 235
-
-85
-85847 235
-
-87
-87867 235
-
-89
-89887 235
-
-91
-91907 235
-
-93
-93927 235
-
-95
-95947 235
-
-97
-97967 235r¾
-
-10131*
-8 (
-
-10151*
-8 (>
-
-10171*
-8 (
-
-10191*
-8 (
-
-10211*
-8 (/
-
-10231*
-8 (M
-
-10251*
-8 ()
-
-10271*
-8ì ì(
-
-10291*
-8í í(
-
-10271*
-8Š Š(
-
-10291*
-8‹ ‹(
-
-10311*
-8™ ™(7
-
-33353*
-8½ ½(
-
-33374*
-8½ ½(
-
-33394*
-8½ ½(
-
-35372*
-8 (
-
-41393*
-8š	 š(&
-
-45474*
-8¸	 ¸(
-
-49514*
-8ª	 ª(
-
-53554*
-8È	 È(
-
-53394*
-8È	 È(
-
-57473*
-8l	 l( 
-
-61634*
-8ˆ	 ˆ(
-
-65374*
-8A	 A(
-
-65674*
-8A	 A(
-
-71514*
-8¼	 ¼(
-
-73634*
-8ê	 ê(
-
-79554*
-8›	 ›(
-
-79394*
-8›	 ›(
-
-81554*
-8¦	 ¦(
-
-81394*
-8¦	 ¦(
-
-83393*
-8Ø	 Ø(
-
-91634*
-8³	 ³(
-
-91514*
-8³	 ³(
-
-93393*
-8ˆ	 ˆ(!

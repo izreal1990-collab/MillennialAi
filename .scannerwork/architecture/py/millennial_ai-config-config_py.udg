@@ -1,221 +1,0 @@
-
-1.0PythonFrontend"1762044806432*py2.Bâ
-
-imports1
-
-extends2
-
-returns3
-
-	has param4
-
-module5
-
-
-class6
-
-function7
-#
-millennial_ai/config/config.py9
-!
-millennial_ai.config.config11
-
-dataclasses12
-
-typing14
-
-warnings16
-/
-)millennial_ai.config.config.PresetConfigs18
-E
-?millennial_ai.config.config.PresetConfigs.research_experimental20
-.
-(millennial_ai.config.config.HybridConfig22
-7
-1millennial_ai.config.config.PresetConfigs.minimal24
-E
-?millennial_ai.config.config.PresetConfigs.multimodal_foundation26
-I
-Cmillennial_ai.config.config.PresetConfigs.llama_3_70b_revolutionary28
-9
-3millennial_ai.config.config.PresetConfigs.bert_base30
-D
->millennial_ai.config.config.PresetConfigs.production_optimized32
-F
-@millennial_ai.config.config.PresetConfigs.llama_2_70b_enterprise34
-A
-;millennial_ai.config.config.PresetConfigs.gpt_4_scale_ultra36
-:
-4millennial_ai.config.config.PresetConfigs.gpt2_small38
-D
->millennial_ai.config.config.HybridConfig.set_custom_trm_config40
-	
-int42
-
-
-dict44
-8
-2millennial_ai.config.config.HybridConfig.from_dict46
-G
-Amillennial_ai.config.config.HybridConfig.get_trm_config_for_layer48
-3
--millennial_ai.config.config.HybridConfig.copy50
-:
-4millennial_ai.config.config.HybridConfig.from_preset52
-	
-str54
-?
-9millennial_ai.config.config.HybridConfig._validate_config56
-7
-1millennial_ai.config.config.HybridConfig.__repr__58
-<
-6millennial_ai.config.config.HybridConfig.__post_init__60
-6
-0millennial_ai.config.config.HybridConfig.to_dict62J
-
-8
-89jˆ
- 
-10
-10115 *
-8 (
-
-13
-13125
-
-15
-15145
-
-17
-17165
-
-19
-19186 210
-
-21
-21207 219
-
-23
-23226 210
-
-25
-25247 219
-
-27
-27267 219
-
-29
-29287 219
-
-31
-31307 219
-
-33
-33327 219
-
-35
-35347 219
-
-37
-37367 219
-
-39
-39387 219
-
-41
-41407 223
-
-43
-43426
-
-45
-45446
-
-47
-47467 223
-
-49
-49487 223
-
-51
-51507 223
-
-53
-53527 223
-
-55
-55546
-
-57
-57567 223
-
-59
-59587 223
-
-61
-61607 223
-
-63
-63627 223rª
-
-10131*
-8	 	()
-
-10151*
-8
- 
-(4
-
-10171*
-8 (
-
-21233*
-8ñ	 ñ(
-
-25233*
-8¨	 ¨(
-
-27233*
-8Õ	 Õ(
-
-29233*
-8›	 ›("
-
-31233*
-8º	 º(
-
-33233*
-8‹	 ‹(
-
-35233*
-8þ	 þ(
-
-37233*
-8¸	 ¸(
-
-39233*
-8µ	 µ(
-
-41434*
-8Ã	 Ã(
-
-41454*
-8Ã	 Ã(
-
-47454*
-8è	 è(
-
-49453*
-8	 (!
-
-49434*
-8	 (!
-
-53554*
-8§	 §(
-
-59553*
-8ð	 ð(
-
-63453*
-8Ð	 Ð(

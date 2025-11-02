@@ -1,75 +1,0 @@
-
-?6"Estimate training costs for MillennialAi enhancement"str
-"vs_full_training"str
-3.0float
-12int
-
-10int
-"estimated_cost_usd"str
-"parameters_trained"str
-;2"{(70 * 10**9 / enhancement_params):.1f}x cheaper"str
-"S3518"bool
-"division by zero"bool
-"gpu_hours"str
-"a"bool
-
-0intconfig
-© ©(5num_samples
-©7 ©(O"—3
-1
-
-­ ­(0"#get-field# cognitive_layers:2
-0
-
-­3 ­(I"#get-field# enhancement_dim:'
-%
-
-­ ­(I"	#binop *#*2*:.
-,
-
-­L ­(^"#get-field# hidden_size:;
-9
-
-­ ­(^enhancement_params"	#binop *#*2*:'
-%
-
-° °(1	"	#binop *#*2*:)
-'
-
-°6 °(<"
-#binop **#*2**:
-,
-*
-
-° °(="
-#binop !=#2!=:Bbool"
- 
-
-° °(="
-#assert#:>
-<
-
-° °(=	gpu_hours"#dependent-value#*:	Bfloat1
-/
-
-³ ³(cost_per_hour"#id#:Bfloat&
-$
-
-µ º("#new-object#Bdict"
- 
-
-¶ ¶(0"	#map-set#:"
- 
-
-· ·("	#map-set#:3
-1
-
-¸ ¸(7"#dependent-value#*:Bfloat"
- 
-
-¸ ¸(7"	#map-set#:"
- 
-
-¹ ¹(O "	#map-set#:
-
-µ º(*N/home/jovan-blango/Desktop/MillennialAi/millennial_ai/original_architecture.py

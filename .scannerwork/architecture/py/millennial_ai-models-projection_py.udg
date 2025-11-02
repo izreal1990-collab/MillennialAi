@@ -1,339 +1,0 @@
-
-1.0PythonFrontend"1762044806126*py2.B†
-
-imports1
-
-extends2
-
-returns3
-
-	has param4
-
-module5
-
-
-class6
-
-function7
-'
-"millennial_ai/models/projection.py9
-%
-millennial_ai.models.projection11
-
-torch12
-
-typing14
-
-
-math16
-5
-/millennial_ai.models.projection.ProjectionLayer18
-$
-torch.nn.modules.module.Module20
-=
-7millennial_ai.models.projection.ProjectionLayer.forward22
-
-torch.Tensor24
->
-8millennial_ai.models.projection.ProjectionLayer.__init__26
-	
-int28
-
-
-bool30
-
-float32
-C
-=millennial_ai.models.projection.ProjectionLayer._init_weights34
-4
-.millennial_ai.models.projection.IdentityBridge36
-<
-6millennial_ai.models.projection.IdentityBridge.forward38
-	
-str40
-C
-=millennial_ai.models.projection.IdentityBridge.project_to_llm42
-H
-Bmillennial_ai.models.projection.IdentityBridge.get_parameter_count44
-
-
-dict46
-=
-7millennial_ai.models.projection.IdentityBridge.__init__48
-C
-=millennial_ai.models.projection.IdentityBridge.project_to_trm50
-7
-1millennial_ai.models.projection.DimensionalBridge52
-S
-Mmillennial_ai.models.projection.DimensionalBridge._create_residual_projection54
-K
-Emillennial_ai.models.projection.DimensionalBridge.get_parameter_count56
-F
-@millennial_ai.models.projection.DimensionalBridge.project_to_trm58
-?
-9millennial_ai.models.projection.DimensionalBridge.forward60
-@
-:millennial_ai.models.projection.DimensionalBridge.__init__62
-F
-@millennial_ai.models.projection.DimensionalBridge.project_to_llm64
-?
-9millennial_ai.models.projection.create_dimensional_bridge66
-8
-2millennial_ai.models.projection.AdaptiveProjection68
-A
-;millennial_ai.models.projection.AdaptiveProjection.__init__70
-F
-@millennial_ai.models.projection.AdaptiveProjection._init_weights72
-@
-:millennial_ai.models.projection.AdaptiveProjection.forward74J
-
-8
-89j†
- 
-10
-10115 *
-8 (
-
-13
-13125
-
-15
-15145
-
-17
-17165
-
-19
-19186 210
-
-21
-21206
-
-23
-23227 219
-
-25
-25246
-
-27
-27267 219
-
-29
-29286
-
-31
-31306
-
-33
-33326
-
-35
-35347 219
-
-37
-37366 210
-
-39
-39387 237
-
-41
-41406
-
-43
-43427 237
-
-45
-45447 237
-
-47
-47466
-
-49
-49487 237
-
-51
-51507 237
-
-53
-53526 210
-
-55
-55547 253
-
-57
-57567 253
-
-59
-59587 253
-
-61
-61607 253
-
-63
-63627 253
-
-65
-65647 253
-
-67
-67667 210
-
-69
-69686 210
-
-71
-71707 269
-
-73
-73727 269
-
-75
-75747 269r¼
-
-
-10131*
-8 (
-
-10151*
-8 (*
-
-10171*
-8 (
-
-19212*
-8 (
-
-23253*
-8B	 B(
-
-23254*
-8B	 B(
-
-27294*
-8	 (
-
-27294*
-8	 (
-
-27314*
-8	 (
-
-27334*
-8	 (
-
-37212*
-8µ µ(
-
-39253*
-8Ï	 Ï(
-
-39254*
-8Ï	 Ï(
-
-39414*
-8Ï	 Ï(
-
-43253*
-8Ë	 Ë(
-
-43254*
-8Ë	 Ë(
-
-45473*
-8Ó	 Ó(
-
-49294*
-8½	 ½(
-
-51253*
-8Ç	 Ç(
-
-51254*
-8Ç	 Ç(
-
-53212*
-8‹ ‹(
-
-55213*
-8Ú	 Ú($
-
-55294*
-8Ú	 Ú($
-
-55294*
-8Ú	 Ú($
-
-55314*
-8Ú	 Ú($
-
-55334*
-8Ú	 Ú($
-
-57473*
-8•	 •(
-
-59253*
-8ë	 ë(
-
-59254*
-8ë	 ë(
-
-61253*
-8¢	 ¢(
-
-61254*
-8¢	 ¢(
-
-61414*
-8¢	 ¢(
-
-63294*
-8ª	 ª(
-
-63294*
-8ª	 ª(
-
-63414*
-8ª	 ª(
-
-63314*
-8ª	 ª(
-
-63334*
-8ª	 ª(
-
-63294*
-8ª	 ª(
-
-65253*
-8€	 €(
-
-65254*
-8€	 €(
-
-67294*
-8Ü Ü(
-
-67294*
-8Ü Ü(
-
-67474*
-8Ü Ü(
-
-69212*
-8O O(
-
-71294*
-8W	 W(
-
-71294*
-8W	 W(
-
-71294*
-8W	 W(
-
-75253*
-8u	 u(
-
-75254*
-8u	 u(

@@ -1,7 +1,0 @@
-organization=izreal1990-collab
-projectKey=millennial-ai
-serverUrl=https://sonarcloud.io
-serverVersion=8.0.0.69380
-dashboardUrl=https://sonarcloud.io/dashboard?id=millennial-ai
-ceTaskId=AZpCDhZniiES_HBWtzW8
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZpCDhZniiES_HBWtzW8

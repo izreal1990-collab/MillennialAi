@@ -1,366 +1,0 @@
-
-1.0PythonFrontend"1762044806499*py2.Bê
-
-imports1
-
-extends2
-
-returns3
-
-	has param4
-
-module5
-
-
-class6
-
-function7
-+
-&millennial_ai/original_architecture.py9
-)
-#millennial_ai.original_architecture11
-
-torch12
-
-typing14
-
-dataclasses16
-
-psutil18
-
-transformers20
-;
-5millennial_ai.original_architecture.MillennialAiModel22
-M
-Gmillennial_ai.original_architecture.MillennialAiModel.load_enhancements24
-
-
-bool26
-	
-str28
-M
-Gmillennial_ai.original_architecture.MillennialAiModel.save_enhancements30
-I
-Cmillennial_ai.original_architecture.MillennialAiModel.enhance_model32
-L
-Fmillennial_ai.original_architecture.MillennialAiModel.count_parameters34
-
-
-dict36
-C
-=millennial_ai.original_architecture.MillennialAiModel.forward38
-
-torch.Tensor40
-D
->millennial_ai.original_architecture.MillennialAiModel.generate42
-	
-int44
-D
->millennial_ai.original_architecture.MillennialAiModel.__init__46
-<
-6millennial_ai.original_architecture.MillennialAiConfig48
-K
-Emillennial_ai.original_architecture.MillennialAiModel.load_base_model50
-?
-9millennial_ai.original_architecture.LayerInjectionManager52
-V
-Pmillennial_ai.original_architecture.LayerInjectionManager._create_injection_hook54
-C
-=millennial_ai.original_architecture.CognitiveEnhancementLayer56
-X
-Rmillennial_ai.original_architecture.LayerInjectionManager._find_transformer_layers58
-
-
-list60
-$
-torch.nn.modules.module.Module62
-Q
-Kmillennial_ai.original_architecture.LayerInjectionManager.remove_injections64
-Q
-Kmillennial_ai.original_architecture.LayerInjectionManager.inject_into_model66
-H
-Bmillennial_ai.original_architecture.LayerInjectionManager.__init__68
-A
-;millennial_ai.original_architecture.create_enterprise_model70
-@
-:millennial_ai.original_architecture.estimate_training_cost72
-P
-Jmillennial_ai.original_architecture.MillennialAiConfig.for_enterprise_175b74
-U
-Omillennial_ai.original_architecture.MillennialAiConfig.for_rtx_5060ti_optimized76
-O
-Imillennial_ai.original_architecture.MillennialAiConfig.for_enterprise_70b78
-S
-Mmillennial_ai.original_architecture.MillennialAiConfig._optimize_for_hardware80
-J
-Dmillennial_ai.original_architecture.MillennialAiConfig.__post_init__82
-U
-Omillennial_ai.original_architecture.MillennialAiConfig._get_available_memory_gb84
-
-float86
-O
-Imillennial_ai.original_architecture.MillennialAiConfig._get_gpu_memory_gb88
-V
-Pmillennial_ai.original_architecture.MillennialAiConfig._suggest_injection_points90
-P
-Jmillennial_ai.original_architecture.MillennialAiConfig._auto_detect_device92
-L
-Fmillennial_ai.original_architecture.CognitiveEnhancementLayer.__init__94
-K
-Emillennial_ai.original_architecture.CognitiveEnhancementLayer.forward96J
-
-8
-89já
- 
-10
-10115 *
-8 (
-
-13
-13125
-
-15
-15145
-
-17
-17165
-
-19
-19185
-
-21
-21205
-
-23
-23226 210
-
-25
-25247 223
-
-27
-27266
-
-29
-29286
-
-31
-31307 223
-
-33
-33327 223
-
-35
-35347 223
-
-37
-37366
-
-39
-39387 223
-
-41
-41406
-
-43
-43427 223
-
-45
-45446
-
-47
-47467 223
-
-49
-49486 210
-
-51
-51507 223
-
-53
-53526 210
-
-55
-55547 253
-
-57
-57566 210
-
-59
-59587 253
-
-61
-61606
-
-63
-63626
-
-65
-65647 253
-
-67
-67667 253
-
-69
-69687 253
-
-71
-71707 210
-
-73
-73727 210
-
-75
-75747 249
-
-77
-77767 249
-
-79
-79787 249
-
-81
-81807 249
-
-83
-83827 249
-
-85
-85847 249
-
-87
-87866
-
-89
-89887 249
-
-91
-91907 249
-
-93
-93927 249
-
-95
-95947 257
-
-97
-97967 257rÃ
-
-10131*
-8 (
-
-10151*
-8 (4
-
-10171*
-8 ("
-
-10131*
-8Z Z(
-
-10191*
-8e e(
-
-10131*
-8m m(
-
-10211*
-8± ±(>
-
-25273*
-8Ü	 Ü(
-
-25294*
-8Ü	 Ü(
-
-31294*
-8˛	 ˛(
-
-33273*
-8√	 √(
-
-35373*
-8	 (
-
-39414*
-8“	 “(
-
-39374*
-8“	 “(
-
-43293*
-8Ÿ	 Ÿ(
-
-43294*
-8Ÿ	 Ÿ(
-
-43454*
-8Ÿ	 Ÿ(
-
-43374*
-8Ÿ	 Ÿ(
-
-47494*
-8®	 ®(
-
-51294*
-8Æ	 Æ(
-
-55574*
-8Å	 Å(
-
-59613*
-8Â	 Â(!
-
-59634*
-8Â	 Â(!
-
-67634*
-8≈	 ≈(
-
-69494*
-8ø	 ø(
-
-71233*
-8ú ú(
-
-71294*
-8ú ú(
-
-73373*
-8© ©(
-
-73494*
-8© ©(
-
-73454*
-8© ©(
-
-85873*
-8b	 b(!
-
-89873*
-8W	 W(
-
-91613*
-88	 8("
-
-93293*
-8j	 j(
-
-57632*
-8∫ ∫( 
-
-95494*
-8≈	 ≈(
-
-95454*
-8≈	 ≈(
-
-95454*
-8≈	 ≈(
-
-97413*
-8É	 É(
-
-97414*
-8É	 É(

@@ -1,97 +1,0 @@
-
-"trm_block"str
-"projection"str
-"division by zero"bool
-"llm_model"str
-"S3518"bool
-
-0int
-"overhead_params"str
- 100int
-"a"bool
-"overhead_percentage"str
-1("Get detailed parameter count breakdown"str
-
-"total"strself
-Ø Ø( "€,
-*
-
-Ý& Ý(4"#get-field# llm_model:w
-u
-
-Ý Ý(5
-llm_params"V
-Bmillennial_ai.core.hybrid_model.CombinedTRMLLM.get_parameter_countcount_parameters:,
-*
-
-Þ& Þ(4"#get-field# trm_block:w
-u
-
-Þ Þ(5
-trm_params"V
-Bmillennial_ai.core.hybrid_model.CombinedTRMLLM.get_parameter_countcount_parameters:-
-+
-
-ß- ß(<"#get-field# projection:~
-|
-
-ß ß(=projection_params"V
-Bmillennial_ai.core.hybrid_model.CombinedTRMLLM.get_parameter_countcount_parameters:&
-$
-
-á è(		"#new-object#Bdict%
-#
-
-â â(@"	#binop +#2+:"
- 
-
-â â(@"	#map-set#:	
-"
- 
-
-ã ã(#"	#map-set#:	"
- 
-
-ä ä(#"	#map-set#:	"
- 
-
-å å(+"	#map-set#:	$
-"
-
-æ æ(="	#binop +#2+:"
- 
-
-æ æ(="	#map-set#:	*
-(
-
-ç\ ç(j"	#binop >#2>:Bbool,"*
-
-ç\ ç(j *
-çY ç([2
-çk ç(o"ã$
-"
-
-ç% ç(C"	#binop +#2+:,
-*
-
-ç$ ç(Q"
-#binop !=#2!=:Bbool"
- 
-
-ç$ ç(Q"
-#assert#:,
-*
-
-ç$ ç(Q"#dependent-value#*:'
-%
-
-ç$ ç(W!"	#binop *#*2*: 
-
-ç# ç(q"
-
-ç# ç(q"J*"!"
- 
-
-ç ç(q#"	#map-set#:	"
-
-á è(		*J/home/jovan-blango/Desktop/MillennialAi/millennial_ai/core/hybrid_model.py

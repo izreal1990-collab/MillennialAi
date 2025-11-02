@@ -1,136 +1,0 @@
-
-
-"adaptive_injection"str
-"trm_hidden_size"str
-"injection_strength"str
-"num_recursion_steps"str
-.%"Convert configuration to dictionary"str
-"trm_num_heads"str
-%"recursion_dropout"str
-"trm_ff_hidden_size"str
-"injection_layers"str
-4"custom_trm_configs"str
-"trm_num_layers"str
-""layer_norm_eps"str
-"blending_strategy"str
-7"injection_schedule"str
- +"projection_activation"str
-!."gradient_checkpointing"str
-("projection_bias"str
-	"dropout"str
-1"mixed_precision"strself
-Ð Ð("ƒ&
-$
-
-Ò å(	"#new-object#Bdict3
-1
-
-Ó  Ó(5"#get-field# injection_layers:"
- 
-
-Ó Ó(5"	#map-set#:5
-3
-
-Ô" Ô(9" #get-field# injection_strength:"
- 
-
-Ô Ô(9	"	#map-set#:5
-3
-
-Õ" Õ(9" #get-field# adaptive_injection:"
- 
-
-Õ Õ(9"	#map-set#:
-4
-2
-
-Ö! Ö(7"#get-field# blending_strategy:"
- 
-
-Ö Ö(7"	#map-set#:2
-0
-
-× ×(3"#get-field# trm_hidden_size:"
- 
-
-× ×(3"	#map-set#:0
-.
-
-Ø Ø(/"#get-field# trm_num_heads:"
- 
-
-Ø Ø(/"	#map-set#:5
-3
-
-Ù" Ù(9" #get-field# trm_ff_hidden_size:"
- 
-
-Ù Ù(9"	#map-set#:1
-/
-
-Ú Ú(1"#get-field# trm_num_layers:"
- 
-
-Ú Ú(1"	#map-set#:6
-4
-
-Û# Û(;"!#get-field# num_recursion_steps:"
- 
-
-Û Û(;"	#map-set#:*
-(
-
-Ü Ü(# "#get-field# dropout:"
- 
-
-Ü Ü(#!"	#map-set#: 1
-/
-
-Ý Ý(1#"#get-field# layer_norm_eps:"
- 
-
-Ý Ý(1$"	#map-set#:"#4
-2
-
-Þ! Þ(7&"#get-field# recursion_dropout:"
- 
-
-Þ Þ(7'"	#map-set#:%&2
-0
-
-ß ß(3)"#get-field# projection_bias:"
- 
-
-ß ß(3*"	#map-set#:()8
-6
-
-à% à(?,"#!#get-field# projection_activation:"
- 
-
-à à(?-"	#map-set#:+,9
-7
-
-á& á(A/"$"#get-field# gradient_checkpointing:"
- 
-
-á á(A0"	#map-set#:./2
-0
-
-â â(32"#get-field# mixed_precision:"
- 
-
-â â(33"	#map-set#:125
-3
-
-ã" ã(95" #get-field# custom_trm_configs:"
- 
-
-ã ã(96"	#map-set#:455
-3
-
-ä" ä(98" #get-field# injection_schedule:"
- 
-
-ä ä(99"	#map-set#:78
-
-Ò å(	*F/home/jovan-blango/Desktop/MillennialAi/millennial_ai/config/config.py

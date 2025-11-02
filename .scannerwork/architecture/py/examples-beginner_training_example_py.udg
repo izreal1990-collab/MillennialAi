@@ -1,90 +1,0 @@
-
-1.0PythonFrontend"1762044806119*py2.Bƒ
-
-imports1
-
-extends2
-
-returns3
-
-	has param4
-
-module5
-
-
-class6
-
-function7
-*
-%examples/beginner_training_example.py9
-(
-"examples.beginner_training_example11
-
-torch12
-
-transformers14
-%
-millennial_ai.core.hybrid_model16
-!
-millennial_ai.config.config18
-7
-1examples.beginner_training_example.setup_training20
-?
-9examples.beginner_training_example.create_beginner_config22
-=
-7examples.beginner_training_example.simple_training_step24
--
-'examples.beginner_training_example.main26
-<
-6examples.beginner_training_example.create_hybrid_model28
-8
-2examples.beginner_training_example.load_base_model30J
-
-8
-89j„
- 
-10
-10115 *
-8 (
-
-13
-13125
-
-15
-15145
-
-17
-17165
-
-19
-19185
-
-21
-21207 210
-
-23
-23227 210
-
-25
-25247 210
-
-27
-27267 210
-
-29
-29287 210
-
-31
-31307 210rh
-
-10131*
-8 (
-
-10151*
-8 (=
-
-10171*
-8 (;
-
-10191*
-8 (5

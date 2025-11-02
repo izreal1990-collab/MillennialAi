@@ -1,53 +1,0 @@
-
-1.0PythonFrontend"1762044806457*py2.B¼
-
-imports1
-
-extends2
-
-returns3
-
-	has param4
-
-module5
-
-
-class6
-
-function7
- 
-examples/cost_calculator.py9
-
-examples.cost_calculator11
-B
-<examples.cost_calculator.calculate_traditional_training_cost12
-:
-4examples.cost_calculator.calculate_cloud_vs_hardware14
-4
-.examples.cost_calculator.print_cost_comparison16
-#
-examples.cost_calculator.main18
-;
-5examples.cost_calculator.calculate_millennial_ai_cost20J
-
-8
-89jŸ
- 
-10
-10115 *
-8 (
-
-13
-13127 210
-
-15
-15147 210
-
-17
-17167 210
-
-19
-19187 210
-
-21
-21207 210

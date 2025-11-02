@@ -1,66 +1,0 @@
-
-"trm_to_llm"str
-"total"str
-"layer_norms"str
-("Get parameter count breakdown"str
-
-2int
-"scaling_factors"str
-"llm_to_trm"strself
-ï ï( "¸&
-$
-
-ö †(	"#new-object#Bdictn
-l
-
-õ õ(+"Y
-Emillennial_ai.models.projection.DimensionalBridge.get_parameter_countcount_parameters:"
- 
-
-õ õ(+"	#map-set#:-
-+
-
-ú+ ú(:"#get-field# llm_to_trm:n
-l
-
-ú ú(;	"Y
-Emillennial_ai.models.projection.DimensionalBridge.get_parameter_countcount_parameters:"
- 
-
-ú ú(;
-"	#map-set#:	-
-+
-
-ù+ ù(:"#get-field# trm_to_llm:n
-l
-
-ù ù(;"Y
-Emillennial_ai.models.projection.DimensionalBridge.get_parameter_countcount_parameters:"
- 
-
-ù ù(;"	#map-set#:+
-)
-
-û, û(9"#get-field# llm_norm:n
-l
-
-û û(:"Y
-Emillennial_ai.models.projection.DimensionalBridge.get_parameter_countcount_parameters:+
-)
-
-ûN û(["#get-field# trm_norm:n
-l
-
-û= û(\"Y
-Emillennial_ai.models.projection.DimensionalBridge.get_parameter_countcount_parameters:$
-"
-
-û û(\"	#binop +#2+:"
- 
-
-û û(\"	#map-set#:"
- 
-
-ü ü( "	#map-set#:
-
-ö †(	*J/home/jovan-blango/Desktop/MillennialAi/millennial_ai/models/projection.py

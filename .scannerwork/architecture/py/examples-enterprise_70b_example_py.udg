@@ -1,134 +1,0 @@
-
-1.0PythonFrontend"1762044806133*py2.BÛ
-
-imports1
-
-extends2
-
-returns3
-
-	has param4
-
-module5
-
-
-class6
-
-function7
-'
-"examples/enterprise_70b_example.py9
-%
-examples.enterprise_70b_example11
-
-torch12
-
-typing14
-
-gc16
-
-warnings18
-%
-millennial_ai.core.hybrid_model20
-!
-millennial_ai.config.config22
-A
-;examples.enterprise_70b_example.show_research_configuration24
-*
-$examples.enterprise_70b_example.main26
-?
-9examples.enterprise_70b_example.enterprise_hybrid_example28
-K
-Eexamples.enterprise_70b_example.demonstrate_enterprise_configurations30
-2
-,examples.enterprise_70b_example.MockLLaMA70B32
-$
-torch.nn.modules.module.Module34
-;
-5examples.enterprise_70b_example.MockLLaMA70B.__init__36
-:
-4examples.enterprise_70b_example.MockLLaMA70B.forward38
-
-
-dict40
-L
-Fexamples.enterprise_70b_example.MockLLaMA70B._create_transformer_layer42J
-
-8
-89j‚
- 
-10
-10115 *
-8 (
-
-13
-13125
-
-15
-15145
-
-17
-17165
-
-19
-19185
-
-21
-21205
-
-23
-23225
-
-25
-25247 210
-
-27
-27267 210
-
-29
-29287 210
-
-31
-31307 210
-
-33
-33326 210
-
-35
-35346
-
-37
-37367 233
-
-39
-39387 233
-
-41
-41406
-
-43
-43427 233rÐ
-
-10131*
-8 (
-
-10151*
-8 (
-
-10171*
-8 (
-
-
-10191*
-8 (
-
-10211*
-8 (P
-
-10231*
-8 (D
-
-33352*
-8 (
-
-39414*
-8u	 u(
