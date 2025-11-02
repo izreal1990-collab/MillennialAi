@@ -109,10 +109,6 @@ jobs:
       run: |
         az extension add --name ml --upgrade
     
-    - name: Install Azure ML Python SDK
-      run: |
-        pip install azure-ai-ml azure-identity
-    
     - name: Validate Azure resources
       run: |
         echo "🔍 Setting subscription context..."
@@ -138,6 +134,10 @@ jobs:
     
     - name: Test Azure ML job submission (dry run)
       run: |
+        echo "🔍 Installing Azure ML Python SDK..."
+        pip install azure-ai-ml azure-identity
+        
+        echo "🔍 Testing Azure ML client connection..."
         python -c "
         from azure.ai.ml import MLClient
         from azure.identity import DefaultAzureCredential
