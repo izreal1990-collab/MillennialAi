@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MillennialAi - Try It Now!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .output-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .output-text {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e1e5e9;
+            min-height: 100px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .status.ready {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.loading {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e1e5e9;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 MillennialAi</h1>
+            <p>Experience Revolutionary AI with Layer Injection Technology</p>
+        </div>
+
+        <div class="main-content">
+            <div class="status ready" id="status">
+                🟢 Ready
+            </div>
+
+            <div class="input-section">
+                <div class="input-group">
+                    <label for="prompt">Enter your prompt:</label>
+                    <textarea id="prompt" placeholder="Ask me anything! Try: 'Explain quantum computing' or 'Write a creative story about space travel'">Explain the future of artificial intelligence in 3 paragraphs</textarea>
+                </div>
+
+                <div class="controls">
+                    <div class="input-group">
+                        <label for="maxLength">Max Length:</label>
+                        <input type="number" id="maxLength" value="200" min="10" max="1000">
+                    </div>
+                    <div class="input-group">
+                        <label for="temperature">Creativity:</label>
+                        <input type="range" id="temperature" value="0.7" min="0.0" max="2.0" step="0.1">
+                        <span id="tempValue">0.7</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="method">Method:</label>
+                        <select id="method">
+                            <option value="standard">Standard</option>
+                            <option value="revolutionary">Revolutionary</option>
+                            <option value="layer-inject">Layer Injection</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="generateText()" id="generateBtn">
+                    🎯 Generate with MillennialAi
+                </button>
+            </div>
+
+            <div class="output-section" id="outputSection" style="display: none;">
+                <h3>🎉 Generated Output:</h3>
+                <div class="output-text" id="output"></div>
+                
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="processingTime">-</div>
+                        <div class="stat-label">Processing Time (s)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="methodUsed">-</div>
+                        <div class="stat-label">Method Used</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="outputLength">-</div>
+                        <div class="stat-label">Output Length</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Powered by MillennialAi API • <a href="/docs" target="_blank">API Documentation</a> • <a href="/health" target="_blank">Health Check</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Update temperature display
+        document.getElementById('temperature').addEventListener('input', function(e) {
+            document.getElementById('tempValue').textContent = e.target.value;
+        });
+
+        // API base URL (adjust if needed)
+        const API_BASE = window.location.origin;
+
+        async function generateText() {
+            const prompt = document.getElementById('prompt').value.trim();
+            if (!prompt) {
+                alert('Please enter a prompt!');
+                return;
+            }
+
+            const btn = document.getElementById('generateBtn');
+            const status = document.getElementById('status');
+            const output = document.getElementById('output');
+            const outputSection = document.getElementById('outputSection');
+
+            // Update UI for loading state
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Generating...';
+            status.className = 'status loading';
+            status.textContent = '🟡 Processing...';
+
+            try {
+                const method = document.getElementById('method').value;
+                const maxLength = parseInt(document.getElementById('maxLength').value);
+                const temperature = parseFloat(document.getElementById('temperature').value);
+
+                let endpoint, requestBody;
+
+                if (method === 'layer-inject') {
+                    endpoint = '/layer-inject';
+                    requestBody = {
+                        input_text: prompt,
+                        injection_type: 'revolutionary',
+                        config_preset: 'quality'
+                    };
+                } else {
+                    endpoint = '/generate';
+                    requestBody = {
+                        prompt: prompt,
+                        max_length: maxLength,
+                        temperature: temperature,
+                        use_revolutionary: method === 'revolutionary'
+                    };
+                }
+
+                const response = await fetch(API_BASE + endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+
+                // Display results
+                if (method === 'layer-inject') {
+                    output.textContent = result.injected_text;
+                    document.getElementById('methodUsed').textContent = result.injection_type;
+                    document.getElementById('outputLength').textContent = result.injected_text.length;
+                } else {
+                    output.textContent = result.generated_text;
+                    document.getElementById('methodUsed').textContent = result.method_used;
+                    document.getElementById('outputLength').textContent = result.generated_text.length;
+                }
+
+                document.getElementById('processingTime').textContent = result.processing_time.toFixed(3);
+                outputSection.style.display = 'block';
+
+                status.className = 'status ready';
+                status.textContent = '✅ Complete';
+
+            } catch (error) {
+                console.error('Error:', error);
+                output.textContent = `Error: ${error.message}\n\nPlease try again or check if the API server is running.`;
+                outputSection.style.display = 'block';
+                
+                status.className = 'status error';
+                status.textContent = '❌ Error';
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '🎯 Generate with MillennialAi';
+            }
+        }
+
+        // Allow Enter key to submit
+        document.getElementById('prompt').addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                generateText();
+            }
+        });
+
+        // Check API health on load
+        async function checkHealth() {
+            try {
+                const response = await fetch(API_BASE + '/health');
+                const health = await response.json();
+                
+                const status = document.getElementById('status');
+                if (health.status === 'healthy') {
+                    status.className = 'status ready';
+                    status.textContent = '🟢 Ready';
+                } else {
+                    status.className = 'status error';
+                    status.textContent = '🟡 Demo Mode';
+                }
+            } catch (error) {
+                const status = document.getElementById('status');
+                status.className = 'status error';
+                status.textContent = '🔴 API Offline';
+            }
+        }
+
+        // Check health on page load
+        checkHealth();
+    </script>
+</body>
+</html>

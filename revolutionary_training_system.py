@@ -56,22 +56,22 @@ class RevolutionaryTrainer:
         self.brain = brain.to(device)
         self.device = device
         
-        # Revolutionary training optimizers
+        # Revolutionary training optimizers - OPTIMIZED FOR 85B MODELS
         self.complexity_optimizer = optim.AdamW(
             self.brain.complexity_net.parameters(),
-            lr=0.001,
+            lr=1e-5,  # Much lower LR for large models
             weight_decay=0.01
         )
         
         self.thinking_optimizer = optim.AdamW(
             self.brain.thinking_modules.parameters(),
-            lr=0.0005,
+            lr=5e-6,  # Even lower for thinking modules
             weight_decay=0.01
         )
         
         self.convergence_optimizer = optim.AdamW(
             self.brain.convergence_net.parameters(),
-            lr=0.001,
+            lr=1e-5,  # Stable LR for convergence
             weight_decay=0.01
         )
         

@@ -289,10 +289,10 @@ def parse_args():
     # Training parameters
     parser.add_argument('--num-epochs', type=int, default=100,
                        help='Number of training epochs')
-    parser.add_argument('--batch-size', type=int, default=4,
-                       help='Training batch size')
-    parser.add_argument('--learning-rate', type=float, default=0.001,
-                       help='Learning rate')
+    parser.add_argument('--batch-size', type=int, default=1024,
+                       help='Training batch size (1024+ recommended for 85B models)')
+    parser.add_argument('--learning-rate', type=float, default=1e-5,
+                       help='Learning rate (1e-5 recommended for 85B models)')
     parser.add_argument('--checkpoint-frequency', type=int, default=10,
                        help='Save checkpoint every N epochs')
     
