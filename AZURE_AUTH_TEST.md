@@ -13,3 +13,10 @@ This commit will test the complete Azure CI/CD pipeline.
 - Client ID: d1f5a611-eee3-485d-bcb2-7efb502260b6
 
 🧪 **This commit tests the complete Azure CI/CD pipeline authentication.**
+✅ **Service Principal Permissions Updated**
+
+Added role assignments for GitHub-MillennialAi-Actions service principal:
+- AzureML Data Scientist role on millennialai-rg resource group
+- Reader role on millennialai-rg resource group  
+
+This should resolve the authorization error for ML workspace access.
