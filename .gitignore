@@ -178,4 +178,4 @@ datasets/
 .scannerwork/
 
 # GPU cache
-.nv/
+.nv/github_secrets.txt

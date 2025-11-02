@@ -1,0 +1,5 @@
+$schema: https://azuremlschemas.azureedge.net/latest/environment.schema.json
+name: millennialai-test-env
+version: "1.0"
+image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04-py38-cuda11.6-gpu:latest
+conda_file: environment.yml

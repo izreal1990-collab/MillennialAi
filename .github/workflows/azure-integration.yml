@@ -90,7 +90,7 @@ jobs:
   azure-validation:
     runs-on: ubuntu-latest
     needs: test
-    if: github.ref == 'refs/heads/main'
+    if: false  # Temporarily disabled until GitHub secrets are configured
     
     steps:
     - uses: actions/checkout@v4
