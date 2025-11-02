@@ -135,7 +135,12 @@ jobs:
     - name: Test Azure ML job submission (dry run)
       run: |
         echo "🔍 Installing Azure ML Python SDK..."
-        pip install azure-ai-ml azure-identity
+        python -m pip install --upgrade pip
+        python -m pip install azure-ai-ml azure-identity
+        
+        echo "🔍 Verifying installation..."
+        python -c "import azure.ai.ml; print('✅ azure-ai-ml imported successfully')"
+        python -c "import azure.identity; print('✅ azure-identity imported successfully')"
         
         echo "🔍 Testing Azure ML client connection..."
         python -c "
