@@ -113,18 +113,18 @@ jobs:
       run: |
         echo "🔍 Validating Azure ML workspace..."
         az ml workspace show \
-          --name ${{ secrets.AZURE_ML_WORKSPACE }} \
-          --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
+          --name '${{ secrets.AZURE_ML_WORKSPACE }}' \
+          --resource-group '${{ secrets.AZURE_RESOURCE_GROUP }}'
         
         echo "🔍 Checking compute clusters..."
         az ml compute list \
-          --workspace-name ${{ secrets.AZURE_ML_WORKSPACE }} \
-          --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
+          --workspace-name '${{ secrets.AZURE_ML_WORKSPACE }}' \
+          --resource-group '${{ secrets.AZURE_RESOURCE_GROUP }}'
         
         echo "🔍 Validating AI Foundry Hub..."
         az ml workspace show \
-          --name ${{ secrets.AZURE_FOUNDRY_HUB }} \
-          --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
+          --name '${{ secrets.AZURE_FOUNDRY_HUB }}' \
+          --resource-group '${{ secrets.AZURE_RESOURCE_GROUP }}'
     
     - name: Test Azure ML job submission (dry run)
       run: |
