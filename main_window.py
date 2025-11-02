@@ -189,6 +189,7 @@ Enhanced LLM (70B) + MillennialAi Cognitive Layers
         
         self.model_combo = QComboBox()
         self.model_combo.addItems(["GPT-2", "LLaMA-7B", "LLaMA-70B"])
+        self.model_combo.setCurrentText("GPT-2")  # Set GPT-2 as default
         form_layout.addRow("Base Model:", self.model_combo)
         
         self.layers_spin = QSpinBox()
@@ -298,15 +299,47 @@ Enhanced LLM (70B) + MillennialAi Cognitive Layers
         model_name = self.model_combo.currentText()
         logger.info(f"Loading model: {model_name}")
         
-        self.config.base_model_name = model_name
+        # Map display names to HuggingFace model paths
+        model_paths = {
+            "GPT-2": "gpt2",
+            "LLaMA-7B": "meta-llama/Llama-2-7b-hf",
+            "LLaMA-70B": "meta-llama/Llama-2-70b-hf"
+        }
+        
+        model_path = model_paths.get(model_name, model_name)
+        self.config.base_model_name = model_path
         self.config.base_model_layers = self.layers_spin.value()
         self.config.reasoning_stages = self.depth_spin.value()
         
         try:
             self.model = MillennialAiModel(self.config)
-            logger.info(f"Model {model_name} loaded successfully")
-            self.status_bar.showMessage(f"Model {model_name} loaded successfully")
-            QMessageBox.information(self, "Success", f"Model {model_name} loaded successfully!")
+            # Load the base model
+            if self.model.load_base_model(model_path):
+                # Update config with actual model layers
+                if hasattr(self.model.base_model, 'config') and hasattr(self.model.base_model.config, 'n_layer'):
+                    # GPT-2 style models
+                    actual_layers = self.model.base_model.config.n_layer
+                elif hasattr(self.model.base_model, 'config') and hasattr(self.model.base_model.config, 'num_hidden_layers'):
+                    # LLaMA/BERT style models
+                    actual_layers = self.model.base_model.config.num_hidden_layers
+                else:
+                    # Fallback
+                    actual_layers = len([m for m in self.model.base_model.modules() if hasattr(m, 'weight') and len(m.weight.shape) > 1])
+                
+                self.config.base_model_layers = actual_layers
+                # Recalculate injection points for the actual model
+                self.config.injection_points = None  # Force recalculation
+                self.config._suggest_injection_points()
+                
+                # Apply enhancements
+                if self.model.enhance_model():
+                    logger.info(f"Model {model_name} loaded and enhanced successfully")
+                    self.status_bar.showMessage(f"Model {model_name} loaded and enhanced successfully")
+                    QMessageBox.information(self, "Success", f"Model {model_name} loaded and enhanced successfully!")
+                else:
+                    raise Exception("Failed to apply enhancements")
+            else:
+                raise Exception("Failed to load base model")
         except Exception as e:
             error_msg = f"Failed to load model {model_name}: {str(e)}"
             logger.error(error_msg)
