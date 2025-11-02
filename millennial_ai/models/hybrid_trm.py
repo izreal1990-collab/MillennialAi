@@ -46,7 +46,8 @@ class RotaryPositionalEmbedding(nn.Module):
         """Update cached cos/sin values if sequence length changed"""
         if seq_len > self._cached_seq_len:
             seq = torch.arange(seq_len, device=device, dtype=dtype)
-            freqs = torch.outer(seq, self.inv_freq.to(device))
+            inv_freq_tensor: torch.Tensor = self.inv_freq.to(device)  # type: ignore[assignment]
+            freqs = torch.outer(seq, inv_freq_tensor)
             emb = torch.cat((freqs, freqs), dim=-1)
             
             self._cached_cos = emb.cos()

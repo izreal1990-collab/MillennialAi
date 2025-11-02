@@ -36,7 +36,7 @@ class AzureMLTrainingRunner:
         if args.use_azure_storage:
             self._setup_azure_clients()
         
-        print(f"🚀 Azure ML Training Runner initialized")
+        print("Azure ML Training Runner initialized")
         print(f"   Device: {self.device}")
         print(f"   Output directory: {self.output_dir}")
         print(f"   Azure Storage: {args.use_azure_storage}")
@@ -45,7 +45,7 @@ class AzureMLTrainingRunner:
         """Configure compute device with multi-GPU support"""
         if torch.cuda.is_available():
             device_count = torch.cuda.device_count()
-            print(f"🎮 GPU Configuration:")
+            print("GPU Configuration:")
             for i in range(device_count):
                 gpu_name = torch.cuda.get_device_name(i)
                 gpu_mem = torch.cuda.get_device_properties(i).total_memory / 1e9
@@ -336,7 +336,7 @@ def main():
         import datetime
         args.run_name = f"run_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}"
     
-    print("🌟 MILLENNIALAI AZURE ML TRAINING")
+    print("MILLENNIALAI AZURE ML TRAINING")
     print("=" * 70)
     print(f"   Experiment: {args.experiment_name}")
     print(f"   Run: {args.run_name}")
@@ -349,12 +349,12 @@ def main():
     runner = AzureMLTrainingRunner(args)
     
     # Train model
-    brain, trainer = runner.train()
+    brain, _ = runner.train()
     
     # Test model
     runner.test_model(brain)
     
-    print("\n🎉 AZURE ML TRAINING COMPLETE!")
+    print("\nAZURE ML TRAINING COMPLETE!")
     print("=" * 70)
 
 

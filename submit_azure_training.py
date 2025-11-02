@@ -38,19 +38,25 @@ def submit_training_job():
     )
     print("✅ Connected successfully")
     
-    # Create or update environment
-    print("\n📦 Creating training environment...")
-    env_path = Path(__file__).parent / "azure_ml_env.yaml"
-    
-    if env_path.exists():
+    # Create or get environment
+    env_name = "millennialai-training"
+    env = None
+    try:
+        env = ml_client.environments.get(env_name, version="1")
+        print(f"✅ Using existing environment: {env.name}:{env.version}")
+    except Exception:
+        print("📦 Creating new environment...")
         env = Environment(
-            name="millennialai-training-env",
-            description="MillennialAi training environment",
-            conda_file=str(env_path),
+            name=env_name,
+            description="MillennialAI Training Environment with Azure ML",
+            conda_file="./azure_ml_env.yaml",
             image="mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.8-cudnn8-ubuntu22.04:latest"
         )
         env = ml_client.environments.create_or_update(env)
         print(f"✅ Environment created: {env.name}:{env.version}")
+    
+    if env is None:
+        raise RuntimeError("Failed to create or get environment")
     
     # Define training job
     print("\n🚀 Submitting training job...")
@@ -79,13 +85,13 @@ def submit_training_job():
     # Submit job
     returned_job = ml_client.jobs.create_or_update(job)
     
-    print(f"\n✅ Training job submitted successfully!")
+    print("\n✅ Training job submitted successfully!")
     print(f"   Job name: {returned_job.name}")
     print(f"   Status: {returned_job.status}")
     print(f"   Compute: {returned_job.compute}")
-    print(f"\n🌐 View job in Azure ML Studio:")
+    print("\n🌐 View job in Azure ML Studio:")
     print(f"   {returned_job.studio_url}")
-    print(f"\n📊 Monitor with:")
+    print("\n📊 Monitor with:")
     print(f"   az ml job show --name {returned_job.name}")
     
     return returned_job

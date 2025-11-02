@@ -267,7 +267,7 @@ class CognitiveEnhancementLayer(nn.Module):
         Returns:
             Enhanced hidden states with same shape as input
         """
-        batch_size, seq_len, _ = hidden_states.shape
+        _, _, _ = hidden_states.shape
         
         # Multi-stage reasoning enhancement
         stage_outputs = []

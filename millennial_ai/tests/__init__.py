@@ -10,6 +10,7 @@ import torch
 import torch.nn as nn
 import numpy as np
 from typing import Dict, Any, List
+from dataclasses import dataclass
 import time
 import json
 import os
@@ -20,6 +21,14 @@ from millennial_ai.core.hybrid_model import CombinedTRMLLM, create_hybrid_model
 from millennial_ai.models.hybrid_trm import HybridTRMBlock
 from millennial_ai.models.projection import DimensionalBridge, create_dimensional_bridge
 from millennial_ai.config.config import HybridConfig
+
+
+@dataclass
+class MockConfig:
+    """Mock config for testing"""
+    hidden_size: int
+    num_layers: int
+    vocab_size: int
 
 
 class TestHybridConfig(unittest.TestCase):
@@ -131,7 +140,9 @@ class TestHybridTRMBlock(unittest.TestCase):
         loss.backward()
         
         self.assertIsNotNone(x.grad)
-        self.assertFalse(torch.allclose(x.grad, torch.zeros_like(x.grad)))
+        # Check gradient is not None before comparing
+        if x.grad is not None:
+            self.assertFalse(torch.allclose(x.grad, torch.zeros_like(x.grad)))
 
 
 class TestDimensionalBridge(unittest.TestCase):
@@ -218,26 +229,26 @@ class MockLLM(nn.Module):
         self.lm_head = nn.Linear(hidden_size, vocab_size)
         
         # Mock config
-        self.config = type('Config', (), {
-            'hidden_size': hidden_size,
-            'num_layers': num_layers,
-            'vocab_size': vocab_size
-        })()
+        self.config = MockConfig(
+            hidden_size=hidden_size,
+            num_layers=num_layers,
+            vocab_size=vocab_size
+        )
     
     def forward(self, input_ids, attention_mask=None, **kwargs):
         # Simple forward pass
-        x = self.transformer.wte(input_ids)
+        x = self.transformer['wte'](input_ids)
         
         # Add position embeddings
         seq_len = input_ids.size(1)
         position_ids = torch.arange(seq_len, device=input_ids.device).unsqueeze(0)
-        x = x + self.transformer.wpe(position_ids)
+        x = x + self.transformer['wpe'](position_ids)
         
         # Pass through layers
-        for layer in self.transformer.h:
+        for layer in self.transformer['h']:  # type: ignore[attr-defined]
             x = layer(x, x, memory_mask=attention_mask)
         
-        x = self.transformer.ln_f(x)
+        x = self.transformer['ln_f'](x)
         logits = self.lm_head(x)
         
         return type('Output', (), {'logits': logits, 'last_hidden_state': x})()
@@ -247,7 +258,7 @@ class TestCombinedTRMLLM(unittest.TestCase):
     """Test the main hybrid model"""
     
     def setUp(self):
-        self.llm = MockLLM(hidden_size=768, num_layers=6)
+        self.llm: MockLLM = MockLLM(hidden_size=768, num_layers=6)
         self.config = HybridConfig(
             injection_layers=[2, 4],
             trm_hidden_size=256,
@@ -568,11 +579,8 @@ class TestEndToEnd(unittest.TestCase):
         # Create mock LLM
         llm = MockLLM(hidden_size=512, num_layers=8)
         
-        # Create config with injection points
-        config = HybridConfig(injection_layers=[2, 5])
-        
         # Create hybrid model
-        model = create_hybrid_model(llm, config)
+        model = create_hybrid_model(llm, injection_layers=[2, 5])
         
         # Test input
         batch_size, seq_len = 2, 16
@@ -589,11 +597,11 @@ class TestEndToEnd(unittest.TestCase):
         self.assertEqual(output.shape, (batch_size, seq_len, llm.hidden_size))
         
         # Check that injection actually happened
-        performance = model.get_reasoning_performance()
-        self.assertGreater(performance['injection_statistics']['total_injections'], 0)
+        stats = model.get_injection_statistics()
+        self.assertGreater(stats['total_injections'], 0)
         
-        # Verify enhancement layers were used
-        self.assertTrue(any(layer.injection_active for layer in model.injection_layers.values()))
+        # Verify injection was active
+        self.assertTrue(model.injection_active)
     
     def test_memory_efficiency(self):
         """Test memory usage with different configurations"""
@@ -607,7 +615,7 @@ class TestEndToEnd(unittest.TestCase):
         ]
         
         for config in configs:
-            model = create_hybrid_model(llm, config)
+            model = create_hybrid_model(llm, injection_layers=config.injection_layers)
             model.activate_injection()
             
             # Test inference

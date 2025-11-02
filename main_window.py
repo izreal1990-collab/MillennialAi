@@ -10,7 +10,7 @@ import torch
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QHBoxLayout,
     QTextEdit, QPushButton, QLabel, QComboBox, QProgressBar, QSplitter,
-    QGroupBox, QFormLayout, QSpinBox, QCheckBox, QMessageBox
+    QGroupBox, QFormLayout, QSpinBox, QCheckBox, QMessageBox, QStatusBar
 )
 from PyQt5.QtCore import QThread, pyqtSignal, QTimer
 from PyQt5.QtGui import QFont, QPalette, QColor
@@ -67,6 +67,9 @@ class MainWindow(QMainWindow):
         self.config = MillennialAiConfig.for_enterprise_70b()
         self.model = None  # Lazy load
         
+        # Initialize status bar first to avoid None errors
+        self.status_bar: QStatusBar = self.statusBar()
+        
         # Setup UI
         self.init_ui()
         self.apply_millennialai_theme()
@@ -101,8 +104,7 @@ class MainWindow(QMainWindow):
         self.tools_tab = self.create_tools_tab()
         tabs.addTab(self.tools_tab, "🏢 Enterprise Suite")
         
-        # Status bar
-        self.status_bar = self.statusBar()
+        # Update status bar message (already initialized in __init__)
         self.status_bar.showMessage("Ready - No model loaded")
     
     def create_chat_tab(self):
@@ -316,15 +318,18 @@ Enhanced LLM (70B) + MillennialAi Cognitive Layers
             # Load the base model
             if self.model.load_base_model(model_path):
                 # Update config with actual model layers
-                if hasattr(self.model.base_model, 'config') and hasattr(self.model.base_model.config, 'n_layer'):
+                base_model = self.model.base_model
+                if base_model and hasattr(base_model, 'config') and hasattr(base_model.config, 'n_layer'):
                     # GPT-2 style models
-                    actual_layers = self.model.base_model.config.n_layer
-                elif hasattr(self.model.base_model, 'config') and hasattr(self.model.base_model.config, 'num_hidden_layers'):
+                    actual_layers = base_model.config.n_layer
+                elif base_model and hasattr(base_model, 'config') and hasattr(base_model.config, 'num_hidden_layers'):
                     # LLaMA/BERT style models
-                    actual_layers = self.model.base_model.config.num_hidden_layers
-                else:
+                    actual_layers = base_model.config.num_hidden_layers
+                elif base_model:
                     # Fallback
-                    actual_layers = len([m for m in self.model.base_model.modules() if hasattr(m, 'weight') and len(m.weight.shape) > 1])
+                    actual_layers = len([m for m in base_model.modules() if hasattr(m, 'weight') and len(m.weight.shape) > 1])
+                else:
+                    actual_layers = 12  # default
                 
                 self.config.base_model_layers = actual_layers
                 # Recalculate injection points for the actual model

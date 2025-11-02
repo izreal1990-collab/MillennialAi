@@ -17,7 +17,7 @@ Key Benefits:
 
 import torch
 import torch.nn as nn
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 import warnings
 
 # Add HuggingFace imports
@@ -82,7 +82,7 @@ class MillennialAiIPSafeModel(CombinedTRMLLM):
         self.hooks.clear()
         
         # Get transformer layers
-        transformer_layers = self._get_transformer_layers()
+        transformer_layers = self._get_transformer_layers()  # type: ignore[misc]
         
         # Re-register hooks with our reasoning engine
         for layer_idx in self.config.injection_layers:
@@ -109,13 +109,13 @@ class MillennialAiIPSafeModel(CombinedTRMLLM):
                 other_outputs = ()
             
             # Project to reasoning space
-            projected_states = self.projection.to_reasoning_space(hidden_states)
+            projected_states = self.projection.to_reasoning_space(hidden_states)  # type: ignore[misc]
             
             # Apply MillennialAi reasoning (replaces Samsung TRM)
             reasoned_states = self.reasoning_block(projected_states)
             
             # Project back to LLM space
-            enhanced_states = self.projection.to_llm_space(reasoned_states)
+            enhanced_states = self.projection.to_llm_space(reasoned_states)  # type: ignore[misc]
             
             # Update statistics
             self.injection_statistics['total_injections'] += 1
@@ -153,7 +153,7 @@ class MillennialAiIPSafeModel(CombinedTRMLLM):
 
 
 def create_ip_safe_millennial_model(llm_model: nn.Module, 
-                                   injection_layers: list = None,
+                                   injection_layers: Optional[List[int]] = None,
                                    **kwargs) -> MillennialAiIPSafeModel:
     """
     Create IP-safe MillennialAi model with Samsung TRM completely removed
@@ -174,6 +174,10 @@ def create_ip_safe_millennial_model(llm_model: nn.Module,
             total_layers // 2,      # Mid-layer boost  
             3 * total_layers // 4   # Final reasoning
         ]
+    
+    # Ensure injection_layers is a list
+    if not isinstance(injection_layers, list):
+        injection_layers = list(injection_layers)
     
     # Create configuration
     config = HybridConfig(
