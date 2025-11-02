@@ -44,7 +44,7 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-01-01-pr
   }
 }
 
-// Role Assignment for ACR Pull (Required before Container Apps)
+// Role Assignment for ACR Pull
 resource acrPullRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(containerRegistry.id, userAssignedIdentity.id, '7f951dda-4ed3-4680-a7ca-43fe172d538d')
   scope: containerRegistry
@@ -86,22 +86,30 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
 }
 
 // Blob containers for training artifacts
+resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
+  name: 'default'
+  parent: storageAccount
+}
+
 resource trainingDataContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
-  name: '${storageAccount.name}/default/training-data'
+  name: 'training-data'
+  parent: blobService
   properties: {
     publicAccess: 'None'
   }
 }
 
 resource modelsContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
-  name: '${storageAccount.name}/default/models'
+  name: 'models'
+  parent: blobService
   properties: {
     publicAccess: 'None'
   }
 }
 
 resource checkpointsContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
-  name: '${storageAccount.name}/default/checkpoints'
+  name: 'checkpoints'
+  parent: blobService
   properties: {
     publicAccess: 'None'
   }
@@ -154,27 +162,7 @@ resource mlWorkspace 'Microsoft.MachineLearningServices/workspaces@2024-04-01' =
   }
 }
 
-// GPU Compute Cluster for training
-resource gpuComputeCluster 'Microsoft.MachineLearningServices/workspaces/computes@2024-04-01' = {
-  name: 'gpu-cluster'
-  parent: mlWorkspace
-  location: location
-  properties: {
-    computeType: 'AmlCompute'
-    properties: {
-      vmSize: 'Standard_NC6s_v3'
-      vmPriority: 'LowPriority'
-      scaleSettings: {
-        minNodeCount: 0
-        maxNodeCount: 4
-        nodeIdleTimeBeforeScaleDown: 'PT120S'
-      }
-      remoteLoginPortPublicAccess: 'Disabled'
-    }
-  }
-}
-
-// CPU Compute Cluster for data preprocessing
+// CPU Compute Cluster for data preprocessing (no GPU quota needed)
 resource cpuComputeCluster 'Microsoft.MachineLearningServices/workspaces/computes@2024-04-01' = {
   name: 'cpu-cluster'
   parent: mlWorkspace
@@ -205,18 +193,18 @@ resource mlStorageRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-0
   }
 }
 
-// Role assignment for user identity to access Key Vault
+// Role assignment for user identity to access Key Vault (Key Vault Secrets User role)
 resource kvRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(keyVault.id, userAssignedIdentity.id, '00482a5a-887f-4fb3-b09a-4739e490fd96')
+  name: guid(keyVault.id, userAssignedIdentity.id, '4633458b-17de-408a-b874-0445c86b69e6')
   scope: keyVault
   properties: {
     principalId: userAssignedIdentity.properties.principalId
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b09a-4739e490fd96')
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '4633458b-17de-408a-b874-0445c86b69e6')
     principalType: 'ServicePrincipal'
   }
 }
 
-// Container App for MillennialAi
+// Container App for MillennialAi (using basic config, no Docker build)
 resource millennialaiApp 'Microsoft.App/containerApps@2023-05-01' = {
   name: 'azca${resourceToken}'
   location: location
