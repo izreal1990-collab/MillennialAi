@@ -10,6 +10,18 @@ from dataclasses import dataclass, field
 from typing import List, Optional, Union, Dict, Any
 import warnings
 
+from .constants import (
+    DEFAULT_TRM_HIDDEN_SIZE,
+    DEFAULT_TRM_NUM_HEADS,
+    DEFAULT_TRM_FF_HIDDEN_SIZE,
+    DEFAULT_TRM_NUM_LAYERS,
+    DEFAULT_NUM_RECURSION_STEPS,
+    DEFAULT_DROPOUT,
+    DEFAULT_LAYER_NORM_EPS,
+    DEFAULT_RECURSION_DROPOUT,
+    DEFAULT_INJECTION_STRENGTH,
+)
+
 
 @dataclass
 class HybridConfig:
@@ -47,21 +59,21 @@ class HybridConfig:
     
     # Layer injection settings
     injection_layers: List[int] = field(default_factory=lambda: [4, 8])
-    injection_strength: float = 1.0
+    injection_strength: float = DEFAULT_INJECTION_STRENGTH
     adaptive_injection: bool = False
     blending_strategy: str = "linear"  # "linear", "attention_weighted", "gated"
     
     # TRM architecture settings
-    trm_hidden_size: int = 512
-    trm_num_heads: int = 8
-    trm_ff_hidden_size: int = 2048
-    trm_num_layers: int = 2
-    num_recursion_steps: int = 3
+    trm_hidden_size: int = DEFAULT_TRM_HIDDEN_SIZE
+    trm_num_heads: int = DEFAULT_TRM_NUM_HEADS
+    trm_ff_hidden_size: int = DEFAULT_TRM_FF_HIDDEN_SIZE
+    trm_num_layers: int = DEFAULT_TRM_NUM_LAYERS
+    num_recursion_steps: int = DEFAULT_NUM_RECURSION_STEPS
     
     # Regularization settings
-    dropout: float = 0.1
-    layer_norm_eps: float = 1e-5
-    recursion_dropout: float = 0.05
+    dropout: float = DEFAULT_DROPOUT
+    layer_norm_eps: float = DEFAULT_LAYER_NORM_EPS
+    recursion_dropout: float = DEFAULT_RECURSION_DROPOUT
     
     # Projection layer settings
     projection_bias: bool = True

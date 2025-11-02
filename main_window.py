@@ -30,6 +30,22 @@ logger = logging.getLogger('MillennialAi')
 # Import MillennialAi components
 from millennial_ai.original_architecture import MillennialAiModel, MillennialAiConfig
 from millennial_ai.core.ip_safe_integration import MillennialAiIPSafeModel
+from millennial_ai.config.constants import (
+    DEFAULT_WINDOW_WIDTH,
+    DEFAULT_WINDOW_HEIGHT,
+    DEFAULT_WINDOW_X,
+    DEFAULT_WINDOW_Y,
+    DEFAULT_UPDATE_INTERVAL_MS,
+    MIN_LAYERS,
+    MAX_LAYERS,
+    DEFAULT_DEPTH_VALUE,
+    MIN_SAMPLES,
+    MAX_SAMPLES,
+    DEFAULT_SAMPLES_VALUE,
+    DEFAULT_MAX_LENGTH,
+    COMPLEXITY_DIVISOR,
+    COMPLEXITY_MULTIPLIER,
+)
 from brain_visualizer import BrainVisualizer
 from examples.cost_calculator import calculate_millennial_ai_cost
 
@@ -46,10 +62,10 @@ class InferenceWorker(QThread):
     def run(self):
         try:
             logger.info("Starting model inference")
-            response = self.model.generate(self.prompt, max_length=100)
+            response = self.model.generate(self.prompt, max_length=DEFAULT_MAX_LENGTH)
             # Simulate metrics since model doesn't provide them
-            complexity = len(self.prompt) / 100.0  # Simple heuristic
-            steps = max(1, int(complexity * 10))
+            complexity = len(self.prompt) / COMPLEXITY_DIVISOR  # Simple heuristic
+            steps = max(1, int(complexity * COMPLEXITY_MULTIPLIER))
             logger.info("Inference completed successfully")
             self.result_ready.emit(response, complexity, steps)
         except Exception as e:
@@ -61,7 +77,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("MillennialAi Cognitive Enhancement Platform")
-        self.setGeometry(100, 100, 1400, 900)
+        self.setGeometry(DEFAULT_WINDOW_X, DEFAULT_WINDOW_Y, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT)
         
         # Load default model
         self.config = MillennialAiConfig.for_enterprise_70b()
@@ -179,7 +195,7 @@ Enhanced LLM (70B) + MillennialAi Cognitive Layers
         # Update timer for live viz
         self.viz_timer = QTimer()
         self.viz_timer.timeout.connect(self.update_visualization)
-        self.viz_timer.start(1000)  # Update every second
+        self.viz_timer.start(DEFAULT_UPDATE_INTERVAL_MS)  # Update every second
         
         return widget
     
@@ -195,13 +211,13 @@ Enhanced LLM (70B) + MillennialAi Cognitive Layers
         form_layout.addRow("Base Model:", self.model_combo)
         
         self.layers_spin = QSpinBox()
-        self.layers_spin.setRange(1, 100)
+        self.layers_spin.setRange(MIN_LAYERS, MAX_LAYERS)
         self.layers_spin.setValue(80)
         form_layout.addRow("Total Layers:", self.layers_spin)
         
         self.depth_spin = QSpinBox()
         self.depth_spin.setRange(1, 20)
-        self.depth_spin.setValue(10)
+        self.depth_spin.setValue(DEFAULT_DEPTH_VALUE)
         form_layout.addRow("Max Recursion Depth:", self.depth_spin)
         
         self.adaptive_check = QCheckBox("Adaptive Depth by Layer Position")
@@ -224,8 +240,8 @@ Enhanced LLM (70B) + MillennialAi Cognitive Layers
         cost_group = QGroupBox("Cost Estimation")
         cost_layout = QVBoxLayout(cost_group)
         self.samples_spin = QSpinBox()
-        self.samples_spin.setRange(1000, 1000000)
-        self.samples_spin.setValue(10000)
+        self.samples_spin.setRange(MIN_SAMPLES, MAX_SAMPLES)
+        self.samples_spin.setValue(DEFAULT_SAMPLES_VALUE)
         cost_layout.addWidget(QLabel("Training Samples:"))
         cost_layout.addWidget(self.samples_spin)
         

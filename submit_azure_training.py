@@ -49,7 +49,7 @@ def submit_training_job():
         env = Environment(
             name=env_name,
             description="MillennialAI Training Environment with Azure ML",
-            conda_file="./azure_ml_env.yaml",
+            conda_file="./conda.yml",
             image="mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.8-cudnn8-ubuntu22.04:latest"
         )
         env = ml_client.environments.create_or_update(env)
@@ -71,8 +71,8 @@ def submit_training_job():
                 --use-azure-storage \
                 --output-dir ./outputs",
         environment=f"{env.name}:{env.version}",
-        compute="gpu-cluster",  # GPU compute cluster defined in Bicep
-        display_name="MillennialAi Revolutionary Training",
+        compute="cpu-cluster",  # CPU compute cluster (GPU cluster blocked by quota)
+        display_name="MillennialAi Revolutionary Training (CPU)",
         description="Training MillennialAi with revolutionary layer injection framework",
         experiment_name="millennialai-training",
         tags={
