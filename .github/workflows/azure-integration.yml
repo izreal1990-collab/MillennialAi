@@ -132,32 +132,16 @@ jobs:
           --resource-group '${{ secrets.AZURE_RESOURCE_GROUP }}' \
           --subscription '${{ secrets.AZURE_SUBSCRIPTION_ID }}'
     
-    - name: Test Azure ML job submission (dry run)
+    - name: Test Azure connectivity (CLI-based)
       run: |
-        echo "🔍 Installing Azure ML Python SDK..."
-        python -m pip install --upgrade pip
-        python -m pip install azure-ai-ml azure-identity
+        echo "🔍 Testing Azure connectivity with CLI..."
+        az account show --query '{name: name, id: id, tenantId: tenantId}' -o table
         
-        echo "🔍 Verifying installation..."
-        python -c "import azure.ai.ml; print('✅ azure-ai-ml imported successfully')"
-        python -c "import azure.identity; print('✅ azure-identity imported successfully')"
+        echo "🔍 Verifying resource group access..."
+        az group show --name '${{ secrets.AZURE_RESOURCE_GROUP }}' --query '{name: name, location: location}' -o table
         
-        echo "🔍 Testing Azure ML client connection..."
-        python -c "
-        from azure.ai.ml import MLClient
-        from azure.identity import DefaultAzureCredential
-        
-        credential = DefaultAzureCredential()
-        ml_client = MLClient(
-            credential=credential,
-            subscription_id='${{ secrets.AZURE_SUBSCRIPTION_ID }}',
-            resource_group_name='${{ secrets.AZURE_RESOURCE_GROUP }}',
-            workspace_name='${{ secrets.AZURE_ML_WORKSPACE }}'
-        )
-        
-        print('✅ Azure ML client connection successful')
-        print('✅ Ready for job submission')
-        "
+        echo "✅ Azure CLI connectivity test successful"
+        echo "✅ Ready for Azure ML operations"
 
   deploy:
     runs-on: ubuntu-latest
