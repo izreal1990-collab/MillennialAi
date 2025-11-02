@@ -51,7 +51,11 @@ For MillennialAi training, you need one of the following:
    - Submit request
 
 4. **Wait for Approval**:
-   - Typical approval time: 1-3 business days
+   - **Response time varies by severity**:
+     - **Severity A**: 24x7 support (critical issues)
+     - **Severity B**: Optionally 24x7 (important issues)
+     - **Severity C**: Business hours only (general requests like quota)
+   - **Quota requests (Severity C)**: Business hours only, typically 1-3 business days
    - Check email for updates
    - Azure Portal shows request status
 
@@ -221,6 +225,19 @@ print('✅ Model uploaded to Azure Storage')
 
 ## 📞 Support Resources
 
+### Azure Support Response Times (by Severity)
+Based on Azure support classification:
+- **Severity A**: Critical issues - 24x7 support, immediate response
+- **Severity B**: Important issues - Optionally 24x7 support
+- **Severity C**: General requests (like quota increases) - **Business hours only**
+
+**For GPU quota requests**:
+- Classified as **Severity C** (business hours only)
+- Processing: Monday-Friday, excludes weekends/holidays
+- Expected timeline: 1-3 business days from submission
+- Weekend submissions process on next business day
+
+### Documentation Links
 - **Azure Support**: https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade
 - **ML Quota Docs**: https://learn.microsoft.com/azure/machine-learning/how-to-manage-quotas
 - **GPU VM Sizes**: https://learn.microsoft.com/azure/virtual-machines/sizes-gpu

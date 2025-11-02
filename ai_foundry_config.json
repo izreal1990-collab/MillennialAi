@@ -1,0 +1,20 @@
+{
+  "subscription_id": "639e13e9-b4be-4ba6-8e9e-f14db5b3a65c",
+  "resource_group": "rg-jblango-1749",
+  "hub_name": "millennialai-foundry-hub",
+  "project_name": "millennialai-project",
+  "location": "eastus2",
+  "ai_studio_url": "https://ai.azure.com",
+  "hub_endpoint": "https://ml.azure.com/workspaces/millennialai-foundry-hub",
+  "project_endpoint": "https://ml.azure.com/workspaces/millennialai-project",
+  "capabilities": [
+    "Model training and fine-tuning",
+    "Model deployment and serving", 
+    "Prompt engineering and testing",
+    "AI application development",
+    "Integration with existing ML workspace",
+    "Advanced monitoring and observability",
+    "Layer injection framework support"
+  ],
+  "setup_date": "2025-11-02T14:25:22-05:00"
+}

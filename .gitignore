@@ -34,20 +34,20 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
+# Azure and AI Infrastructure Files (keep in repo for setup)
+# Keep configuration files for setup
+!ai_foundry_config.json
+
+# Test and Job Output Files (exclude outputs, keep scripts)
+job_outputs/
+*.log
+
+# Environment Files (exclude virtual env, keep requirements)
+millennial_env/
+.azure/
+
+# Azure ML specific
+azure-pipelines.yml.backup
 
 # Translations
 *.mo
