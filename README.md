@@ -372,10 +372,8 @@ If you use MillennialAi in your research, please cite:
 
 - [ ] Support for more transformer architectures
 - [ ] Optimized CUDA kernels for TRM operations
-- [ ] Distributed training support
 - [ ] Model compression techniques
-- [ ] Interactive visualization tools
-- [ ] Integration with major ML frameworks
+- [ ] Integration with major ML framework
 
 ## 📞 Support
 
