@@ -28,7 +28,7 @@ class MillennialAiConfig:
     # MillennialAi Cognitive Enhancement
     cognitive_layers: int = 4
     enhancement_dim: int = 2048
-    injection_points: List[int] = None  # Will be auto-calculated
+    injection_points: Optional[List[int]] = None  # Will be auto-calculated
     
     # Multi-stage reasoning
     reasoning_stages: int = 3
@@ -92,7 +92,7 @@ class MillennialAiConfig:
                 return torch.cuda.get_device_properties(0).total_memory / (1024**3)
             else:
                 return 0.0  # CPU fallback
-        except:
+        except (ImportError, RuntimeError, AttributeError):
             return 8.0  # Conservative default
     
     def _get_available_memory_gb(self) -> float:
@@ -100,7 +100,7 @@ class MillennialAiConfig:
         try:
             import psutil
             return psutil.virtual_memory().available / (1024**3)
-        except:
+        except (ImportError, AttributeError):
             return 16.0  # Conservative default
     
     def _auto_detect_device(self) -> str:
@@ -112,7 +112,7 @@ class MillennialAiConfig:
                 if gpu_mem >= 8.0:  # At least 8GB GPU memory
                     return "cuda"
             return "cpu"
-        except:
+        except (ImportError, RuntimeError):
             return "cpu"
     
     def _optimize_for_hardware(self):
@@ -331,6 +331,10 @@ class LayerInjectionManager:
         """
         # Find transformer layers (model-agnostic approach)
         transformer_layers = self._find_transformer_layers(model)
+        
+        # Ensure injection_points is not None
+        if self.injection_points is None:
+            raise ValueError("injection_points cannot be None when injecting enhancements")
         
         if len(transformer_layers) < max(self.injection_points):
             raise ValueError(f"Model has only {len(transformer_layers)} layers, "

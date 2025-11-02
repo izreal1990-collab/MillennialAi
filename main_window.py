@@ -50,7 +50,7 @@ class InferenceWorker(QThread):
             # Simulate metrics since model doesn't provide them
             complexity = len(self.prompt) / 100.0  # Simple heuristic
             steps = max(1, int(complexity * 10))
-            logger.info(f"Inference completed successfully")
+            logger.info("Inference completed successfully")
             self.result_ready.emit(response, complexity, steps)
         except Exception as e:
             error_msg = f"Inference error: {str(e)}"
@@ -337,9 +337,9 @@ Enhanced LLM (70B) + MillennialAi Cognitive Layers
                     self.status_bar.showMessage(f"Model {model_name} loaded and enhanced successfully")
                     QMessageBox.information(self, "Success", f"Model {model_name} loaded and enhanced successfully!")
                 else:
-                    raise Exception("Failed to apply enhancements")
+                    raise RuntimeError("Failed to apply enhancements")
             else:
-                raise Exception("Failed to load base model")
+                raise RuntimeError("Failed to load base model")
         except Exception as e:
             error_msg = f"Failed to load model {model_name}: {str(e)}"
             logger.error(error_msg)
@@ -354,7 +354,8 @@ Enhanced LLM (70B) + MillennialAi Cognitive Layers
             self.plot_widget.plot(data, clear=True)
     
     def calculate_cost(self):
-        samples = self.samples_spin.value()
+        # Get samples value (currently not used but may be needed in future)
+        _ = self.samples_spin.value()
         base_size = self.config.base_model_layers * self.config.hidden_size / 1e9  # in billions
         trm_size = base_size * 0.01  # 1% of base
         cost_dict = calculate_millennial_ai_cost(base_size, trm_size)

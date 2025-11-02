@@ -350,7 +350,7 @@ if __name__ == "__main__":
         trm_hidden_size=512
     )
     
-    print(f"   ✅ Created IP-safe model")
+    print("   ✅ Created IP-safe model")
     params = ip_safe_model.count_parameters()
     print(f"   📊 Total parameters: {params['total']:,}")
     print(f"   🧠 Reasoning engine: {params['reasoning_engine']:,}")

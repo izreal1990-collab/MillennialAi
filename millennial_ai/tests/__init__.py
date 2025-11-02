@@ -433,8 +433,8 @@ class TestIntegration(unittest.TestCase):
         input_ids = torch.randint(0, 1000, (2, 10))
         targets = torch.randint(0, 1000, (2, 10))
         
-        # Training step
-        optimizer = torch.optim.Adam(hybrid.parameters(), lr=1e-4)
+        # Training step with proper hyperparameters
+        optimizer = torch.optim.Adam(hybrid.parameters(), lr=1e-4, weight_decay=0.01)
         
         hybrid.train()
         outputs = hybrid(input_ids)
@@ -659,7 +659,7 @@ if __name__ == '__main__':
     run_benchmarks()
     
     # Summary
-    print(f"\n" + "=" * 50)
+    print("\n" + "=" * 50)
     print(f"Tests run: {test_results.testsRun}")
     print(f"Failures: {len(test_results.failures)}")
     print(f"Errors: {len(test_results.errors)}")

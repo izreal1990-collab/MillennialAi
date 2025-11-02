@@ -18,9 +18,16 @@ RUN apt-get update && apt-get install -y \
 # Copy requirements first for better caching
 COPY requirements.txt .
 
-# Install Python dependencies
+# Install Python dependencies in stages to avoid memory issues
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir torch>=1.12.0 numpy>=1.21.0 && \
+    pip install --no-cache-dir fastapi>=0.104.0 pydantic>=2.0.0 uvicorn>=0.24.0 && \
+    pip install --no-cache-dir \
+    pandas>=1.4.0 \
+    psutil>=5.9.0 \
+    pytest>=7.0.0 \
+    tokenizers>=0.12.1 \
+    transformers>=4.20.0
 
 # Copy application code
 COPY . .
