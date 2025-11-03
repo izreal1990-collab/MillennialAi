@@ -16,7 +16,17 @@ RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir torch==2.9.0+cpu --index-url https://download.pytorch.org/whl/cpu && \
-    pip install --no-cache-dir fastapi numpy pydantic requests uvicorn
+    pip install --no-cache-dir \
+        fastapi \
+        numpy \
+        pydantic \
+        requests \
+        uvicorn \
+        azure-ai-ml \
+        azure-identity \
+        azure-storage-blob \
+        mlflow \
+        azureml-mlflow
 
 # Copy application files
 COPY millennial_ai_live_chat.py .
