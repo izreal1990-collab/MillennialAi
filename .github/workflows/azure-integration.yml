@@ -156,10 +156,13 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     
-    - name: Log in to Azure Container Registry
+    - name: Get ACR credentials and login
       run: |
-        echo "🔑 Logging into Azure Container Registry..."
-        az acr login --name millennialaiacr17621237
+        echo "🔑 Getting Azure Container Registry credentials..."
+        ACR_USERNAME=$(az acr credential show --name millennialaiacr17621237 --query username -o tsv)
+        ACR_PASSWORD=$(az acr credential show --name millennialaiacr17621237 --query passwords[0].value -o tsv)
+        echo "� Logging into Docker registry..."
+        echo "$ACR_PASSWORD" | docker login millennialaiacr17621237.azurecr.io -u "$ACR_USERNAME" --password-stdin
     
     - name: Build and push Docker image
       run: |
