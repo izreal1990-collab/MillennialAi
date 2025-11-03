@@ -61,7 +61,7 @@ jobs:
         sys.path.append('.')
         
         # Test core imports
-        from millennial_ai.config import HybridConfig
+        from millennial_ai.config.config import HybridConfig
         from layer_injection_framework import LayerInjectionFramework
         
         # Test basic configuration
