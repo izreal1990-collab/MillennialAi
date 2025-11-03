@@ -66,7 +66,7 @@ class OllamaIntegration:
             response = requests.post(
                 f"{self.base_url}/api/generate", 
                 json=payload, 
-                timeout=30
+                timeout=120  # Increased timeout for llama3:8b on CPU
             )
             
             print(f"📡 Ollama response status: {response.status_code}")
