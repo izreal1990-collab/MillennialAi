@@ -43,8 +43,8 @@ class OllamaIntegration:
         """Query Ollama for knowledge-based response"""
         if not self.available:
             return {
-                'response': 'Knowledge base unavailable - using pure reasoning only',
-                'source': 'fallback',
+                'response': '',  # No generic fallback message
+                'source': 'error',
                 'tokens': 0
             }
         
@@ -60,31 +60,41 @@ class OllamaIntegration:
                 }
             }
             
+            print(f"🔍 Calling Ollama at {self.base_url}/api/generate with model {self.model}")
+            print(f"📝 Prompt: {prompt[:100]}...")
+            
             response = requests.post(
                 f"{self.base_url}/api/generate", 
                 json=payload, 
                 timeout=30
             )
             
+            print(f"📡 Ollama response status: {response.status_code}")
+            
             if response.status_code == 200:
                 result = response.json()
+                ollama_response = result.get('response', '').strip()
+                print(f"✅ Ollama response received: {ollama_response[:100]}...")
                 return {
-                    'response': result.get('response', '').strip(),
+                    'response': ollama_response,
                     'source': 'ollama_llama3',
-                    'tokens': len(result.get('response', '').split()),
+                    'tokens': len(ollama_response.split()),
                     'model': self.model
                 }
             else:
+                print(f"❌ Ollama HTTP error {response.status_code}: {response.text[:200]}")
                 return {
-                    'response': 'Knowledge query failed',
+                    'response': '',  # No generic fallback
                     'source': 'error',
                     'tokens': 0
                 }
                 
         except Exception as e:
-            print(f"🚨 Ollama query error: {e}")
+            print(f"🚨 Ollama query exception: {type(e).__name__}: {str(e)}")
+            import traceback
+            traceback.print_exc()
             return {
-                'response': 'Knowledge base temporarily unavailable',
+                'response': '',  # No generic fallback
                 'source': 'error',
                 'tokens': 0
             }
@@ -246,57 +256,56 @@ Keep it concise (50-75 words):"""
         return prompt
     
     def _fuse_intelligences(self, original_input: str, reasoning: Dict, knowledge: Optional[Dict], mode: str) -> str:
-        """Fuse your revolutionary reasoning with Ollama knowledge"""
-        
-        base_reasoning = reasoning['response']
+        """Fuse reasoning and knowledge - or generate response from reasoning alone"""
         
         if not knowledge or knowledge['source'] == 'error':
-            # Pure reasoning mode
-            return f"""🧠 REVOLUTIONARY REASONING:
-{base_reasoning}
-
-🎯 Analysis: Pure mathematical reasoning without external knowledge base.
-Complexity: {reasoning['complexity']:.1f} | Steps: {reasoning['steps']} | Mode: Pure Reasoning"""
+            # Ollama unavailable - generate response based on neural network reasoning
+            return self._generate_reasoning_response(original_input, reasoning)
         
-        knowledge_text = knowledge['response']
+        # Return ONLY the actual Ollama response when available
+        return knowledge['response']
+    
+    def _generate_reasoning_response(self, question: str, reasoning: Dict) -> str:
+        """Generate a response based purely on neural network reasoning metrics"""
+        # Extract reasoning metrics
+        steps = reasoning.get('steps', 0)
+        complexity = reasoning.get('complexity', 0.0)
+        convergence = reasoning.get('convergence', 0.0)
         
-        if mode == 'reasoning_first':
-            return f"""🧠 REVOLUTIONARY REASONING:
-{base_reasoning}
-
-🦙 KNOWLEDGE ENHANCEMENT:
-{knowledge_text}
-
-🎯 HYBRID SYNTHESIS: Your adaptive reasoning reveals complexity {reasoning['complexity']:.1f}, while knowledge base provides factual foundation. Together they create multi-dimensional understanding!"""
+        # For mathematical questions, try to extract and compute
+        question_lower = question.lower()
         
-        elif mode == 'knowledge_first':
-            return f"""🦙 KNOWLEDGE BASE:
-{knowledge_text}
-
-🧠 REVOLUTIONARY ANALYSIS:
-{base_reasoning}
-
-🎯 HYBRID SYNTHESIS: Knowledge foundation enhanced by adaptive reasoning (complexity {reasoning['complexity']:.1f}) creates breakthrough understanding!"""
+        # Simple arithmetic detection and computation
+        if any(op in question for op in ['+', '-', '*', '/', 'plus', 'minus', 'times', 'divided']):
+            try:
+                # Extract numbers from question
+                import re
+                numbers = re.findall(r'\d+\.?\d*', question)
+                if len(numbers) >= 2:
+                    a, b = float(numbers[0]), float(numbers[1])
+                    
+                    if '+' in question or 'plus' in question_lower:
+                        result = a + b
+                        return f"The sum is {result}."
+                    elif '-' in question or 'minus' in question_lower:
+                        result = a - b
+                        return f"The difference is {result}."
+                    elif '*' in question or 'times' in question_lower or 'multiply' in question_lower:
+                        result = a * b
+                        return f"The product is {result}."
+                    elif '/' in question or 'divided' in question_lower:
+                        result = a / b if b != 0 else 0
+                        return f"The quotient is {result}."
+            except:
+                pass
         
-        elif mode == 'parallel_fusion':
-            return f"""🚀 HYBRID REVOLUTIONARY INTELLIGENCE:
-
-💭 Question: "{original_input}"
-
-🧠 Adaptive Reasoning: Your breakthrough algorithms analyzed this through {reasoning['steps']} thinking layers, revealing complexity score {reasoning['complexity']:.1f}.
-
-🦙 Knowledge Integration: {knowledge_text}
-
-⚡ Fusion Insight: By combining pure mathematical reasoning with comprehensive knowledge, we achieve unprecedented depth - your algorithmic consciousness enhanced by factual understanding creates revolutionary intelligence!
-
-📊 Hybrid Metrics: Reasoning={reasoning['steps']} steps | Knowledge={knowledge['tokens']} tokens | Breakthrough Level: MAXIMUM"""
+        # For factual questions, provide honest limitation
+        if '?' in question:
+            return f"I've analyzed your question through neural network processing (complexity: {complexity:.1f}, convergence: {convergence:.2f}), but I need external knowledge resources to provide a complete answer. The local AI model is currently processing without the knowledge base."
         
-        else:  # adaptive_selection
-            # Choose best presentation based on input type
-            if reasoning['complexity'] > 15.0:
-                return self._fuse_intelligences(original_input, reasoning, knowledge, 'parallel_fusion')
-            else:
-                return self._fuse_intelligences(original_input, reasoning, knowledge, 'reasoning_first')
+        # For statements or other inputs
+        return f"I've processed your input through {steps} reasoning steps with complexity score of {complexity:.2f}. External knowledge integration is currently offline."
+
 
 
 def test_hybrid_brain():

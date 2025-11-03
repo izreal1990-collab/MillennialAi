@@ -13,7 +13,7 @@ from typing import Optional, List, Dict, Any
 import logging
 import time
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import os
 import threading
@@ -54,6 +54,12 @@ start_time = time.time()
 conversation_count = 0
 active_conversations = {}
 learning_data_queue = queue.Queue()
+
+# Performance tracking
+response_times = []
+total_requests = 0
+failed_requests = 0
+successful_requests = 0
 
 # Conversation memory system
 class ConversationMemory:
@@ -165,8 +171,10 @@ class HealthResponse(BaseModel):
     brain_status: str
     ollama_status: str
     timestamp: str
-    uptime: float
+    uptime: float  # Keep for backward compatibility
+    uptime_seconds: float  # Android app expects this field name
     active_conversations: int
+    total_processed: int  # Android expects this
     learning_samples_queued: int
 
 class LearningStatsResponse(BaseModel):
@@ -208,258 +216,472 @@ learning_thread.start()
 async def root():
     """Serve the live chat web interface"""
     return HTMLResponse("""
-        <html>
+        <!DOCTYPE html>
+        <html lang="en">
             <head>
-                <title>MillennialAi Live Chat</title>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>MillennialAi - Advanced AI Chat</title>
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
                 <style>
-                    body {
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    :root {
+                        --primary: #6366f1;
+                        --primary-dark: #4f46e5;
+                        --primary-light: #818cf8;
+                        --secondary: #8b5cf6;
+                        --bg-main: #0f0f0f;
+                        --bg-chat: #212121;
+                        --bg-user: #2f2f2f;
+                        --bg-ai: transparent;
+                        --text-primary: #ececec;
+                        --text-secondary: #b4b4b4;
+                        --border: #404040;
+                        --shadow: rgba(0, 0, 0, 0.3);
+                    }
+                    
+                    * {
                         margin: 0;
                         padding: 0;
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                        min-height: 100vh;
+                        box-sizing: border-box;
                     }
-                    .container {
-                        max-width: 900px;
-                        margin: 0 auto;
-                        background: white;
-                        border-radius: 15px;
-                        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                    
+                    body {
+                        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+                        background: var(--bg-main);
+                        color: var(--text-primary);
+                        height: 100vh;
                         overflow: hidden;
-                        margin-top: 20px;
-                        margin-bottom: 20px;
+                        -webkit-font-smoothing: antialiased;
                     }
-                    .header {
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                        color: white;
-                        padding: 30px;
-                        text-align: center;
+                    
+                    .app-container {
+                        display: flex;
+                        height: 100vh;
                     }
-                    .header h1 {
-                        margin: 0;
-                        font-size: 2.5em;
-                        font-weight: 300;
-                    }
-                    .header p {
-                        margin: 10px 0 0 0;
-                        opacity: 0.9;
-                        font-size: 1.1em;
-                    }
-                    .chat-container {
-                        height: 600px;
+                    
+                    .sidebar {
+                        width: 260px;
+                        background: var(--bg-main);
+                        border-right: 1px solid var(--border);
                         display: flex;
                         flex-direction: column;
+                        padding: 12px;
                     }
-                    .chat-messages {
-                        flex: 1;
-                        padding: 20px;
-                        overflow-y: auto;
-                        background: #f8f9fa;
-                        border-bottom: 1px solid #e9ecef;
-                    }
-                    .message {
-                        margin-bottom: 20px;
-                        padding: 15px;
-                        border-radius: 10px;
-                        max-width: 80%;
-                        animation: fadeIn 0.3s ease-in;
-                    }
-                    .message.user {
-                        background: #007bff;
-                        color: white;
-                        margin-left: auto;
-                        text-align: right;
-                    }
-                    .message.ai {
-                        background: white;
-                        border: 1px solid #e9ecef;
-                        color: #333;
-                    }
-                    .message-header {
-                        font-weight: bold;
-                        margin-bottom: 5px;
-                        font-size: 0.9em;
-                        opacity: 0.8;
-                    }
-                    .chat-input-container {
-                        padding: 20px;
-                        background: white;
-                        border-top: 1px solid #e9ecef;
-                    }
-                    .chat-input {
+                    
+                    .new-chat-btn {
                         display: flex;
-                        gap: 10px;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px 16px;
+                        background: transparent;
+                        border: 1px solid var(--border);
+                        border-radius: 8px;
+                        color: var(--text-primary);
+                        cursor: pointer;
+                        font-size: 14px;
+                        font-weight: 500;
+                        transition: all 0.2s;
+                        margin-bottom: 16px;
                     }
+                    
+                    .new-chat-btn:hover {
+                        background: var(--bg-user);
+                    }
+                    
+                    .brand {
+                        padding: 20px 16px;
+                        font-size: 18px;
+                        font-weight: 700;
+                        background: linear-gradient(135deg, var(--primary), var(--secondary));
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        margin-top: auto;
+                    }
+                    
+                    .main-content {
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                        max-width: 100%;
+                    }
+                    
+                    .chat-header {
+                        padding: 16px 24px;
+                        border-bottom: 1px solid var(--border);
+                        background: var(--bg-main);
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                    }
+                    
+                    .model-selector {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 8px 16px;
+                        background: var(--bg-user);
+                        border-radius: 8px;
+                        font-size: 14px;
+                        font-weight: 500;
+                    }
+                    
+                    .model-badge {
+                        padding: 2px 8px;
+                        background: var(--primary);
+                        border-radius: 4px;
+                        font-size: 11px;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                    }
+                    
+                    .chat-area {
+                        flex: 1;
+                        overflow-y: auto;
+                        background: var(--bg-chat);
+                        scroll-behavior: smooth;
+                    }
+                    
+                    .messages-container {
+                        max-width: 800px;
+                        margin: 0 auto;
+                        padding: 24px;
+                    }
+                    
+                    .message-group {
+                        margin-bottom: 24px;
+                        display: flex;
+                        gap: 16px;
+                    }
+                    
+                    .avatar {
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 8px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-weight: 600;
+                        font-size: 14px;
+                        flex-shrink: 0;
+                    }
+                    
+                    .avatar.user {
+                        background: linear-gradient(135deg, var(--primary), var(--primary-light));
+                    }
+                    
+                    .avatar.ai {
+                        background: linear-gradient(135deg, var(--secondary), var(--primary));
+                    }
+                    
+                    .message-content {
+                        flex: 1;
+                        padding-top: 4px;
+                    }
+                    
+                    .message-text {
+                        color: var(--text-primary);
+                        line-height: 1.6;
+                        font-size: 15px;
+                    }
+                    
+                    .input-area {
+                        padding: 24px;
+                        background: var(--bg-chat);
+                        border-top: 1px solid var(--border);
+                    }
+                    
+                    .input-container {
+                        max-width: 800px;
+                        margin: 0 auto;
+                        position: relative;
+                    }
+                    
+                    .input-wrapper {
+                        background: var(--bg-user);
+                        border-radius: 24px;
+                        border: 1px solid var(--border);
+                        display: flex;
+                        align-items: flex-end;
+                        padding: 12px 16px;
+                        transition: border-color 0.2s;
+                    }
+                    
+                    .input-wrapper:focus-within {
+                        border-color: var(--primary);
+                    }
+                    
                     #messageInput {
                         flex: 1;
-                        padding: 15px;
-                        border: 2px solid #e9ecef;
-                        border-radius: 25px;
-                        font-size: 16px;
-                        outline: none;
-                        transition: border-color 0.3s;
-                    }
-                    #messageInput:focus {
-                        border-color: #667eea;
-                    }
-                    #sendButton {
-                        padding: 15px 30px;
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                        color: white;
+                        background: transparent;
                         border: none;
-                        border-radius: 25px;
+                        color: var(--text-primary);
+                        font-size: 15px;
+                        font-family: inherit;
+                        outline: none;
+                        resize: none;
+                        max-height: 200px;
+                        min-height: 24px;
+                        line-height: 24px;
+                        padding: 0;
+                    }
+                    
+                    #messageInput::placeholder {
+                        color: var(--text-secondary);
+                    }
+                    
+                    #sendButton {
+                        width: 32px;
+                        height: 32px;
+                        background: var(--primary);
+                        border: none;
+                        border-radius: 8px;
+                        color: white;
                         cursor: pointer;
-                        font-size: 16px;
-                        font-weight: 500;
-                        transition: transform 0.2s;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: all 0.2s;
+                        flex-shrink: 0;
+                        margin-left: 8px;
                     }
-                    #sendButton:hover {
-                        transform: translateY(-2px);
+                    
+                    #sendButton:hover:not(:disabled) {
+                        background: var(--primary-dark);
+                        transform: scale(1.05);
                     }
+                    
                     #sendButton:disabled {
-                        opacity: 0.6;
+                        opacity: 0.4;
                         cursor: not-allowed;
-                        transform: none;
                     }
-                    .status {
-                        text-align: center;
-                        padding: 10px;
-                        background: #f8f9fa;
-                        border-top: 1px solid #e9ecef;
-                        font-size: 0.9em;
-                        color: #666;
+                    
+                    .thinking {
+                        display: inline-flex;
+                        gap: 4px;
+                        padding: 8px 0;
                     }
-                    @keyframes fadeIn {
-                        from { opacity: 0; transform: translateY(10px); }
-                        to { opacity: 1; transform: translateY(0); }
-                    }
-                    .loading {
-                        display: inline-block;
-                        width: 20px;
-                        height: 20px;
-                        border: 3px solid #f3f3f3;
-                        border-top: 3px solid #667eea;
+                    
+                    .thinking span {
+                        width: 6px;
+                        height: 6px;
+                        background: var(--text-secondary);
                         border-radius: 50%;
-                        animation: spin 1s linear infinite;
+                        animation: bounce 1.4s infinite ease-in-out both;
                     }
-                    @keyframes spin {
-                        0% { transform: rotate(0deg); }
-                        100% { transform: rotate(360deg); }
+                    
+                    .thinking span:nth-child(1) { animation-delay: -0.32s; }
+                    .thinking span:nth-child(2) { animation-delay: -0.16s; }
+                    
+                    @keyframes bounce {
+                        0%, 80%, 100% { transform: scale(0); }
+                        40% { transform: scale(1); }
+                    }
+                    
+                    @media (max-width: 768px) {
+                        .sidebar {
+                            position: absolute;
+                            left: -260px;
+                            z-index: 100;
+                            transition: left 0.3s;
+                        }
+                        
+                        .sidebar.open {
+                            left: 0;
+                        }
+                        
+                        .messages-container,
+                        .input-container {
+                            padding-left: 16px;
+                            padding-right: 16px;
+                        }
                     }
                 </style>
             </head>
             <body>
-                <div class="container">
-                    <div class="header">
-                        <h1>🧠 MillennialAi Live Chat</h1>
-                        <p>Experience revolutionary AI with continuous learning</p>
+                <div class="app-container">
+                    <div class="sidebar">
+                        <button class="new-chat-btn" onclick="newChat()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 5v14M5 12h14"/>
+                            </svg>
+                            New chat
+                        </button>
+                        <div class="brand">MillennialAi</div>
                     </div>
-
-                    <div class="chat-container">
-                        <div id="chatMessages" class="chat-messages">
-                            <div class="message ai">
-                                <div class="message-header">MillennialAi</div>
-                                Hello! I'm your revolutionary AI assistant with continuous learning capabilities. I combine advanced mathematical reasoning with vast knowledge integration. What would you like to discuss?
+                    
+                    <div class="main-content">
+                <div class="chat-header">
+                    <div class="model-selector">
+                        <span>MillennialAi</span>
+                    </div>
+                </div>                        <div class="chat-area" id="chatArea">
+                            <div class="messages-container" id="messagesContainer">
+                                <div class="message-group">
+                                    <div class="avatar ai">AI</div>
+                                    <div class="message-content">
+                                        <div class="message-text">Hello! How can I assist you today?</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="chat-input-container">
-                            <div class="chat-input">
-                                <input type="text" id="messageInput" placeholder="Type your message here..." maxlength="2000">
-                                <button id="sendButton">Send</button>
+                        
+                        <div class="input-area">
+                            <div class="input-container">
+                                <div class="input-wrapper">
+                                    <textarea 
+                                        id="messageInput" 
+                                        placeholder="Message MillennialAi..." 
+                                        rows="1"
+                                        maxlength="2000"
+                                    ></textarea>
+                                    <button id="sendButton" type="button">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                            <path d="M7 11L12 6L17 11M12 18V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-
-                        <div id="status" class="status">
-                            Ready for conversation
                         </div>
                     </div>
                 </div>
 
                 <script>
                     let conversationId = null;
-
                     const messageInput = document.getElementById('messageInput');
                     const sendButton = document.getElementById('sendButton');
-                    const chatMessages = document.getElementById('chatMessages');
-                    const status = document.getElementById('status');
-
-                    // Send message function
+                    const messagesContainer = document.getElementById('messagesContainer');
+                    const chatArea = document.getElementById('chatArea');
+                    
+                    // Auto-resize textarea
+                    messageInput.addEventListener('input', function() {
+                        this.style.height = 'auto';
+                        this.style.height = Math.min(this.scrollHeight, 200) + 'px';
+                    });
+                    
                     async function sendMessage() {
                         const message = messageInput.value.trim();
-                        if (!message) return;
-
-                        // Disable input
-                        messageInput.disabled = true;
+                        if (!message || sendButton.disabled) return;
+                        
+                        // Disable send
                         sendButton.disabled = true;
-                        sendButton.innerHTML = '<div class="loading"></div>';
-
-                        // Add user message to chat
-                        addMessage('user', 'You', message);
+                        const userMessage = message;
                         messageInput.value = '';
-
-                        // Update status
-                        status.textContent = '🧠 AI is thinking...';
-
+                        messageInput.style.height = 'auto';
+                        
+                        // Add user message
+                        addMessage('user', userMessage);
+                        
+                        // Add thinking indicator
+                        const thinkingId = addThinking();
+                        
                         try {
                             const response = await fetch('/chat', {
                                 method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    message: message,
-                                    conversation_id: conversationId
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ 
+                                    message: userMessage, 
+                                    conversation_id: conversationId 
                                 })
                             });
-
+                            
                             const data = await response.json();
-
+                            
+                            // Remove thinking indicator
+                            removeThinking(thinkingId);
+                            
                             if (response.ok) {
                                 conversationId = data.conversation_id;
-                                addMessage('ai', 'MillennialAi', data.response);
-
-                                // Show metrics
-                                const metrics = `Thinking: ${data.brain_metrics.steps} steps, complexity: ${data.brain_metrics.complexity.toFixed(2)}`;
-                                status.textContent = metrics;
+                                addMessage('ai', data.response);
                             } else {
-                                addMessage('ai', 'System', `Error: ${data.detail || 'Unknown error'}`);
-                                status.textContent = 'Error occurred';
+                                addMessage('ai', 'Sorry, I encountered an error. Please try again.');
                             }
                         } catch (error) {
-                            addMessage('ai', 'System', `Network error: ${error.message}`);
-                            status.textContent = 'Connection error';
+                            removeThinking(thinkingId);
+                            addMessage('ai', 'Connection error. Please check your internet and try again.');
                         }
-
-                        // Re-enable input
-                        messageInput.disabled = false;
+                        
                         sendButton.disabled = false;
-                        sendButton.textContent = 'Send';
                         messageInput.focus();
                     }
-
-                    // Add message to chat
-                    function addMessage(type, sender, content) {
-                        const messageDiv = document.createElement('div');
-                        messageDiv.className = `message ${type}`;
-                        messageDiv.innerHTML = `
-                            <div class="message-header">${sender}</div>
-                            <div>${content.replace(/\n/g, '<br>')}</div>
-                        `;
-                        chatMessages.appendChild(messageDiv);
-                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    
+                    function addMessage(type, content) {
+                        const messageGroup = document.createElement('div');
+                        messageGroup.className = 'message-group';
+                        
+                        const avatar = document.createElement('div');
+                        avatar.className = `avatar ${type}`;
+                        avatar.textContent = type === 'user' ? 'You' : 'AI';
+                        
+                        const messageContent = document.createElement('div');
+                        messageContent.className = 'message-content';
+                        
+                        const messageText = document.createElement('div');
+                        messageText.className = 'message-text';
+                        messageText.innerHTML = content.replace(/\\n/g, '<br>');
+                        
+                        messageContent.appendChild(messageText);
+                        messageGroup.appendChild(avatar);
+                        messageGroup.appendChild(messageContent);
+                        messagesContainer.appendChild(messageGroup);
+                        
+                        chatArea.scrollTop = chatArea.scrollHeight;
                     }
-
+                    
+                    function addThinking() {
+                        const id = 'thinking-' + Date.now();
+                        const messageGroup = document.createElement('div');
+                        messageGroup.className = 'message-group';
+                        messageGroup.id = id;
+                        
+                        const avatar = document.createElement('div');
+                        avatar.className = 'avatar ai';
+                        avatar.textContent = 'AI';
+                        
+                        const messageContent = document.createElement('div');
+                        messageContent.className = 'message-content';
+                        
+                        const thinking = document.createElement('div');
+                        thinking.className = 'thinking';
+                        thinking.innerHTML = '<span></span><span></span><span></span>';
+                        
+                        messageContent.appendChild(thinking);
+                        messageGroup.appendChild(avatar);
+                        messageGroup.appendChild(messageContent);
+                        messagesContainer.appendChild(messageGroup);
+                        
+                        chatArea.scrollTop = chatArea.scrollHeight;
+                        return id;
+                    }
+                    
+                    function removeThinking(id) {
+                        const element = document.getElementById(id);
+                        if (element) element.remove();
+                    }
+                    
+                    function newChat() {
+                        conversationId = null;
+                        messagesContainer.innerHTML = `
+                            <div class="message-group">
+                                <div class="avatar ai">AI</div>
+                                <div class="message-content">
+                                    <div class="message-text">Hello! How can I assist you today?</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
                     // Event listeners
                     sendButton.addEventListener('click', sendMessage);
-                    messageInput.addEventListener('keypress', (e) => {
+                    
+                    messageInput.addEventListener('keydown', (e) => {
                         if (e.key === 'Enter' && !e.shiftKey) {
                             e.preventDefault();
                             sendMessage();
                         }
                     });
-
-                    // Focus input on load
+                    
                     messageInput.focus();
                 </script>
             </body>
@@ -469,9 +691,13 @@ async def root():
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest, background_tasks: BackgroundTasks):
     """Real-time chat with MillennialAi"""
-    global conversation_count
+    global conversation_count, total_requests, successful_requests, failed_requests
 
+    # Track ALL requests
+    total_requests += 1
+    
     if not brain_available:
+        failed_requests += 1
         raise HTTPException(status_code=503, detail="AI brain not available")
 
     start_time_req = time.time()
@@ -502,6 +728,7 @@ async def chat(request: ChatRequest, background_tasks: BackgroundTasks):
             brain_data = result
             hybrid_data = None
         else:
+            failed_requests += 1
             raise HTTPException(status_code=503, detail="AI brain not properly initialized")
 
         # Add to conversation memory
@@ -530,6 +757,10 @@ async def chat(request: ChatRequest, background_tasks: BackgroundTasks):
         continuous_learning.collect_learning_sample(learning_sample)
 
         processing_time = time.time() - start_time_req
+        
+        # Track REAL response time and success
+        response_times.append(processing_time)
+        successful_requests += 1
 
         logger.info(f"Chat response generated for conversation {request.conversation_id} - {processing_time:.2f}s")
 
@@ -548,6 +779,7 @@ async def chat(request: ChatRequest, background_tasks: BackgroundTasks):
         )
 
     except Exception as e:
+        failed_requests += 1
         logger.error(f"Chat error: {e}")
         raise HTTPException(status_code=500, detail=f"Chat processing failed: {str(e)}")
 
@@ -555,14 +787,18 @@ async def chat(request: ChatRequest, background_tasks: BackgroundTasks):
 async def health_check():
     """Health check with detailed status"""
     ollama_status = "connected" if ollama_available else "offline"
+    uptime_value = time.time() - start_time
+    total_exchanges = sum(len(conv) for conv in memory.conversations.values())
 
     return HealthResponse(
         status="healthy" if brain_available else "degraded",
         brain_status="ready" if brain_available else "unavailable",
         ollama_status=ollama_status,
         timestamp=datetime.now().isoformat(),
-        uptime=time.time() - start_time,
+        uptime=uptime_value,  # Keep for backward compatibility
+        uptime_seconds=uptime_value,  # Android app expects this
         active_conversations=len(memory.conversations),
+        total_processed=total_exchanges,  # Android expects this
         learning_samples_queued=learning_data_queue.qsize()
     )
 
@@ -578,6 +814,114 @@ async def learning_stats():
         learning_samples_queued=stats['current_samples_count'],
         brain_available=brain_available
     )
+
+@app.get("/metrics")
+async def get_metrics():
+    """EXTENSIVE ML Performance Metrics for Android monitoring app"""
+    total_exchanges = sum(len(conv) for conv in memory.conversations.values())
+    recent_conversations = [
+        conv for conv in memory.conversations.values() 
+        if conv and datetime.fromisoformat(conv[-1]['timestamp']) > datetime.now() - timedelta(hours=24)
+    ]
+    
+    # Memory usage
+    try:
+        import psutil
+        process = psutil.Process()
+        memory_info = process.memory_info()
+        memory_usage_mb = memory_info.rss / 1024 / 1024
+        memory_percent = process.memory_percent()
+        cpu_percent = process.cpu_percent(interval=0.1)
+    except Exception:
+        memory_usage_mb = 0.0
+        memory_percent = 0.0
+        cpu_percent = 0.0
+    
+    # ML Brain metrics
+    brain_available = hybrid_brain is not None
+    brain_status = "ready" if brain_available else "offline"
+    brain_layers = 0
+    layer_stats = []
+    
+    if brain_available:
+        try:
+            # Get brain layers count from HybridRevolutionaryBrain
+            if hasattr(hybrid_brain, 'real_brain'):
+                real = getattr(hybrid_brain, 'real_brain', None)
+                if real and hasattr(real, 'brain'):
+                    brain_obj = getattr(real, 'brain', None)
+                    if brain_obj and hasattr(brain_obj, 'layers'):
+                        brain_layers = len(brain_obj.layers)
+                        # Get detailed layer stats
+                        for i, layer in enumerate(brain_obj.layers):
+                            if hasattr(layer, 'weight') and hasattr(layer.weight, 'shape'):
+                                weight_shape = list(layer.weight.shape)
+                                total_params = layer.weight.numel() if hasattr(layer.weight, 'numel') else 0
+                                layer_stats.append({
+                                    "layer_index": i,
+                                    "layer_type": layer.__class__.__name__,
+                                    "parameters": total_params,
+                                    "shape": weight_shape
+                                })
+        except Exception as e:
+            logger.warning(f"Error getting brain layer stats: {e}")
+    
+    brain_load = min(100, (len(memory.conversations) / 50) * 100)
+    
+    # Learning system metrics
+    learning_queue_size = learning_data_queue.qsize()
+    samples_processed = 0
+    learning_active = False
+    
+    # Conversation quality metrics
+    avg_conversation_length = sum(len(conv) for conv in memory.conversations.values()) / max(len(memory.conversations), 1)
+    
+    # REAL tracked response time - calculate from actual measurements
+    avg_response_time = (sum(response_times) / len(response_times)) if response_times else 0.0
+    
+    # REAL success rate - calculate from actual request counts
+    calculated_success_rate = (successful_requests / total_requests * 100) if total_requests > 0 else 100.0
+    
+    # REAL uptime - calculate from start_time global
+    uptime_seconds = time.time() - start_time
+    
+    return {
+        # Core metrics
+        "timestamp": datetime.now().isoformat(),
+        "total_requests": total_requests,  # Use global counter, not total_exchanges
+        "active_conversations": len(memory.conversations),
+        "conversations_24h": len(recent_conversations),
+        "avg_conversation_length": round(avg_conversation_length, 2),
+        
+        # ML Brain metrics
+        "brain_status": brain_status,
+        "brain_load_percentage": round(brain_load, 2),
+        "brain_layers_count": brain_layers,
+        "brain_total_parameters": sum(ls["parameters"] for ls in layer_stats) if layer_stats else 0,
+        "layer_details": layer_stats,
+        
+        # Learning system
+        "learning_active": learning_active,
+        "learning_queue_size": learning_queue_size,
+        "learning_samples_processed": samples_processed,
+        "learning_threshold": 10000,
+        "learning_progress_percentage": min(100, (samples_processed / 10000) * 100) if samples_processed else 0,
+        
+        # Performance metrics - ALL REAL VALUES
+        "avg_response_time_sec": round(avg_response_time, 3),
+        "memory_usage_mb": round(memory_usage_mb, 2),
+        "memory_percent": round(memory_percent, 2),
+        "cpu_percent": round(cpu_percent, 2),
+        "success_rate": round(calculated_success_rate, 2),
+        
+        # Context window
+        "max_context_tokens": 4096,
+        "avg_context_usage_percentage": round((avg_conversation_length / 4096) * 100, 2),
+        
+        # Uptime and health - REAL VALUE
+        "uptime_seconds": round(uptime_seconds, 2),
+        "health_status": "healthy"
+    }
 
 @app.post("/learning/trigger-retraining")
 async def trigger_retraining():

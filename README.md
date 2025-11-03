@@ -1,10 +1,18 @@
+<div align="center">
+  
+<img src="logo.svg" alt="MillennialAi Logo" width="200"/>
+
 # MillennialAi 🚀
 
-Layer Injection Architecture for Hybrid Neural Networks
+**Layer Injection Architecture for Hybrid Neural Networks**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-1.12+-red.svg)](https://pytorch.org/)
+[![Azure](https://img.shields.io/badge/Azure-Container%20Apps-0078D4?logo=microsoft-azure)](https://azure.microsoft.com/en-us/products/container-apps)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success?logo=azuredevops)](https://millennialai-app.lemongrass-179d661f.eastus2.azurecontainerapps.io/)
+
+</div>
 
 ## 🌟 Overview
 

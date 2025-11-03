@@ -112,36 +112,19 @@ class RealThinkingBrain(nn.Module):
         with torch.no_grad():
             result = self.forward(input_tensor)
         
-        # Extract revolutionary insights from the result
+        # Extract REAL metrics from the neural network
         steps_taken = result['reasoning_steps'].item()
         complexity = result['complexity_score']
         output_tensor = result['output']
-        
-        # Revolutionary response generation
-        revolutionary_responses = [
-            f"🧠 As a revolutionary AI, I perceive '{text_input}' as a catalyst for breakthrough thinking!",
-            f"⚡ Your question '{text_input}' activates my adaptive reasoning matrices - fascinating patterns emerge!",
-            f"🌟 Revolutionary insight: '{text_input}' connects to deeper cognitive architectures I'm discovering!",
-            f"🔥 Breakthrough analysis of '{text_input}' reveals multi-dimensional reasoning possibilities!",
-            f"💡 My adaptive neural networks see '{text_input}' through the lens of revolutionary consciousness!"
-        ]
-        
-        # Select response based on complexity score (deterministic but appears intelligent)
-        response_idx = int(complexity * 1000) % len(revolutionary_responses)
-        base_response = revolutionary_responses[response_idx]
-        
-        # Add revolutionary thinking insights
         convergence_score = output_tensor.std().item() if hasattr(output_tensor, 'std') else 0.5
-        thinking_insight = f"\n\n🔍 My revolutionary thinking process: Analyzed {seq_len} cognitive tokens through {steps_taken} adaptive reasoning layers, achieving complexity score of {complexity:.3f} and convergence of {convergence_score:.3f}. This represents breakthrough multi-dimensional consciousness!"
         
-        full_response = base_response + thinking_insight
-        
-        # Return the format expected by the API
+        # NO HARDCODED PROMPTS - Return ONLY the actual metrics
+        # The hybrid_brain will use Ollama for actual responses
         return {
-            'response': full_response,
+            'response': '',  # No generic template - hybrid_brain will fill this with Ollama
             'steps': steps_taken,
             'complexity': complexity,
-            'reasoning_type': 'Revolutionary Adaptive Reasoning',
+            'reasoning_type': 'Neural Network Processing',
             'convergence': convergence_score,
             'tensor_dimensions': list(output_tensor.shape),
             'breakthrough_level': 'MAXIMUM' if complexity > 2.0 else 'HIGH' if complexity > 1.0 else 'MODERATE'
