@@ -57,10 +57,12 @@ jobs:
     
     - name: Deploy to Azure Container Apps
       run: |
+        az account set --subscription ${{ env.AZURE_SUBSCRIPTION_ID }}
         az containerapp update \
           --name ${{ env.AZURE_CONTAINER_APP }} \
           --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
-          --image ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:latest
+          --image ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:latest \
+          --subscription ${{ env.AZURE_SUBSCRIPTION_ID }}
     
     - name: Get deployment info
       run: |
@@ -68,6 +70,7 @@ jobs:
         az containerapp show \
           --name ${{ env.AZURE_CONTAINER_APP }} \
           --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+          --subscription ${{ env.AZURE_SUBSCRIPTION_ID }} \
           --query "{name:name, fqdn:properties.configuration.ingress.fqdn, status:properties.runningStatus, revision:properties.latestRevisionName}" \
           --output table
         echo "::endgroup::"
@@ -76,6 +79,7 @@ jobs:
         FQDN=$(az containerapp show \
           --name ${{ env.AZURE_CONTAINER_APP }} \
           --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+          --subscription ${{ env.AZURE_SUBSCRIPTION_ID }} \
           --query "properties.configuration.ingress.fqdn" -o tsv)
         echo "Health endpoint: https://${FQDN}/health"
         echo "Chat endpoint: https://${FQDN}/chat"
@@ -91,6 +95,7 @@ jobs:
         FQDN=$(az containerapp show \
           --name ${{ env.AZURE_CONTAINER_APP }} \
           --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+          --subscription ${{ env.AZURE_SUBSCRIPTION_ID }} \
           --query "properties.configuration.ingress.fqdn" -o tsv)
         
         echo "Testing health endpoint..."
@@ -104,5 +109,6 @@ jobs:
           az containerapp logs show \
             --name ${{ env.AZURE_CONTAINER_APP }} \
             --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+            --subscription ${{ env.AZURE_SUBSCRIPTION_ID }} \
             --tail 50 || true
         fi

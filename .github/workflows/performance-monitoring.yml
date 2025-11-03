@@ -1,0 +1,319 @@
+name: Performance Monitoring
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_duration:
+        description: 'Test duration in seconds'
+        required: false
+        default: '300'
+      concurrent_users:
+        description: 'Number of concurrent users to simulate'
+        required: false
+        default: '10'
+  schedule:
+    # Run every 6 hours
+    - cron: '0 */6 * * *'
+
+env:
+  AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  AZURE_RESOURCE_GROUP: millennialai-rg-20251102-174920
+  AZURE_CONTAINER_APP: millennialai-app
+
+jobs:
+  performance-test:
+    name: Run Performance Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+    
+    - name: Install dependencies
+      run: |
+        pip install requests numpy pandas
+    
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Get application URL
+      id: app-url
+      run: |
+        az account set --subscription ${{ env.AZURE_SUBSCRIPTION_ID }}
+        FQDN=$(az containerapp show \
+          --name ${{ env.AZURE_CONTAINER_APP }} \
+          --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+          --subscription ${{ env.AZURE_SUBSCRIPTION_ID }} \
+          --query "properties.configuration.ingress.fqdn" -o tsv)
+        echo "fqdn=$FQDN" >> $GITHUB_OUTPUT
+        echo "Base URL: https://${FQDN}"
+    
+    - name: Create performance test script
+      run: |
+        cat > performance_test.py << 'EOF'
+        import requests
+        import time
+        import json
+        import statistics
+        from datetime import datetime
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+        import sys
+        
+        BASE_URL = sys.argv[1]
+        DURATION = int(sys.argv[2])
+        CONCURRENT_USERS = int(sys.argv[3])
+        
+        test_questions = [
+            "What is artificial intelligence?",
+            "How does machine learning work?",
+            "Explain neural networks",
+            "What is deep learning?",
+            "Tell me about natural language processing",
+            "What are transformers in AI?",
+            "Explain reinforcement learning",
+            "What is supervised learning?",
+            "How do chatbots work?",
+            "What is the future of AI?"
+        ]
+        
+        results = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "duration_seconds": DURATION,
+            "concurrent_users": CONCURRENT_USERS,
+            "requests": [],
+            "errors": [],
+            "summary": {}
+        }
+        
+        def test_health():
+            start = time.time()
+            try:
+                response = requests.get(f"{BASE_URL}/health", timeout=10)
+                latency = (time.time() - start) * 1000
+                return {
+                    "endpoint": "/health",
+                    "status_code": response.status_code,
+                    "latency_ms": latency,
+                    "success": response.status_code == 200
+                }
+            except Exception as e:
+                return {
+                    "endpoint": "/health",
+                    "error": str(e),
+                    "latency_ms": (time.time() - start) * 1000,
+                    "success": False
+                }
+        
+        def test_chat(question):
+            start = time.time()
+            try:
+                response = requests.post(
+                    f"{BASE_URL}/chat",
+                    json={"message": question},
+                    timeout=30
+                )
+                latency = (time.time() - start) * 1000
+                return {
+                    "endpoint": "/chat",
+                    "status_code": response.status_code,
+                    "latency_ms": latency,
+                    "success": response.status_code == 200,
+                    "response_length": len(response.text) if response.status_code == 200 else 0
+                }
+            except Exception as e:
+                return {
+                    "endpoint": "/chat",
+                    "error": str(e),
+                    "latency_ms": (time.time() - start) * 1000,
+                    "success": False
+                }
+        
+        def test_learning_stats():
+            start = time.time()
+            try:
+                response = requests.get(f"{BASE_URL}/learning-stats", timeout=10)
+                latency = (time.time() - start) * 1000
+                return {
+                    "endpoint": "/learning-stats",
+                    "status_code": response.status_code,
+                    "latency_ms": latency,
+                    "success": response.status_code == 200
+                }
+            except Exception as e:
+                return {
+                    "endpoint": "/learning-stats",
+                    "error": str(e),
+                    "latency_ms": (time.time() - start) * 1000,
+                    "success": False
+                }
+        
+        print(f"Starting performance test...")
+        print(f"Base URL: {BASE_URL}")
+        print(f"Duration: {DURATION} seconds")
+        print(f"Concurrent users: {CONCURRENT_USERS}")
+        print()
+        
+        # Initial health check
+        print("Running initial health check...")
+        health_result = test_health()
+        if not health_result["success"]:
+            print(f"❌ Health check failed: {health_result}")
+            results["errors"].append({"type": "initial_health_check", "data": health_result})
+        else:
+            print(f"✅ Health check passed ({health_result['latency_ms']:.2f}ms)")
+        
+        # Run concurrent tests
+        print(f"\nRunning load tests for {DURATION} seconds...")
+        start_time = time.time()
+        request_count = 0
+        
+        with ThreadPoolExecutor(max_workers=CONCURRENT_USERS) as executor:
+            while time.time() - start_time < DURATION:
+                futures = []
+                
+                # Submit health checks
+                futures.append(executor.submit(test_health))
+                
+                # Submit chat requests
+                for question in test_questions[:CONCURRENT_USERS]:
+                    futures.append(executor.submit(test_chat, question))
+                
+                # Submit learning stats check
+                futures.append(executor.submit(test_learning_stats))
+                
+                # Collect results
+                for future in as_completed(futures):
+                    result = future.result()
+                    results["requests"].append(result)
+                    request_count += 1
+                    
+                    if not result["success"]:
+                        results["errors"].append(result)
+                    
+                    if request_count % 10 == 0:
+                        print(f"Completed {request_count} requests...")
+                
+                time.sleep(1)  # Small delay between batches
+        
+        # Calculate statistics
+        latencies = [r["latency_ms"] for r in results["requests"] if "latency_ms" in r]
+        successful = [r for r in results["requests"] if r.get("success", False)]
+        failed = [r for r in results["requests"] if not r.get("success", False)]
+        
+        results["summary"] = {
+            "total_requests": len(results["requests"]),
+            "successful_requests": len(successful),
+            "failed_requests": len(failed),
+            "success_rate": (len(successful) / len(results["requests"]) * 100) if results["requests"] else 0,
+            "avg_latency_ms": statistics.mean(latencies) if latencies else 0,
+            "min_latency_ms": min(latencies) if latencies else 0,
+            "max_latency_ms": max(latencies) if latencies else 0,
+            "median_latency_ms": statistics.median(latencies) if latencies else 0,
+            "p95_latency_ms": sorted(latencies)[int(len(latencies) * 0.95)] if len(latencies) > 20 else 0,
+            "requests_per_second": len(results["requests"]) / DURATION
+        }
+        
+        # Print summary
+        print("\n" + "="*60)
+        print("PERFORMANCE TEST SUMMARY")
+        print("="*60)
+        print(f"Total Requests:     {results['summary']['total_requests']}")
+        print(f"Successful:         {results['summary']['successful_requests']}")
+        print(f"Failed:             {results['summary']['failed_requests']}")
+        print(f"Success Rate:       {results['summary']['success_rate']:.2f}%")
+        print(f"Avg Latency:        {results['summary']['avg_latency_ms']:.2f}ms")
+        print(f"Min Latency:        {results['summary']['min_latency_ms']:.2f}ms")
+        print(f"Max Latency:        {results['summary']['max_latency_ms']:.2f}ms")
+        print(f"Median Latency:     {results['summary']['median_latency_ms']:.2f}ms")
+        print(f"P95 Latency:        {results['summary']['p95_latency_ms']:.2f}ms")
+        print(f"Requests/Second:    {results['summary']['requests_per_second']:.2f}")
+        print("="*60)
+        
+        # Save results
+        filename = f"performance_results_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.json"
+        with open(filename, 'w') as f:
+            json.dump(results, f, indent=2)
+        print(f"\nResults saved to: {filename}")
+        
+        # Exit with error code if success rate is below 95%
+        if results['summary']['success_rate'] < 95:
+            print("\n⚠️  WARNING: Success rate below 95%")
+            sys.exit(1)
+        EOF
+    
+    - name: Run performance tests
+      id: perf-test
+      run: |
+        python performance_test.py \
+          "https://${{ steps.app-url.outputs.fqdn }}" \
+          "${{ github.event.inputs.test_duration || '300' }}" \
+          "${{ github.event.inputs.concurrent_users || '10' }}"
+      continue-on-error: true
+    
+    - name: Create performance results directory
+      run: mkdir -p performance_results
+    
+    - name: Move results file
+      run: mv performance_results_*.json performance_results/ || true
+    
+    - name: Upload performance results
+      uses: actions/upload-artifact@v3
+      with:
+        name: performance-results-${{ github.run_number }}
+        path: performance_results/
+        retention-days: 90
+    
+    - name: Get container metrics
+      run: |
+        echo "::group::Container App Metrics"
+        az containerapp show \
+          --name ${{ env.AZURE_CONTAINER_APP }} \
+          --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+          --subscription ${{ env.AZURE_SUBSCRIPTION_ID }} \
+          --query "{name:name, revision:properties.latestRevisionName, replicas:properties.template.scale, cpu:properties.template.containers[0].resources.cpu, memory:properties.template.containers[0].resources.memory}" \
+          --output table
+        echo "::endgroup::"
+    
+    - name: Check application logs
+      if: steps.perf-test.outcome == 'failure'
+      run: |
+        echo "::group::Recent Application Logs"
+        az containerapp logs show \
+          --name ${{ env.AZURE_CONTAINER_APP }} \
+          --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+          --subscription ${{ env.AZURE_SUBSCRIPTION_ID }} \
+          --tail 100 || true
+        echo "::endgroup::"
+    
+    - name: Create performance summary
+      if: always()
+      run: |
+        if [ -f performance_results/performance_results_*.json ]; then
+          echo "## Performance Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Run:** #${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Extract summary from JSON
+          RESULT_FILE=$(ls -t performance_results/performance_results_*.json | head -1)
+          echo "**Summary:**" >> $GITHUB_STEP_SUMMARY
+          python3 << EOF >> $GITHUB_STEP_SUMMARY
+        import json
+        with open('$RESULT_FILE') as f:
+            data = json.load(f)
+            s = data['summary']
+            print(f"- Total Requests: {s['total_requests']}")
+            print(f"- Success Rate: {s['success_rate']:.2f}%")
+            print(f"- Avg Latency: {s['avg_latency_ms']:.2f}ms")
+            print(f"- P95 Latency: {s['p95_latency_ms']:.2f}ms")
+            print(f"- Requests/Second: {s['requests_per_second']:.2f}")
+        EOF
+        fi
