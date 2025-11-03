@@ -1,8 +1,8 @@
 <div align="center">
   
-<img src="logo.svg" alt="MillennialAi Logo" width="200"/>
+<img src="logo.png" alt="MillennialAi Logo" width="200"/>
 
-# MillennialAi 🚀
+# MillennialAi
 
 **Layer Injection Architecture for Hybrid Neural Networks**
 
@@ -14,13 +14,19 @@
 
 </div>
 
-## 🌟 Overview
+## Overview
 
-MillennialAi introduces a groundbreaking **Layer Injection Architecture** that seamlessly integrates Tiny Recursion Models (TRM) into existing Large Language Models (LLM) using PyTorch forward hooks. This revolutionary approach enables hybrid neural architectures without modifying the original models.
+MillennialAi integrates Tiny Recursion Models (TRM) into Large Language Models using PyTorch forward hooks for layer injection.
 
-### Key Innovation
+The system combines:
+- Neural reasoning via adaptive PyTorch networks
+- Knowledge integration through Ollama LLM (llama3:8b)
+- Layer injection using forward hooks (zero LLM modification)
+- Production API with FastAPI deployed on Azure
 
-Unlike traditional approaches that require model retraining or architecture changes, MillennialAi uses **forward hooks** to inject TRM processing directly into LLM hidden layers, creating a hybrid system that:
+### Core Concept
+
+This approach uses **forward hooks** to inject TRM processing directly into LLM hidden layers, creating a hybrid system that:
 
 - ✅ **Zero Model Modification**: Original LLM remains unchanged
 - ✅ **Dynamic Activation**: Injection can be toggled on/off at runtime
@@ -28,39 +34,57 @@ Unlike traditional approaches that require model retraining or architecture chan
 - ✅ **Multi-Layer Support**: Inject at multiple layers simultaneously
 - ✅ **Framework Agnostic**: Works with any PyTorch transformer model
 
-## 🏗️ Architecture
+## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     Layer Injection Architecture            │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  LLM Layer N-1 ────┐                                       │
-│                    │                                       │
-│                    ▼                                       │
-│              ┌─────────────┐                               │
-│              │ Forward Hook │                               │
-│              └─────────────┘                               │
-│                    │                                       │
-│                    ▼                                       │
-│              ┌─────────────┐    ┌─────────────┐           │
-│              │ Project to  │    │     TRM     │           │
-│              │  TRM Space  │───▶│ Processing  │           │
-│              └─────────────┘    └─────────────┘           │
-│                    ▲                    │                  │
-│                    │                    ▼                  │
-│              ┌─────────────┐    ┌─────────────┐           │
-│              │ Project to  │◀───│  Enhanced   │           │
-│              │  LLM Space  │    │   Hidden    │           │
-│              └─────────────┘    │   States    │           │
-│                    │            └─────────────┘           │
-│                    ▼                                       │
-│  LLM Layer N ──────────────────────────────────────────── │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────┐
+│                   System Architecture                  │
+├────────────────────────────────────────────────────────┤
+│                                                        │
+│  Input → FastAPI → Hybrid Brain Controller            │
+│                         │                              │
+│            ┌────────────┴────────────┐                 │
+│            ▼                         ▼                 │
+│    ┌──────────────┐          ┌──────────────┐         │
+│    │ Neural Brain │          │    Ollama    │         │
+│    │  (PyTorch)   │          │  llama3:8b   │         │
+│    │              │          │              │         │
+│    │ • Complexity │          │ • Knowledge  │         │
+│    │ • Steps 1-8  │          │ • Generation │         │
+│    │ • Convergence│          │ • Context    │         │
+│    └──────────────┘          └──────────────┘         │
+│            │                         │                 │
+│            └────────────┬────────────┘                 │
+│                         ▼                              │
+│              Response Synthesis                        │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────┐
+│              Layer Injection Mechanism                 │
+├────────────────────────────────────────────────────────┤
+│                                                        │
+│  LLM Layer N-1                                         │
+│       │                                                │
+│       ▼                                                │
+│  [Forward Hook] ────→ Inject TRM Processing           │
+│       │                      │                         │
+│       │                      ▼                         │
+│       │              ┌──────────────┐                  │
+│       │              │     TRM      │                  │
+│       │              │ • Attention  │                  │
+│       │              │ • Recursion  │                  │
+│       │              │ • Transform  │                  │
+│       │              └──────────────┘                  │
+│       │                      │                         │
+│       └──────────┬───────────┘                         │
+│                  ▼                                     │
+│  LLM Layer N (Enhanced Hidden States)                 │
+│                                                        │
+└────────────────────────────────────────────────────────┘
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 
@@ -110,14 +134,14 @@ outputs = hybrid.generate(**inputs, max_length=50)
 print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 ```
 
-## 🔧 Core Components
+## Core Components
 
 ### 1. HybridConfig
 Configuration system with presets and validation:
 
 ```python
 # Use preset configurations
-config = HybridConfig.from_preset('gpt2')
+config = HybridConfig.from_preset('production')
 
 # Custom configuration
 config = HybridConfig(
@@ -176,25 +200,27 @@ trm_hidden = bridge.project_to_trm(llm_hidden)
 llm_hidden = bridge.project_to_llm(trm_hidden)
 ```
 
-## 📊 Performance
+## Performance
 
-### Parameter Overhead
+### Production Metrics
 
-| Configuration | LLM Params | TRM Params | Overhead |
-|---------------|------------|------------|----------|
-| Minimal       | 124M       | 2.1M       | 1.7%     |
-| Standard      | 124M       | 8.4M       | 6.8%     |
-| Heavy         | 124M       | 24.7M      | 19.9%    |
+Live deployment on Azure Container Apps (4 CPU, 8GB RAM):
 
-### Speed Benchmark (GPT-2 Base)
+**Response Times:**
+- Average: 733ms
+- P50: 733ms  
+- P95: 734ms
+- P99: 734ms
 
-| Configuration | Normal | Injected | Overhead |
-|---------------|--------|----------|----------|
-| 2 Layers      | 45ms   | 52ms     | 15.6%    |
-| 4 Layers      | 45ms   | 61ms     | 35.6%    |
-| 6 Layers      | 45ms   | 73ms     | 62.2%    |
+**Configuration:**
+- CPU-only inference (no GPU)
+- Ollama llama3:8b model
+- 120s timeout
+- Adaptive reasoning steps (1-8 based on complexity)
 
-## 🔬 Advanced Features
+*Note: Performance varies based on query complexity and knowledge enhancement requirements.*
+
+## Advanced Features
 
 ### Multi-Layer Injection
 ```python
@@ -229,7 +255,7 @@ stats = hybrid.get_injection_statistics()
 hybrid.reset_injection_statistics()
 ```
 
-## 🧪 Examples
+## Examples
 
 ### Basic Usage
 ```bash
@@ -248,7 +274,7 @@ See `examples/` directory for comprehensive examples including:
 - Custom model architectures
 - Performance benchmarking
 
-## 🧪 Testing
+## Testing
 
 Run comprehensive test suite:
 
@@ -263,14 +289,17 @@ python examples/basic_usage.py
 python -c "from millennial_ai.tests import run_benchmarks; run_benchmarks()"
 ```
 
-## 📚 Documentation
+## Documentation
 
 ### Configuration Presets
 
-- **minimal**: Lightweight injection (1-2 layers)
-- **gpt2**: Optimized for GPT-2 models
-- **bert**: Optimized for BERT models
-- **adaptive**: Dynamic configuration
+- **minimal**: Lightweight injection (single layer)
+- **production**: Balanced for performance and efficiency
+- **llama2-70b**: Optimized for LLaMA-2 70B models
+- **llama3-70b**: Optimized for LLaMA-3 70B models
+- **gpt4-scale**: Ultra-scale configuration for largest models
+- **multimodal**: Enterprise multimodal model configuration
+- **research**: Experimental maximum capability configuration
 
 ### Projection Types
 
@@ -285,9 +314,9 @@ The library automatically manages PyTorch forward hooks:
 - No memory leaks or stale hooks
 - Exception handling for failed injections
 
-## 🤝 Contributing
+## Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+Contributions are welcome! 
 
 ### Development Setup
 
@@ -298,7 +327,7 @@ cd MillennialAi
 # Install development dependencies
 pip install -e ".[dev]"
 
-# Install pre-commit hooks (includes SonarQube scanning)
+# Install pre-commit hooks
 pre-commit install
 
 # Run tests
@@ -350,11 +379,11 @@ The project enforces these quality standards:
 
 View results at: [SonarCloud Dashboard](https://sonarcloud.io/dashboard?id=millennial-ai)
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 This work builds upon:
 - **Trill-AI Project**: Original TRM architecture and recursive processing concepts
@@ -362,28 +391,27 @@ This work builds upon:
 - **HuggingFace**: For the transformers library and model ecosystem
 - **Research Community**: For foundational work in attention mechanisms and neural architecture
 
-## 📖 Citation
+## Citation
 
 If you use MillennialAi in your research, please cite:
 
 ```bibtex
 @software{millennial_ai_2024,
-  title={MillennialAi: Revolutionary Layer Injection Architecture for Hybrid Neural Networks},
+  title={MillennialAi: Layer Injection Architecture for Hybrid Neural Networks},
   author={Jovan Blango},
   year={2024},
-  url={https://github.com/izreal1990-collab/MillennialAi},
-  note={Based on Trill-AI TRM architecture}
+  url={https://github.com/izreal1990-collab/MillennialAi}
 }
 ```
 
-## 🚀 Future Roadmap
+## Future Roadmap
 
 - [ ] Support for more transformer architectures
 - [ ] Optimized CUDA kernels for TRM operations
 - [ ] Model compression techniques
-- [ ] Integration with major ML framework
+- [ ] Integration with major ML frameworks
 
-## 📞 Support
+## Support
 
 - **Issues**: [GitHub Issues](https://github.com/izreal1990-collab/MillennialAi/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/izreal1990-collab/MillennialAi/discussions)
@@ -392,6 +420,5 @@ If you use MillennialAi in your research, please cite:
 ---
 
 <div align="center">
-<strong>🎯 Revolutionizing AI with Layer Injection Architecture 🎯</strong>
+<strong>Layer Injection Architecture for TRM-LLM Integration</strong>
 </div>
-Revolutionary Layer Injection Architecture for TRM-LLM Integration - Seamless integration of Tiny Recursion Models into Large Language Models using PyTorch forward hooks
