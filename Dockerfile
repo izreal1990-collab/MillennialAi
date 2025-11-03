@@ -9,40 +9,30 @@ ENV PYTHONPATH=/app
 ENV PYTHONUNBUFFERED=1
 ENV PORT=8000
 
-# Install system dependencies needed for PyTorch and ML libraries
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+# Install system dependencies
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements first for better caching
+# Copy and install minimal requirements
 COPY requirements.txt .
-
-# Install Python dependencies in stages to avoid memory issues
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir torch>=1.12.0 numpy>=1.21.0 && \
-    pip install --no-cache-dir fastapi>=0.104.0 pydantic>=2.0.0 uvicorn>=0.24.0 && \
-    pip install --no-cache-dir \
-    pandas>=1.4.0 \
-    psutil>=5.9.0 \
-    pytest>=7.0.0 \
-    tokenizers>=0.12.1 \
-    transformers>=4.20.0
+    pip install --no-cache-dir torch==2.9.0+cpu --index-url https://download.pytorch.org/whl/cpu && \
+    pip install --no-cache-dir fastapi numpy pydantic requests uvicorn
 
-# Copy application code
-COPY . .
+# Copy application files
+COPY millennial_ai_live_chat.py .
+COPY hybrid_brain.py .
+COPY real_brain.py .
+COPY continuous_learning.py .
 
-# Create non-root user for security
-RUN useradd --create-home --shell /bin/bash app && \
-    chown -R app:app /app
-USER app
+# Create necessary directories
+RUN mkdir -p logs data/learning_samples static
 
 # Expose port
 EXPOSE 8000
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
     CMD curl -f http://localhost:8000/health || exit 1
 
-# Default command - run the web API
-CMD ["python", "web_api.py"]
+# Run the FastAPI application
+CMD ["uvicorn", "millennial_ai_live_chat:app", "--host", "0.0.0.0", "--port", "8000", "--log-level", "info"]

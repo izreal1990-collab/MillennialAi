@@ -16,3 +16,4 @@ services:
 infra:
   provider: bicep
   path: infra
+  template: main-no-gpu.bicep

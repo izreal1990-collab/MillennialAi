@@ -24,6 +24,8 @@ logger = logging.getLogger(__name__)
 class ContinuousLearningManager:
     """Manages continuous learning pipeline for MillennialAi"""
 
+    SAMPLE_FILE_PATTERN = "learning_sample_*.json"
+
     def __init__(self, learning_data_path: str = "learning_data"):
         self.learning_data_path = Path(learning_data_path)
         self.learning_data_path.mkdir(exist_ok=True)
@@ -33,10 +35,10 @@ class ContinuousLearningManager:
         self.resource_group = os.getenv('AZURE_RESOURCE_GROUP', 'millennialai-rg')
         self.workspace_name = os.getenv('AZURE_ML_WORKSPACE_NAME', 'millennialai-ws')
 
-        # Continuous learning settings - OPTIMIZED FOR 85B PARAMETER MODEL
-        self.min_samples_for_retraining = 10000  # Large models need massive data
-        self.max_samples_per_batch = 50000  # Much larger batches for stability
-        self.retraining_interval_hours = 168  # Weekly retraining (7 days) for 85B models
+        # Continuous learning settings - MAXIMUM RESOURCE UTILIZATION (90%)
+        self.min_samples_for_retraining = 10  # TEMP: Reduced for testing 90% capacity system
+        self.max_samples_per_batch = 100000  # Maximum batch size for 90% resource usage
+        self.retraining_interval_hours = 1  # Frequent retraining cycles
         self.last_retraining_time = None
 
         # Initialize Azure ML client
@@ -50,6 +52,9 @@ class ContinuousLearningManager:
             'last_retraining_samples': 0,
             'avg_sample_quality': 0.0
         }
+
+        # Load existing samples
+        self._load_existing_samples()
 
         logger.info("Continuous Learning Manager initialized")
 
@@ -69,6 +74,35 @@ class ContinuousLearningManager:
                 logger.warning("⚠️ Azure ML credentials not configured - running in local mode only")
         except Exception as e:
             logger.error(f"❌ Azure ML setup failed: {e}")
+
+    def _load_existing_samples(self):
+        """Load existing learning samples on startup"""
+        try:
+            sample_files = list(self.learning_data_path.glob(self.SAMPLE_FILE_PATTERN))
+            loaded_samples = 0
+            total_quality = 0.0
+
+            for filepath in sample_files:
+                try:
+                    with open(filepath, 'r') as f:
+                        sample = json.load(f)
+
+                    quality_score = sample.get('quality_score', 0.0)
+                    total_quality += quality_score
+                    loaded_samples += 1
+
+                except Exception as e:
+                    logger.warning(f"Failed to load sample {filepath}: {e}")
+
+            if loaded_samples > 0:
+                self.stats['total_samples_collected'] = loaded_samples
+                self.stats['avg_sample_quality'] = total_quality / loaded_samples
+                logger.info(f"📚 Loaded {loaded_samples} existing learning samples (avg quality: {self.stats['avg_sample_quality']:.3f})")
+            else:
+                logger.info("📚 No existing learning samples found")
+
+        except Exception as e:
+            logger.error(f"❌ Failed to load existing samples: {e}")
 
     def collect_learning_sample(self, sample: Dict[str, Any]):
         """Collect a learning sample from live chat"""
@@ -194,7 +228,7 @@ class ContinuousLearningManager:
     def _prepare_training_batch(self) -> List[Dict[str, Any]]:
         """Prepare batch of high-quality samples for training"""
         # Get all sample files
-        sample_files = list(self.learning_data_path.glob("learning_sample_*.json"))
+        sample_files = list(self.learning_data_path.glob(self.SAMPLE_FILE_PATTERN))
 
         # Load and filter samples
         samples = []
@@ -230,7 +264,7 @@ class ContinuousLearningManager:
         # Create command job
         job = command(
             code="./millennial_ai/",
-            command=f"python azure_ml_training.py --use-mlflow --experiment-name millennialai-continuous-learning --run-name continuous_{int(time.time())} --num-epochs 10 --batch-size 2048",
+            command=f"python azure_ml_training.py --use-mlflow --experiment-name millennialai-continuous-learning --run-name continuous_{int(time.time())} --num-epochs 20 --batch-size 4096",
             environment="millennialai-dev-env:1.0.0",
             compute="gpu-cluster",  # Assumes GPU cluster exists
             display_name=f"MillennialAi Continuous Learning {datetime.now().strftime('%Y%m%d_%H%M')}",
@@ -264,7 +298,7 @@ class ContinuousLearningManager:
     def get_learning_stats(self) -> Dict[str, Any]:
         """Get comprehensive learning statistics"""
         # Count current samples
-        current_samples = list(self.learning_data_path.glob("learning_sample_*.json"))
+        current_samples = list(self.learning_data_path.glob(self.SAMPLE_FILE_PATTERN))
         archived_samples = list((self.learning_data_path / "archive").glob("*.json"))
 
         return {
@@ -290,8 +324,8 @@ class ContinuousLearningManager:
             if remaining_hours > 0:
                 return f"Time-based: {remaining_hours:.1f} hours remaining"
 
-        if self.stats['avg_sample_quality'] < 0.85:  # Higher quality threshold for 85B models
-            return f"Quality threshold: {self.stats['avg_sample_quality']:.2f} < 0.85"
+        if self.stats['avg_sample_quality'] < 0.7:  # Lower threshold for more frequent retraining
+            return f"Quality threshold: {self.stats['avg_sample_quality']:.2f} < 0.7"
 
         return "Eligible now"
 
@@ -299,14 +333,15 @@ class ContinuousLearningManager:
 continuous_learning = ContinuousLearningManager()
 
 def process_continuous_learning():
-    """Continuous process for automated machine learning - OPTIMIZED FOR 85B MODELS"""
-    print("🚀 Starting Automated ML for 85B Parameter Model - Maximum Efficiency Mode")
-    print("📊 Optimized Settings for Large-Scale AI:")
-    print("   • Minimum samples: 10,000 (massive data requirements)")
-    print("   • Batch size: 50,000 (stable training)")
-    print("   • Retraining interval: 7 days (resource intensive)")
-    print("   • Check frequency: Every 5 minutes (conservative monitoring)")
-    print("🎯 Quality threshold: 0.85+ (high quality required for 85B models)")
+    """Continuous process for automated machine learning - MAXIMUM RESOURCE UTILIZATION (90%)"""
+    print("🚀 Starting Automated ML for 85B Parameter Model - MAXIMUM RESOURCE UTILIZATION (90%)")
+    print("📊 Aggressive Settings for 90% System Usage:")
+    print(f"   • Minimum samples: {continuous_learning.min_samples_for_retraining} (very aggressive triggering)")
+    print(f"   • Batch size: {continuous_learning.max_samples_per_batch} (maximum memory utilization)")
+    print(f"   • Retraining interval: {continuous_learning.retraining_interval_hours} hour (frequent cycles)")
+    print("   • Check frequency: Every 30 seconds (continuous monitoring)")
+    print("   • Quality threshold: 0.7+ (balanced for speed)")
+    print("⚡ SYSTEM RUNNING AT 90% CAPACITY - HIGH RESOURCE USAGE EXPECTED")
 
     while True:
         try:
@@ -315,17 +350,17 @@ def process_continuous_learning():
 
             # Get current stats
             stats = continuous_learning.get_learning_stats()
-            logger.info(f"85B Model Status: {stats['total_samples_collected']} samples, Quality: {stats['avg_sample_quality']:.3f}, Next: {stats['next_retraining_eligible']}")
+            logger.info(f"90% Capacity ML Status: {stats['total_samples_collected']} samples, Quality: {stats['avg_sample_quality']:.3f}, Next: {stats['next_retraining_eligible']}")
 
-            # Sleep for 5 minutes (conservative checking for large models)
-            time.sleep(300)
+            # Sleep for 30 seconds (aggressive monitoring for 90% utilization)
+            time.sleep(30)
 
         except KeyboardInterrupt:
-            print("\n🛑 85B Automated ML stopped by user")
+            print("\n🛑 90% Capacity Automated ML stopped by user")
             break
         except Exception as e:
-            logger.error(f"85B Automated ML error: {e}")
-            time.sleep(60)  # Longer wait on error for stability
+            logger.error(f"90% Capacity Automated ML error: {e}")
+            time.sleep(10)  # Shorter wait on error for maximum uptime
 
 # Start automated ML process
 if __name__ == "__main__":

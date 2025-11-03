@@ -114,4 +114,4 @@ millennial_brain_activity_*.png
 
 # Azure files (keep in image)
 !azure.yaml
-!infra/
+!infra/.scannerwork
