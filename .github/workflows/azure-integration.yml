@@ -156,25 +156,29 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-    
-    - name: Install dependencies
+    - name: Log in to Azure Container Registry
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        az extension add --name ml --upgrade
+        echo "🔑 Logging into Azure Container Registry..."
+        az acr login --name millennialaiacr17621237
     
-    - name: Submit Azure ML training job
+    - name: Build and push Docker image
       run: |
-        echo "🚀 Submitting MillennialAi training job to Azure ML..."
-        python submit_azure_training.py
-      env:
-        AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
-        AZURE_ML_WORKSPACE_NAME: ${{ secrets.AZURE_ML_WORKSPACE }}
+        echo "🐳 Building Docker image..."
+        docker build -t millennialaiacr17621237.azurecr.io/millennialai:latest .
+        echo "📤 Pushing to Azure Container Registry..."
+        docker push millennialaiacr17621237.azurecr.io/millennialai:latest
+    
+    - name: Deploy to Azure Container Apps
+      run: |
+        echo "🚀 Deploying to Azure Container Apps..."
+        az containerapp update \
+          --name millennialai-app \
+          --resource-group millennialai-rg-20251102-174920 \
+          --image millennialaiacr17621237.azurecr.io/millennialai:latest
+        
+        echo "✅ Deployment complete!"
+        echo "🌐 Your AI chat app should be live at:"
+        echo "https://millennialai-app.lemongrass-179d661f.eastus2.azurecontainerapps.io"
 
   gpu-quota-check:
     runs-on: ubuntu-latest
