@@ -40,6 +40,10 @@ jobs:
         az account set --subscription ${{ env.AZURE_SUBSCRIPTION_ID }}
         echo "Using subscription: $(az account show --query name -o tsv)"
     
+    - name: Install Azure Container Apps extension
+      run: |
+        az extension add --name containerapp --upgrade
+    
     - name: Log in to Azure Container Registry
       run: |
         az acr login --name ${{ env.ACR_NAME }}
@@ -57,7 +61,17 @@ jobs:
     
     - name: Deploy to Azure Container Apps
       run: |
+        echo "Setting subscription context..."
         az account set --subscription ${{ env.AZURE_SUBSCRIPTION_ID }}
+        
+        echo "Verifying container app exists..."
+        az containerapp show \
+          --name ${{ env.AZURE_CONTAINER_APP }} \
+          --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+          --subscription ${{ env.AZURE_SUBSCRIPTION_ID }} \
+          --query "name" -o tsv
+        
+        echo "Updating container app..."
         az containerapp update \
           --name ${{ env.AZURE_CONTAINER_APP }} \
           --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \

@@ -43,6 +43,10 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     
+    - name: Install Azure Container Apps extension
+      run: |
+        az extension add --name containerapp --upgrade
+    
     - name: Get application URL
       id: app-url
       run: |
