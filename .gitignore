@@ -171,6 +171,8 @@ data/
 datasets/
 *.csv
 *.json
+!.vscode/*.json
+!ai_foundry_config.json
 *.h5
 *.hdf5
 

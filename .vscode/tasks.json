@@ -1,0 +1,335 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Azure: Monitor All Resources",
+            "type": "shell",
+            "command": "bash",
+            "args": ["${workspaceFolder}/monitor_azure.sh"],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "problemMatcher": [],
+            "detail": "Monitor all Azure resources including ML workspace, compute clusters, and Container Apps"
+        },
+        {
+            "label": "Azure: Monitor Continuous",
+            "type": "shell",
+            "command": "bash",
+            "args": ["${workspaceFolder}/monitor_azure_continuous.sh"],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "problemMatcher": [],
+            "isBackground": true,
+            "detail": "Continuously monitor Azure resources with periodic updates"
+        },
+        {
+            "label": "Azure: Check Container App Status",
+            "type": "shell",
+            "command": "az",
+            "args": [
+                "containerapp", "list",
+                "--resource-group", "millennialai-rg-20251102-174920",
+                "--query", "[].{name:name, location:location, state:provisioningState, url:properties.configuration.ingress.fqdn}",
+                "--output", "table"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "detail": "Check status of Azure Container Apps deployment"
+        },
+        {
+            "label": "Azure: View Container App Logs",
+            "type": "shell",
+            "command": "az",
+            "args": [
+                "containerapp", "logs", "show",
+                "--name", "millennialai-app",
+                "--resource-group", "millennialai-rg-20251102-174920",
+                "--follow"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": false
+            },
+            "problemMatcher": [],
+            "isBackground": true,
+            "detail": "Stream live logs from Azure Container App"
+        },
+        {
+            "label": "Azure: Check ML Workspace",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "az ml workspace show --name ${AZURE_ML_WORKSPACE:-azml7c462q3plqeyo} --resource-group ${AZURE_RESOURCE_GROUP:-rg-jblango-1749} --query '{name:name, location:location, state:provisioningState}' --output table"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "detail": "Check Azure ML workspace status"
+        },
+        {
+            "label": "Azure: List Compute Clusters",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "az ml compute list --resource-group ${AZURE_RESOURCE_GROUP:-rg-jblango-1749} --workspace-name ${AZURE_ML_WORKSPACE:-azml7c462q3plqeyo} --query '[].{name:name, type:computeType, state:provisioningState, size:properties.vmSize}' --output table"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "detail": "List all compute clusters in Azure ML workspace"
+        },
+        {
+            "label": "Azure: Check GPU Quota",
+            "type": "shell",
+            "command": "az",
+            "args": [
+                "vm", "list-usage",
+                "--location", "eastus2",
+                "--query", "[?contains(name.value,'NCSv3')]",
+                "--output", "table"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "detail": "Check GPU quota status for Azure ML"
+        },
+        {
+            "label": "Azure: Test Connectivity",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "echo '🔍 Testing Azure connectivity...' && az account show --query '{subscription:name, id:id, tenantId:tenantId}' --output table && echo '✅ Azure CLI authenticated successfully'"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "detail": "Test Azure CLI connectivity and authentication"
+        },
+        {
+            "label": "Azure: Deploy to Container Apps",
+            "type": "shell",
+            "command": "bash",
+            "args": ["${workspaceFolder}/deploy_azure_simple.sh"],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "problemMatcher": [],
+            "detail": "Deploy application to Azure Container Apps"
+        },
+        {
+            "label": "Azure: View Recent Deployments",
+            "type": "shell",
+            "command": "az",
+            "args": [
+                "deployment", "group", "list",
+                "--resource-group", "millennialai-rg-20251102-174920",
+                "--query", "[].{name:name, state:properties.provisioningState, timestamp:properties.timestamp} | sort_by(@, &timestamp) | reverse(@) | [0:5]",
+                "--output", "table"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "detail": "Show recent Azure deployments and their status"
+        },
+        {
+            "label": "Azure: Check for Deployment Errors",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "LATEST_FAILED=$(az deployment group list --resource-group millennialai-rg-20251102-174920 --query \"[?properties.provisioningState=='Failed'].name | [0]\" --output tsv); if [ ! -z \"$LATEST_FAILED\" ]; then echo \"Latest failed deployment: $LATEST_FAILED\"; az deployment group show --name $LATEST_FAILED --resource-group millennialai-rg-20251102-174920 --query 'properties.error.details[].{code:code, message:message}' --output table; else echo 'No recent failed deployments found.'; fi"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "detail": "Check for errors in recent Azure deployments"
+        },
+        {
+            "label": "Azure: Open Portal Links",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "echo 'Opening Azure Portal...' && echo 'Resource Group: https://portal.azure.com/#@/resource/subscriptions/639e13e9-b4be-4ba6-8e9e-f14db5b3a65c/resourceGroups/millennialai-rg-20251102-174920/overview' && echo 'Container Apps: https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.App%2FcontainerApps' && echo 'ML Studio: https://ml.azure.com/'"
+            ],
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "detail": "Display Azure Portal URLs for quick access"
+        },
+        {
+            "label": "Azure: Monitor ML Jobs",
+            "type": "shell",
+            "command": "bash",
+            "args": ["${workspaceFolder}/monitor_jobs.sh"],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "problemMatcher": [],
+            "detail": "Monitor Azure ML training jobs"
+        },
+        {
+            "label": "Debug: Run Python Tests",
+            "type": "shell",
+            "command": "python",
+            "args": ["-m", "pytest", "tests/", "-v", "--cov=millennial_ai", "--cov-report=term-missing"],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "problemMatcher": [
+                "$python"
+            ],
+            "detail": "Run all Python unit tests with coverage"
+        },
+        {
+            "label": "Debug: Run Quick Test",
+            "type": "shell",
+            "command": "python",
+            "args": ["${workspaceFolder}/quick_test.py"],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": [
+                "$python"
+            ],
+            "detail": "Run quick test to verify basic functionality"
+        },
+        {
+            "label": "Debug: Test API Locally",
+            "type": "shell",
+            "command": "python",
+            "args": ["-m", "uvicorn", "millennial_ai_api:app", "--reload", "--host", "0.0.0.0", "--port", "8000"],
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^.*$",
+                    "file": 1,
+                    "location": 2,
+                    "message": 3
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^.*Uvicorn running.*$",
+                    "endsPattern": "^.*Application startup complete.*$"
+                }
+            },
+            "detail": "Start FastAPI server locally for debugging"
+        },
+        {
+            "label": "Debug: Lint Python Code",
+            "type": "shell",
+            "command": "flake8",
+            "args": [".", "--count", "--select=E9,F63,F7,F82", "--show-source", "--statistics"],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": [
+                "$python"
+            ],
+            "detail": "Run flake8 linter to check for Python errors"
+        },
+        {
+            "label": "Debug: Install Dependencies",
+            "type": "shell",
+            "command": "pip",
+            "args": ["install", "-r", "requirements.txt"],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "detail": "Install all required Python dependencies"
+        },
+        {
+            "label": "Debug: Build Docker Image",
+            "type": "shell",
+            "command": "docker",
+            "args": ["build", "-t", "millennialai:debug", "."],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "problemMatcher": [],
+            "detail": "Build Docker image for local testing"
+        },
+        {
+            "label": "Debug: Run Docker Container",
+            "type": "shell",
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "-p", "8000:8000",
+                "-e", "MODEL_SIZE=70b",
+                "millennialai:debug"
+            ],
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "isBackground": true,
+            "problemMatcher": [],
+            "detail": "Run Docker container locally for debugging"
+        }
+    ]
+}

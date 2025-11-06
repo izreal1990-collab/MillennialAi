@@ -1,0 +1,97 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Python: FastAPI",
+            "type": "python",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "millennial_ai_api:app",
+                "--reload",
+                "--host", "0.0.0.0",
+                "--port", "8000"
+            ],
+            "jinja": true,
+            "justMyCode": false,
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python: Quick Test",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/quick_test.py",
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Python: Pytest Current File",
+            "type": "python",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "${file}",
+                "-v"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Python: All Tests",
+            "type": "python",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "tests/",
+                "-v",
+                "--cov=millennial_ai",
+                "--cov-report=term-missing"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Python: Azure ML Test",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/azure_ml_test.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "AZURE_SUBSCRIPTION_ID": "${env:AZURE_SUBSCRIPTION_ID}",
+                "AZURE_RESOURCE_GROUP": "${env:AZURE_RESOURCE_GROUP}",
+                "AZURE_ML_WORKSPACE": "${env:AZURE_ML_WORKSPACE}"
+            }
+        },
+        {
+            "name": "Python: Debug Injection Flow",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/debug_injection_flow.py",
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Docker: Attach to Container",
+            "type": "docker",
+            "request": "attach",
+            "platform": "python",
+            "python": {
+                "pathMappings": [
+                    {
+                        "localRoot": "${workspaceFolder}",
+                        "remoteRoot": "/app"
+                    }
+                ]
+            }
+        }
+    ]
+}
