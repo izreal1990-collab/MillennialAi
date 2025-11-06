@@ -1,8 +1,0 @@
-$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
-command: python test_job.py
-code: .
-environment: azureml:AzureML-ACPT-pytorch-1.13-py38-cuda11.7-gpu:10
-compute: azureml:cpu-cluster
-display_name: millennialai-cpu-test-simple
-experiment_name: millennialai-testing
-description: "Simple test MillennialAi setup on Azure ML CPU cluster"

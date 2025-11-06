@@ -1,7 +1,0 @@
-2025-10-31 11:07:10,182 - INFO - Injection completed - Success: True, Complexity: 10.4, Time: 0.71s
-2025-10-31 11:07:10,892 - INFO - Injection completed - Success: True, Complexity: 10.6, Time: 0.71s
-2025-10-31 11:07:11,601 - INFO - Injection completed - Success: True, Complexity: 10.5, Time: 0.71s
-2025-10-31 11:08:12,297 - INFO - Injection completed - Success: True, Complexity: 13.7, Time: 5.10s
-2025-10-31 11:10:53,984 - INFO - Injection completed - Success: True, Complexity: 10.7, Time: 5.56s
-2025-10-31 11:10:59,552 - INFO - Injection completed - Success: True, Complexity: 10.5, Time: 5.57s
-2025-10-31 11:11:05,094 - INFO - Injection completed - Success: True, Complexity: 10.8, Time: 5.54s
