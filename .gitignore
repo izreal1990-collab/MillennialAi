@@ -139,8 +139,8 @@ cython_debug/
 # PyCharm
 .idea/
 
-# VS Code
-.vscode/
+# VS Code (keep tasks and launch configurations for debugging)
+# .vscode/ is now tracked to enable Azure debugging tasks
 
 # macOS
 .DS_Store
