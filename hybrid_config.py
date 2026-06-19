@@ -99,8 +99,8 @@ TRAINING_CONFIG = {
     "save_total_limit": 3,
     "save_strategy": "steps",
     
-    # Evaluation
-    "evaluation_strategy": "no",
+    # Evaluation (disabled - no eval dataset)
+    # "evaluation_strategy": "no",  # Default, omitted
     
     # Misc
     "report_to": "none",
@@ -141,6 +141,18 @@ EXCLUDE_PATTERNS = ["archive/*", "llama.cpp/*", "__pycache__/*"]
 # Conversational datasets
 USE_OPENASSISTANT = True  # High-quality multi-turn conversations
 OPENASSISTANT_SAMPLES = 10000  # Use 10K examples (from 88K total)
+
+# ============================================================================
+# TRM / INJECTION CONFIG
+# ============================================================================
+# Policy for placing TRM modules: 'cpu' (default), 'same_as_layer', or 'auto'
+TRM_DEVICE_POLICY = "cpu"
+# Blending alpha for TRM output influence (hidden + alpha * trm_output)
+TRM_BLEND_ALPHA = 0.1
+# Whether to cache shared TRM modules per device (recommended)
+TRM_SHARED_CACHE = True
+# If True, attempt to preserve original state_dict keys (opt-in; more invasive)
+TRM_PRESERVE_KEYS = False
 
 # ============================================================================
 # PATHS

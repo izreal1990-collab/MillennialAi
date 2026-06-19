@@ -4,9 +4,11 @@ Revolutionary Hybrid Brain: MillennialAi + Ollama Integration
 Combines pure mathematical reasoning with vast knowledge base
 """
 
-import torch
-import torch.nn as nn
-import requests
+# Optional dependencies: requests for Ollama integration
+try:
+    import requests
+except ImportError:
+    requests = None
 import json
 import time
 from typing import Dict, Any, Optional, List
@@ -19,10 +21,15 @@ class OllamaIntegration:
     def __init__(self, base_url: str = "http://localhost:11434", model: str = "llama3:8b"):
         self.base_url = base_url
         self.model = model
+        self.requests_available = requests is not None
         self.available = self._check_ollama_status()
         
     def _check_ollama_status(self) -> bool:
         """Check if Ollama is running and model is available"""
+        if not self.requests_available:
+            print("❌ `requests` library not installed; Ollama integration disabled.")
+            return False
+
         try:
             response = requests.get(f"{self.base_url}/api/tags", timeout=5)
             if response.status_code == 200:
@@ -41,7 +48,7 @@ class OllamaIntegration:
     
     def query_knowledge(self, prompt: str, max_tokens: int = 150) -> Dict[str, Any]:
         """Query Ollama for knowledge-based response"""
-        if not self.available:
+        if not self.available or not self.requests_available:
             return {
                 'response': '',  # No generic fallback message
                 'source': 'error',
